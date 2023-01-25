@@ -1,0 +1,182 @@
+{
+  "admins/homework.js": "/packs/js/admins/homework-1d5117832ac9571411f4.js",
+  "admins/homework.js.map": "/packs/js/admins/homework-1d5117832ac9571411f4.js.map",
+  "admins/new.js": "/packs/js/admins/new-b1b431c6aabce641b6c3.js",
+  "admins/new.js.map": "/packs/js/admins/new-b1b431c6aabce641b6c3.js.map",
+  "application.js": "/packs/js/application-958bcdda8454ef1743c4.js",
+  "application.js.map": "/packs/js/application-958bcdda8454ef1743c4.js.map",
+  "datatable_basic.js": "/packs/js/datatable_basic-bd3225258b31a64d8ce1.js",
+  "datatable_basic.js.map": "/packs/js/datatable_basic-bd3225258b31a64d8ce1.js.map",
+  "entrypoints": {
+    "admins/homework": {
+      "js": [
+        "/packs/js/admins/homework-1d5117832ac9571411f4.js"
+      ],
+      "js.map": [
+        "/packs/js/admins/homework-1d5117832ac9571411f4.js.map"
+      ]
+    },
+    "admins/new": {
+      "js": [
+        "/packs/js/admins/new-b1b431c6aabce641b6c3.js"
+      ],
+      "js.map": [
+        "/packs/js/admins/new-b1b431c6aabce641b6c3.js.map"
+      ]
+    },
+    "application": {
+      "js": [
+        "/packs/js/application-958bcdda8454ef1743c4.js"
+      ],
+      "js.map": [
+        "/packs/js/application-958bcdda8454ef1743c4.js.map"
+      ]
+    },
+    "datatable_basic": {
+      "js": [
+        "/packs/js/datatable_basic-bd3225258b31a64d8ce1.js"
+      ],
+      "js.map": [
+        "/packs/js/datatable_basic-bd3225258b31a64d8ce1.js.map"
+      ]
+    },
+    "gpt3": {
+      "js": [
+        "/packs/js/gpt3-986ca6c33be10517dce8.js"
+      ],
+      "js.map": [
+        "/packs/js/gpt3-986ca6c33be10517dce8.js.map"
+      ]
+    },
+    "homeworks/admin": {
+      "js": [
+        "/packs/js/homeworks/admin-1c234c562aa85bac61ff.js"
+      ],
+      "js.map": [
+        "/packs/js/homeworks/admin-1c234c562aa85bac61ff.js.map"
+      ]
+    },
+    "homeworks/edit": {
+      "js": [
+        "/packs/js/homeworks/edit-6dcada61b7cc1a43a04e.js"
+      ],
+      "js.map": [
+        "/packs/js/homeworks/edit-6dcada61b7cc1a43a04e.js.map"
+      ]
+    },
+    "homeworks/new": {
+      "js": [
+        "/packs/js/homeworks/new-c5d8af9df4608e144e2f.js"
+      ],
+      "js.map": [
+        "/packs/js/homeworks/new-c5d8af9df4608e144e2f.js.map"
+      ]
+    },
+    "homeworks/tutor": {
+      "js": [
+        "/packs/js/homeworks/tutor-97bc8af4e1233bb1c5a2.js"
+      ],
+      "js.map": [
+        "/packs/js/homeworks/tutor-97bc8af4e1233bb1c5a2.js.map"
+      ]
+    },
+    "managers/new": {
+      "js": [
+        "/packs/js/managers/new-c419addba35dd8b33c5a.js"
+      ],
+      "js.map": [
+        "/packs/js/managers/new-c419addba35dd8b33c5a.js.map"
+      ]
+    },
+    "messages/new": {
+      "js": [
+        "/packs/js/messages/new-539c8ef84cd2104758b9.js"
+      ],
+      "js.map": [
+        "/packs/js/messages/new-539c8ef84cd2104758b9.js.map"
+      ]
+    },
+    "professors/approve": {
+      "js": [
+        "/packs/js/professors/approve-c0257982abbce4ac7c1c.js"
+      ],
+      "js.map": [
+        "/packs/js/professors/approve-c0257982abbce4ac7c1c.js.map"
+      ]
+    },
+    "professors/index": {
+      "js": [
+        "/packs/js/professors/index-15b79f468610f12ce914.js"
+      ],
+      "js.map": [
+        "/packs/js/professors/index-15b79f468610f12ce914.js.map"
+      ]
+    },
+    "professors/new": {
+      "js": [
+        "/packs/js/professors/new-3bdcc31f05535a83bdbc.js"
+      ],
+      "js.map": [
+        "/packs/js/professors/new-3bdcc31f05535a83bdbc.js.map"
+      ]
+    },
+    "tutors/new": {
+      "js": [
+        "/packs/js/tutors/new-9c7473f61462f39745d1.js"
+      ],
+      "js.map": [
+        "/packs/js/tutors/new-9c7473f61462f39745d1.js.map"
+      ]
+    },
+    "tutors/qnas": {
+      "js": [
+        "/packs/js/tutors/qnas-9487c610afb3ca5f6ffe.js"
+      ],
+      "js.map": [
+        "/packs/js/tutors/qnas-9487c610afb3ca5f6ffe.js.map"
+      ]
+    },
+    "user/new": {
+      "js": [
+        "/packs/js/user/new-d74c6d8cbe192900e19b.js"
+      ],
+      "js.map": [
+        "/packs/js/user/new-d74c6d8cbe192900e19b.js.map"
+      ]
+    }
+  },
+  "gpt3.js": "/packs/js/gpt3-986ca6c33be10517dce8.js",
+  "gpt3.js.map": "/packs/js/gpt3-986ca6c33be10517dce8.js.map",
+  "homeworks/admin.js": "/packs/js/homeworks/admin-1c234c562aa85bac61ff.js",
+  "homeworks/admin.js.map": "/packs/js/homeworks/admin-1c234c562aa85bac61ff.js.map",
+  "homeworks/edit.js": "/packs/js/homeworks/edit-6dcada61b7cc1a43a04e.js",
+  "homeworks/edit.js.map": "/packs/js/homeworks/edit-6dcada61b7cc1a43a04e.js.map",
+  "homeworks/new.js": "/packs/js/homeworks/new-c5d8af9df4608e144e2f.js",
+  "homeworks/new.js.map": "/packs/js/homeworks/new-c5d8af9df4608e144e2f.js.map",
+  "homeworks/tutor.js": "/packs/js/homeworks/tutor-97bc8af4e1233bb1c5a2.js",
+  "homeworks/tutor.js.map": "/packs/js/homeworks/tutor-97bc8af4e1233bb1c5a2.js.map",
+  "managers/new.js": "/packs/js/managers/new-c419addba35dd8b33c5a.js",
+  "managers/new.js.map": "/packs/js/managers/new-c419addba35dd8b33c5a.js.map",
+  "media/webfonts/fa-brands-400.ttf": "/packs/media/webfonts/fa-brands-400-f9ee61fa.ttf",
+  "media/webfonts/fa-brands-400.woff2": "/packs/media/webfonts/fa-brands-400-e1a247a5.woff2",
+  "media/webfonts/fa-regular-400.ttf": "/packs/media/webfonts/fa-regular-400-abf801b7.ttf",
+  "media/webfonts/fa-regular-400.woff2": "/packs/media/webfonts/fa-regular-400-639d2000.woff2",
+  "media/webfonts/fa-solid-900.ttf": "/packs/media/webfonts/fa-solid-900-b48ad290.ttf",
+  "media/webfonts/fa-solid-900.woff2": "/packs/media/webfonts/fa-solid-900-66104b76.woff2",
+  "media/webfonts/fa-v4compatibility.ttf": "/packs/media/webfonts/fa-v4compatibility-f601162a.ttf",
+  "media/webfonts/fa-v4compatibility.woff2": "/packs/media/webfonts/fa-v4compatibility-745989aa.woff2",
+  "messages/new.js": "/packs/js/messages/new-539c8ef84cd2104758b9.js",
+  "messages/new.js.map": "/packs/js/messages/new-539c8ef84cd2104758b9.js.map",
+  "professors/approve.js": "/packs/js/professors/approve-c0257982abbce4ac7c1c.js",
+  "professors/approve.js.map": "/packs/js/professors/approve-c0257982abbce4ac7c1c.js.map",
+  "professors/index.js": "/packs/js/professors/index-15b79f468610f12ce914.js",
+  "professors/index.js.map": "/packs/js/professors/index-15b79f468610f12ce914.js.map",
+  "professors/new.js": "/packs/js/professors/new-3bdcc31f05535a83bdbc.js",
+  "professors/new.js.map": "/packs/js/professors/new-3bdcc31f05535a83bdbc.js.map",
+  "tutors/new.js": "/packs/js/tutors/new-9c7473f61462f39745d1.js",
+  "tutors/new.js.map": "/packs/js/tutors/new-9c7473f61462f39745d1.js.map",
+  "tutors/qnas.js": "/packs/js/tutors/qnas-9487c610afb3ca5f6ffe.js",
+  "tutors/qnas.js.map": "/packs/js/tutors/qnas-9487c610afb3ca5f6ffe.js.map",
+  "user/new.js": "/packs/js/user/new-d74c6d8cbe192900e19b.js",
+  "user/new.js.map": "/packs/js/user/new-d74c6d8cbe192900e19b.js.map"
+}

@@ -1,0 +1,24 @@
+/* line 1, app/assets/stylesheets/datatable.scss */
+.dark .dataTables_wrapper label {
+  color: white;
+}
+
+/* line 5, app/assets/stylesheets/datatable.scss */
+.dark .dataTables_info {
+  color: white !important;
+}
+
+/* line 9, app/assets/stylesheets/datatable.scss */
+.dark select {
+  color: white !important;
+}
+
+/* line 13, app/assets/stylesheets/datatable.scss */
+.dark .paginate_button {
+  color: white !important;
+}
+
+/* line 17, app/assets/stylesheets/datatable.scss */
+.dark .paginate_button.current {
+  color: white !important;
+}
