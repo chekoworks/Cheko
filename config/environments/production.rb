@@ -111,7 +111,7 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   config.action_mailer.raise_delivery_errors = true 
-  config.action_mailer.default_url_options = { host: "http://cheko.dev1.koda.ws"}
+  config.action_mailer.default_url_options = { host: "http://cheko.dev2.koda.ws"}
   config.action_mailer.delivery_method   = :smtp
 
    config.action_mailer.smtp_settings = {
