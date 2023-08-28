@@ -1,184 +1,180 @@
 {
-  "admins/homework.js": "/packs/js/admins/homework-f25a079b5fd5118d5b67.js",
-  "admins/homework.js.map": "/packs/js/admins/homework-f25a079b5fd5118d5b67.js.map",
-  "admins/new.js": "/packs/js/admins/new-84062e20236da099e3f7.js",
-  "admins/new.js.map": "/packs/js/admins/new-84062e20236da099e3f7.js.map",
-  "application.css": "/packs/css/application-2bf669ac.css",
-  "application.js": "/packs/js/application-82adc667fabd4d28f3b1.js",
-  "application.js.map": "/packs/js/application-82adc667fabd4d28f3b1.js.map",
-  "datatable_basic.js": "/packs/js/datatable_basic-d14c1c92ac668674672b.js",
-  "datatable_basic.js.map": "/packs/js/datatable_basic-d14c1c92ac668674672b.js.map",
+  "admins/homework.js": "/packs/js/admins/homework-79bc8730622bd18b71a7.js",
+  "admins/homework.js.map": "/packs/js/admins/homework-79bc8730622bd18b71a7.js.map",
+  "admins/new.js": "/packs/js/admins/new-e4dfff2dc2703e61e2bc.js",
+  "admins/new.js.map": "/packs/js/admins/new-e4dfff2dc2703e61e2bc.js.map",
+  "application.js": "/packs/js/application-8167c288e159b075867c.js",
+  "application.js.map": "/packs/js/application-8167c288e159b075867c.js.map",
+  "datatable_basic.js": "/packs/js/datatable_basic-587bbacd2a6d20b86a12.js",
+  "datatable_basic.js.map": "/packs/js/datatable_basic-587bbacd2a6d20b86a12.js.map",
   "entrypoints": {
     "admins/homework": {
       "js": [
-        "/packs/js/admins/homework-f25a079b5fd5118d5b67.js"
+        "/packs/js/admins/homework-79bc8730622bd18b71a7.js"
       ],
       "js.map": [
-        "/packs/js/admins/homework-f25a079b5fd5118d5b67.js.map"
+        "/packs/js/admins/homework-79bc8730622bd18b71a7.js.map"
       ]
     },
     "admins/new": {
       "js": [
-        "/packs/js/admins/new-84062e20236da099e3f7.js"
+        "/packs/js/admins/new-e4dfff2dc2703e61e2bc.js"
       ],
       "js.map": [
-        "/packs/js/admins/new-84062e20236da099e3f7.js.map"
+        "/packs/js/admins/new-e4dfff2dc2703e61e2bc.js.map"
       ]
     },
     "application": {
-      "css": [
-        "/packs/css/application-2bf669ac.css"
-      ],
       "js": [
-        "/packs/js/application-82adc667fabd4d28f3b1.js"
+        "/packs/js/application-8167c288e159b075867c.js"
       ],
       "js.map": [
-        "/packs/js/application-82adc667fabd4d28f3b1.js.map"
+        "/packs/js/application-8167c288e159b075867c.js.map"
       ]
     },
     "datatable_basic": {
       "js": [
-        "/packs/js/datatable_basic-d14c1c92ac668674672b.js"
+        "/packs/js/datatable_basic-587bbacd2a6d20b86a12.js"
       ],
       "js.map": [
-        "/packs/js/datatable_basic-d14c1c92ac668674672b.js.map"
+        "/packs/js/datatable_basic-587bbacd2a6d20b86a12.js.map"
       ]
     },
     "gpt3": {
       "js": [
-        "/packs/js/gpt3-c387cb5620ce31ee5462.js"
+        "/packs/js/gpt3-22f19963bce9cde22da5.js"
       ],
       "js.map": [
-        "/packs/js/gpt3-c387cb5620ce31ee5462.js.map"
+        "/packs/js/gpt3-22f19963bce9cde22da5.js.map"
       ]
     },
     "homeworks/admin": {
       "js": [
-        "/packs/js/homeworks/admin-ef0af39ac79ee515b767.js"
+        "/packs/js/homeworks/admin-859091c0d842e2b5235b.js"
       ],
       "js.map": [
-        "/packs/js/homeworks/admin-ef0af39ac79ee515b767.js.map"
+        "/packs/js/homeworks/admin-859091c0d842e2b5235b.js.map"
       ]
     },
     "homeworks/edit": {
       "js": [
-        "/packs/js/homeworks/edit-7066abad7039fdf76aec.js"
+        "/packs/js/homeworks/edit-86737dac4e2cca8c355b.js"
       ],
       "js.map": [
-        "/packs/js/homeworks/edit-7066abad7039fdf76aec.js.map"
+        "/packs/js/homeworks/edit-86737dac4e2cca8c355b.js.map"
       ]
     },
     "homeworks/new": {
       "js": [
-        "/packs/js/homeworks/new-486960b6ee8c7c317294.js"
+        "/packs/js/homeworks/new-f82ca6a987d300599edf.js"
       ],
       "js.map": [
-        "/packs/js/homeworks/new-486960b6ee8c7c317294.js.map"
+        "/packs/js/homeworks/new-f82ca6a987d300599edf.js.map"
       ]
     },
     "homeworks/tutor": {
       "js": [
-        "/packs/js/homeworks/tutor-e5dfa5b5f1d49ce9a935.js"
+        "/packs/js/homeworks/tutor-5c698488358623a68b87.js"
       ],
       "js.map": [
-        "/packs/js/homeworks/tutor-e5dfa5b5f1d49ce9a935.js.map"
+        "/packs/js/homeworks/tutor-5c698488358623a68b87.js.map"
       ]
     },
     "managers/homework": {
       "js": [
-        "/packs/js/managers/homework-9bc2679e071095e747e3.js"
+        "/packs/js/managers/homework-5f5e917fae551a7dfa1f.js"
       ],
       "js.map": [
-        "/packs/js/managers/homework-9bc2679e071095e747e3.js.map"
+        "/packs/js/managers/homework-5f5e917fae551a7dfa1f.js.map"
       ]
     },
     "managers/new": {
       "js": [
-        "/packs/js/managers/new-956bcf68449b7c18c1b9.js"
+        "/packs/js/managers/new-e6831587f38560646449.js"
       ],
       "js.map": [
-        "/packs/js/managers/new-956bcf68449b7c18c1b9.js.map"
+        "/packs/js/managers/new-e6831587f38560646449.js.map"
       ]
     },
     "messages/new": {
       "js": [
-        "/packs/js/messages/new-acc9e03ce280dab58316.js"
+        "/packs/js/messages/new-39ff9e4dc394c374caf0.js"
       ],
       "js.map": [
-        "/packs/js/messages/new-acc9e03ce280dab58316.js.map"
+        "/packs/js/messages/new-39ff9e4dc394c374caf0.js.map"
       ]
     },
     "professors/approve": {
       "js": [
-        "/packs/js/professors/approve-9ead738967d06c71e34e.js"
+        "/packs/js/professors/approve-ae95a9b3a3c5c7ae89fd.js"
       ],
       "js.map": [
-        "/packs/js/professors/approve-9ead738967d06c71e34e.js.map"
+        "/packs/js/professors/approve-ae95a9b3a3c5c7ae89fd.js.map"
       ]
     },
     "professors/index": {
       "js": [
-        "/packs/js/professors/index-73b491a935c05b4a7996.js"
+        "/packs/js/professors/index-7763218ce5c5b25a6386.js"
       ],
       "js.map": [
-        "/packs/js/professors/index-73b491a935c05b4a7996.js.map"
+        "/packs/js/professors/index-7763218ce5c5b25a6386.js.map"
       ]
     },
     "professors/new": {
       "js": [
-        "/packs/js/professors/new-6d3a6b8042a1533796d6.js"
+        "/packs/js/professors/new-6ca8015cfeb175acc9c9.js"
       ],
       "js.map": [
-        "/packs/js/professors/new-6d3a6b8042a1533796d6.js.map"
+        "/packs/js/professors/new-6ca8015cfeb175acc9c9.js.map"
       ]
     },
     "tutors/new": {
       "js": [
-        "/packs/js/tutors/new-16e261b85026a0d7ddf3.js"
+        "/packs/js/tutors/new-5a7a1e9a0d06f24a0be6.js"
       ],
       "js.map": [
-        "/packs/js/tutors/new-16e261b85026a0d7ddf3.js.map"
+        "/packs/js/tutors/new-5a7a1e9a0d06f24a0be6.js.map"
       ]
     },
     "tutors/qnas": {
       "js": [
-        "/packs/js/tutors/qnas-f2186ee1293146e56dbf.js"
+        "/packs/js/tutors/qnas-703b024c7612b0315d2a.js"
       ],
       "js.map": [
-        "/packs/js/tutors/qnas-f2186ee1293146e56dbf.js.map"
+        "/packs/js/tutors/qnas-703b024c7612b0315d2a.js.map"
       ]
     },
     "user/new": {
       "js": [
-        "/packs/js/user/new-fbce975fed88210f3b7c.js"
+        "/packs/js/user/new-144a793e1ad4e000bd19.js"
       ],
       "js.map": [
-        "/packs/js/user/new-fbce975fed88210f3b7c.js.map"
+        "/packs/js/user/new-144a793e1ad4e000bd19.js.map"
       ]
     },
     "user/users": {
       "js": [
-        "/packs/js/user/users-0a1031535283e1cad45f.js"
+        "/packs/js/user/users-373e920b35b4e00204fc.js"
       ],
       "js.map": [
-        "/packs/js/user/users-0a1031535283e1cad45f.js.map"
+        "/packs/js/user/users-373e920b35b4e00204fc.js.map"
       ]
     }
   },
-  "gpt3.js": "/packs/js/gpt3-c387cb5620ce31ee5462.js",
-  "gpt3.js.map": "/packs/js/gpt3-c387cb5620ce31ee5462.js.map",
-  "homeworks/admin.js": "/packs/js/homeworks/admin-ef0af39ac79ee515b767.js",
-  "homeworks/admin.js.map": "/packs/js/homeworks/admin-ef0af39ac79ee515b767.js.map",
-  "homeworks/edit.js": "/packs/js/homeworks/edit-7066abad7039fdf76aec.js",
-  "homeworks/edit.js.map": "/packs/js/homeworks/edit-7066abad7039fdf76aec.js.map",
-  "homeworks/new.js": "/packs/js/homeworks/new-486960b6ee8c7c317294.js",
-  "homeworks/new.js.map": "/packs/js/homeworks/new-486960b6ee8c7c317294.js.map",
-  "homeworks/tutor.js": "/packs/js/homeworks/tutor-e5dfa5b5f1d49ce9a935.js",
-  "homeworks/tutor.js.map": "/packs/js/homeworks/tutor-e5dfa5b5f1d49ce9a935.js.map",
-  "managers/homework.js": "/packs/js/managers/homework-9bc2679e071095e747e3.js",
-  "managers/homework.js.map": "/packs/js/managers/homework-9bc2679e071095e747e3.js.map",
-  "managers/new.js": "/packs/js/managers/new-956bcf68449b7c18c1b9.js",
-  "managers/new.js.map": "/packs/js/managers/new-956bcf68449b7c18c1b9.js.map",
+  "gpt3.js": "/packs/js/gpt3-22f19963bce9cde22da5.js",
+  "gpt3.js.map": "/packs/js/gpt3-22f19963bce9cde22da5.js.map",
+  "homeworks/admin.js": "/packs/js/homeworks/admin-859091c0d842e2b5235b.js",
+  "homeworks/admin.js.map": "/packs/js/homeworks/admin-859091c0d842e2b5235b.js.map",
+  "homeworks/edit.js": "/packs/js/homeworks/edit-86737dac4e2cca8c355b.js",
+  "homeworks/edit.js.map": "/packs/js/homeworks/edit-86737dac4e2cca8c355b.js.map",
+  "homeworks/new.js": "/packs/js/homeworks/new-f82ca6a987d300599edf.js",
+  "homeworks/new.js.map": "/packs/js/homeworks/new-f82ca6a987d300599edf.js.map",
+  "homeworks/tutor.js": "/packs/js/homeworks/tutor-5c698488358623a68b87.js",
+  "homeworks/tutor.js.map": "/packs/js/homeworks/tutor-5c698488358623a68b87.js.map",
+  "managers/homework.js": "/packs/js/managers/homework-5f5e917fae551a7dfa1f.js",
+  "managers/homework.js.map": "/packs/js/managers/homework-5f5e917fae551a7dfa1f.js.map",
+  "managers/new.js": "/packs/js/managers/new-e6831587f38560646449.js",
+  "managers/new.js.map": "/packs/js/managers/new-e6831587f38560646449.js.map",
   "media/webfonts/fa-brands-400.ttf": "/packs/media/webfonts/fa-brands-400-13e40630.ttf",
   "media/webfonts/fa-brands-400.woff2": "/packs/media/webfonts/fa-brands-400-7be2266f.woff2",
   "media/webfonts/fa-regular-400.ttf": "/packs/media/webfonts/fa-regular-400-14640490.ttf",
@@ -187,20 +183,20 @@
   "media/webfonts/fa-solid-900.woff2": "/packs/media/webfonts/fa-solid-900-bdb9e232.woff2",
   "media/webfonts/fa-v4compatibility.ttf": "/packs/media/webfonts/fa-v4compatibility-6c0a7b77.ttf",
   "media/webfonts/fa-v4compatibility.woff2": "/packs/media/webfonts/fa-v4compatibility-497d5350.woff2",
-  "messages/new.js": "/packs/js/messages/new-acc9e03ce280dab58316.js",
-  "messages/new.js.map": "/packs/js/messages/new-acc9e03ce280dab58316.js.map",
-  "professors/approve.js": "/packs/js/professors/approve-9ead738967d06c71e34e.js",
-  "professors/approve.js.map": "/packs/js/professors/approve-9ead738967d06c71e34e.js.map",
-  "professors/index.js": "/packs/js/professors/index-73b491a935c05b4a7996.js",
-  "professors/index.js.map": "/packs/js/professors/index-73b491a935c05b4a7996.js.map",
-  "professors/new.js": "/packs/js/professors/new-6d3a6b8042a1533796d6.js",
-  "professors/new.js.map": "/packs/js/professors/new-6d3a6b8042a1533796d6.js.map",
-  "tutors/new.js": "/packs/js/tutors/new-16e261b85026a0d7ddf3.js",
-  "tutors/new.js.map": "/packs/js/tutors/new-16e261b85026a0d7ddf3.js.map",
-  "tutors/qnas.js": "/packs/js/tutors/qnas-f2186ee1293146e56dbf.js",
-  "tutors/qnas.js.map": "/packs/js/tutors/qnas-f2186ee1293146e56dbf.js.map",
-  "user/new.js": "/packs/js/user/new-fbce975fed88210f3b7c.js",
-  "user/new.js.map": "/packs/js/user/new-fbce975fed88210f3b7c.js.map",
-  "user/users.js": "/packs/js/user/users-0a1031535283e1cad45f.js",
-  "user/users.js.map": "/packs/js/user/users-0a1031535283e1cad45f.js.map"
+  "messages/new.js": "/packs/js/messages/new-39ff9e4dc394c374caf0.js",
+  "messages/new.js.map": "/packs/js/messages/new-39ff9e4dc394c374caf0.js.map",
+  "professors/approve.js": "/packs/js/professors/approve-ae95a9b3a3c5c7ae89fd.js",
+  "professors/approve.js.map": "/packs/js/professors/approve-ae95a9b3a3c5c7ae89fd.js.map",
+  "professors/index.js": "/packs/js/professors/index-7763218ce5c5b25a6386.js",
+  "professors/index.js.map": "/packs/js/professors/index-7763218ce5c5b25a6386.js.map",
+  "professors/new.js": "/packs/js/professors/new-6ca8015cfeb175acc9c9.js",
+  "professors/new.js.map": "/packs/js/professors/new-6ca8015cfeb175acc9c9.js.map",
+  "tutors/new.js": "/packs/js/tutors/new-5a7a1e9a0d06f24a0be6.js",
+  "tutors/new.js.map": "/packs/js/tutors/new-5a7a1e9a0d06f24a0be6.js.map",
+  "tutors/qnas.js": "/packs/js/tutors/qnas-703b024c7612b0315d2a.js",
+  "tutors/qnas.js.map": "/packs/js/tutors/qnas-703b024c7612b0315d2a.js.map",
+  "user/new.js": "/packs/js/user/new-144a793e1ad4e000bd19.js",
+  "user/new.js.map": "/packs/js/user/new-144a793e1ad4e000bd19.js.map",
+  "user/users.js": "/packs/js/user/users-373e920b35b4e00204fc.js",
+  "user/users.js.map": "/packs/js/user/users-373e920b35b4e00204fc.js.map"
 }
