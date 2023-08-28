@@ -72,7 +72,7 @@ if Admin.all.count == 0
     last_name: "Cheko",
     email: "admin@cheko.com",
     password: "Adm!nP@ssw0rD",
-    password_confirm: "Adm!nP@ssw0rD"
+    password_confirmation: "Adm!nP@ssw0rD"
   )
 end
 puts "\n --- admin seeder desuwa --- \n"
