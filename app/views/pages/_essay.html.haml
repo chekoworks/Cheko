@@ -46,11 +46,11 @@
       .field 
         = label_tag :tutor_category, "Pick a type of writer"
         .form-check
-          = f.radio_button :tutor_category, "a_plus", class: "form-check-input", "data-bal" => 3
-          = label_tag :tutor_category, "Best Writers (₱3 per word)", :value => 0, class: "form-check-label"
+          = f.radio_button :tutor_category, "a_plus", class: "form-check-input", "data-bal" => 2.5
+          = label_tag :tutor_category, "Best Writers (₱2.50 per word)", :value => 0, class: "form-check-label"
         .form-check
-          = f.radio_button :tutor_category, "cheko", class: "form-check-input", "data-bal" => 2
-          = label_tag :tutor_category, "Great Writers (₱2 per word)", :value => 1, class: "form-check-label"
+          = f.radio_button :tutor_category, "cheko", class: "form-check-input", "data-bal" => 1.6
+          = label_tag :tutor_category, "Great Writers (₱1.60 per word)", :value => 1, class: "form-check-label"
         .form-check
           = f.radio_button :tutor_category, "standard", class: "form-check-input", checked: true, "data-bal" => 1
           = label_tag :tutor_category, "Standard Writers (₱1 per word)", :value => 2, class: "form-check-label"

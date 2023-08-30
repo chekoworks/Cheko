@@ -15,10 +15,10 @@
         = f.label :tutor_category, "Pick a type of writer"
         %br/
         .form-check
-          = f.radio_button :tutor_category, "a_plus", class: "form-check-input", "data-bal" => 3
+          = f.radio_button :tutor_category, "a_plus", class: "form-check-input", "data-bal" => 2.5
           = f.label :tutor_category, "Best Writters (₱3 per word)", :value => "a_plus", class: "form-check-label"
         .form-check
-          = f.radio_button :tutor_category, "cheko", class: "form-check-input", "data-bal" => 2
+          = f.radio_button :tutor_category, "cheko", class: "form-check-input", "data-bal" => 1.6
           = f.label :tutor_category, "Great Writers (₱2 per word)", :value => "cheko", class: "form-check-label"
         .form-check
           = f.radio_button :tutor_category, "standard", class: "form-check-input", checked: true, "data-bal" => 1
