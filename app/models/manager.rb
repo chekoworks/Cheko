@@ -51,7 +51,7 @@ class Manager < ApplicationRecord
   end
 
   def remove_agent
-    url = "http://172.104.186.240:3000/api/v1/accounts/1/agents/#{self.agent_id}"
+    url = "https://chatwoot.chekohomeworkhelp.com/api/v1/accounts/1/agents/#{self.agent_id}"
     uri = URI(url)
     params = {
       id: self.agent_id,

@@ -1,13 +1,13 @@
 = render "users/shared/header"
 .container.my-5{style: "height:100%"}
-  .row
-    .alert.alert-primary{role: "alert"}
-      .text-center
-        %h5 
-          You can call or text us here: 
-          %a{href: "tel: 0963 646 8276"} 0963 646 8276, 
-          you may also message us on Telegram, Viber or Whatsapp with the same number from 8am to 5pm.
-        %h5 Alternatively, you can message us on FB through @chekoworks or contact us through the form below:
+  -# .row
+  -#   .alert.alert-primary{role: "alert"}
+  -#     .text-center
+  -#       %h5 
+  -#         You can call or text us here: 
+  -#         %a{href: "tel: 0963 646 8276"} 0963 646 8276, 
+  -#         you may also message us on Telegram, Viber or Whatsapp with the same number from 8am to 5pm.
+  -#       %h5 Alternatively, you can message us on FB through @chekoworks or contact us through the form below:
   .row
     .col-10.ms-auto.me-auto
       = form_for @contact, url: contacts_path do |f|
