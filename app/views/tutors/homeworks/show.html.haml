@@ -45,8 +45,12 @@
             .row
               .col-12
                 %h6 Download file
-                - @homework.hw_attachment.each do |attachment|
-                  =link_to attachment.filename, rails_blob_path(attachment, disposition: 'attachment'),class: "btn btn-success" 
+                - if @manager.present?
+                  - @manager.each do |docs|
+                    = link_to docs.file.filename, rails_blob_path(docs.file, disposition: 'attachment'), class: "btn btn-success"
+                -else 
+                  - @homework.hw_attachment.each do |attachment|
+                    =link_to attachment.filename, rails_blob_path(attachment, disposition: 'attachment'),class: "btn btn-success" 
         %hr
         .row
           .col-12 

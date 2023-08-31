@@ -14,6 +14,7 @@ class Tutors::HomeworksController < ApplicationController
     @bid = Bid.find_by(homework_id: @homework.id, tutor_id: current_tutor.id)
 
     @documents = @homework.documents.where(documentable_type: "Tutor")
+    @manager = @homework.documents.where(documentable_type: "Manager")
   end
 
   def edit

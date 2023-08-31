@@ -15,7 +15,6 @@ class Managers::HomeworksController < ApplicationController
     @tutor = @homework.documents.where(documentable_type: "Tutor")
     @qco = @homework.documents.where(documentable_type: "QualityOfficer")
     @manager = @homework.documents.where(documentable_type: "Manager")
-
     @bids = Bid.where(homework_id: @homework.id).order(ammount: :asc)
   end
 

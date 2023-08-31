@@ -76,6 +76,16 @@
         .row.mt-3
           %h5 Uploaded files
           .container-flex.mt-2
+            %h6
+              %strong User Files: 
+            - @homework.hw_attachment.each do |att|
+              .row.d-flex.justify-content-between
+                .col-3
+                  = att.filename
+                .col-3.text-end
+                  = link_to "Download File", rails_blob_path(att, disposition: 'attachment'), class: "btn btn-success"
+              %hr  
+          .container-flex.mt-2
             %h6 
               %strong Tutor files:
             - @tutor.each do |docu|
