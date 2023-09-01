@@ -13,7 +13,7 @@ class Manager < ApplicationRecord
   end
 
   def create_agent
-    uri = URI('https://chatwoot.chekohomeworkhelp.com/api/v1/accounts/1/agents')
+    uri = URI.parse('https://chatwoot.chekohomeworkhelp.com/api/v1/accounts/1/agents')
     params = {
       name: self.name,
       email: self.email,
@@ -29,6 +29,7 @@ class Manager < ApplicationRecord
 
     # "api_access_token" = "N7kvJH1xqrVgac3Yq5zkEZw4"
     http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
     req = Net::HTTP::Post.new(uri.request_uri)
     req.set_form_data(params)
     req["api_access_token"] = "Eg2NEZNp4BakhcoS1bPgCHGw"
@@ -39,9 +40,9 @@ class Manager < ApplicationRecord
   end
 
   def assign_inbox
-    uri = URI('https://chatwoot.chekohomeworkhelp.com/api/v1/accounts/1/inbox_members')
-
+    uri = URI.parse('https://chatwoot.chekohomeworkhelp.com/api/v1/accounts/1/inbox_members')
     http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
     req = Net::HTTP::Post.new(uri.request_uri)
     req.set_form_data({'index_id' => '1', 'users_id[0]' => "#{self.agent_id}"})
     req["api_access_token"] = "Eg2NEZNp4BakhcoS1bPgCHGw"
@@ -52,11 +53,12 @@ class Manager < ApplicationRecord
 
   def remove_agent
     url = "https://chatwoot.chekohomeworkhelp.com/api/v1/accounts/1/agents/#{self.agent_id}"
-    uri = URI(url)
+    uri = URI.parse(url)
     params = {
       id: self.agent_id,
     }
     http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
     req = Net::HTTP::Delete.new(uri.request_uri)
     req.set_form_data(params)
     req["api_access_token"] = "Eg2NEZNp4BakhcoS1bPgCHGw"

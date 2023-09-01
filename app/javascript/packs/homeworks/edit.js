@@ -11,11 +11,14 @@ function getCookie(name) {
 }
 
 $(function(){
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1)
+
   window.datetimepicker1 = new tempusDominus.TempusDominus(
     document.getElementById('datetimepicker1'),
     {
       restrictions: {
-        minDate: new Date().toDateString()
+        minDate: tomorrow.toDateString()
       },
       display: {
         theme: getCookie("theme"),

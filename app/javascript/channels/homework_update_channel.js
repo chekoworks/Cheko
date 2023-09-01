@@ -11,41 +11,65 @@ document.addEventListener('turbolinks:load', () => {
     const adminTablePending = $('#admin-homework-table #pending').DataTable({
       scrollX: true,
       order: [[0, 'desc']],
+      paging: false,
+      searching: false,
+      destroy:true
     });
 
     const adminTableOngoing = $("#admin-homework-table #ongoing").DataTable({
       scrollX: true,
       order: [[0, 'desc']],
+      paging: false,
+      searching: false,
+      destroy:true
     });
 
     const adminTableForApproval = $("#admin-homework-table #forApproval").DataTable({
       scrollX: true,
       order: [[0, 'desc']],
+      paging: false,
+      searching: false,
+      destroy:true
     });
 
     const adminTableHistory = $("#admin-homework-table #history").DataTable({
       scrollX: true,
       order: [[0, 'desc']],
+      paging: false,
+      searching: false,
+      destroy:true
     });
 
     const managerTablePending = $('#manager-homework-table #pending').DataTable({
       scrollX: true,
       order: [[0, 'desc']],
+      paging: false,
+      searching: false,
+      destroy:true
     });
 
     const managerTableOngoing = $("#manager-homework-table #ongoing").DataTable({
       scrollX: true,
       order: [[0, 'desc']],
+      paging: false,
+      searching: false,
+      destroy:true
     });
 
     const managerTableForApproval = $("#manager-homework-table #forApproval").DataTable({
       scrollX: true,
       order: [[0, 'desc']],
+      paging: false,
+      searching: false,
+      destroy:true
     });
 
     const managerTableHistory = $("#manager-homework-table #history").DataTable({
       scrollX: true,
       order: [[0, 'desc']],
+      paging: false,
+      searching: false,
+      destroy:true
     });
 
 
