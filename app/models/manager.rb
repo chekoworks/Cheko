@@ -8,8 +8,19 @@ class Manager < ApplicationRecord
 
   enum status: { inactive: 0, active: 1 }
 
+  scope :not_deleted, -> { where(soft_deleted: false) }
+  scope :deleted, -> { where(soft_deleted: true) }
+
   def name
     return "#{self.first_name} #{self.last_name}"
+  end
+
+  def soft_delete
+    update(soft_deleted: true)
+  end
+
+  def undelete
+    update(soft_deleted: false)
   end
 
   def create_agent

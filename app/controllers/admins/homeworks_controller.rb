@@ -24,7 +24,7 @@ class Admins::HomeworksController < ApplicationController
 
   def edit
     @leads = Admin.all
-    @managers = Manager.all
+    @managers = Manager.all.not_deleted
     @tutors = Tutor.all
   end
 

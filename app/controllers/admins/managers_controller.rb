@@ -3,7 +3,7 @@ class Admins::ManagersController < ApplicationController
   before_action :find_manager, except: [:index, :new, :create]
 
   def index
-    @managers = Manager.all
+    @managers = Manager.all.not_deleted
   end
 
   def show
@@ -38,7 +38,7 @@ class Admins::ManagersController < ApplicationController
 
   def destroy
     @manager.remove_agent
-    @manager.destroy!
+    @manager.soft_delete
     redirect_to admins_managers_path
   end
 
