@@ -110,6 +110,55 @@ const generateText = async (prompt) => {
   }
 };
 
+const humanizeText = async () => {
+  // 1. Start requesting: Clear Chatbox, Disable Button, Play Loading Animation
+  document.getElementById("humanize-text-btn").setAttribute("disabled", true); // disable
+
+  // 2. Send Prompt to Controller:
+  let response;
+  
+  try {
+    response = await fetch("/gpt3/humanize_text", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ currentDialogue }),
+    });
+  } catch (e) {
+    console.log(e);
+    return;
+  }
+  
+  const json = await response.json();
+
+  // -- Event Log --
+  window.LOG_EVENTS.logHumanizeText(
+    json.usage.prompt_tokens,
+    json.usage.completion_tokens,
+    json.usage.total_tokens,
+    json.usage.model
+  );
+    
+  // 3. Maintain a string record of the current dialogue between the user and the chatbot.
+  currentDialogue = json.new_dialogue;
+  console.log(currentDialogue);
+
+  // 4. Get response and add as a chat bubble:
+  const chatContainer = document.getElementById("gpt-chat-container");
+  const chekoResponse = json.generated_text
+    .split("\n")
+    .map((t) => `<p>${t}</p>`)
+    .join("");
+  chatContainer.appendChild(createChatBubble(chekoResponse, "cheko"));
+
+
+  // 5. Finished Requesting: Re-enable button, turn off loading animation
+  document.getElementById("humanize-text-btn").removeAttribute("disabled");
+};
+
+
+
 // -- Submit Event Listener --
 const promptArea = document.querySelector("textarea#prompt");
 
@@ -131,6 +180,11 @@ promptArea.addEventListener("keydown", function (e) {
 document.querySelector("form").addEventListener("submit", (e) => {
   e.preventDefault();
   generateText(document.querySelector("textarea#prompt").value);
+});
+
+document.getElementById("humanize-text-btn").addEventListener("click", (e) => {
+  e.preventDefault();
+  humanizeText();
 });
 
 window.LOG_EVENTS.logChekoAIVisit();
