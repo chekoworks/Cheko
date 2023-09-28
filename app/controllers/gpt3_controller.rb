@@ -6,7 +6,7 @@ class Gpt3Controller < ApplicationController
     # 1. Default: Define an initial conversation dialogue between the user and the AI.
     initialDialogue = [
       { role: "system", content: "The following is a conversation with an AI Writing Assistant called 'Cheko' that helps students do their homework, save time, and graduate. The assistant is helpful, creative, clever, informative, and very friendly. Cheko started in 2019 when a college student wanted to improve students’ lives." },
-      { role: "assistant", content: "Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!" },
+      { role: "assistant", content: "Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!"},
     ]
 
     # 2. Turn prompt into a message object: Create a message object from the user's input.
@@ -18,7 +18,7 @@ class Gpt3Controller < ApplicationController
     # 4. REQUEST via OpenAI API
     response = client.chat(
       parameters: {
-        model: "gpt-3.5-turbo",
+        model: "gpt-4-0613",
         messages: currentDialogue,
       }
     )

@@ -10,14 +10,14 @@
       .card-body
         .row.mt-3
           .col-6
-            %h5= "Client: #{@homework.user.name}"
+            -# %h5= "Client: #{@homework.user.name}"
         .row.mt-3
           .col-6
             %h5 Deadline:
             %p= @homework.deadline.strftime("%b %d, %Y - %l:%M %p") if @homework.deadline.present?
           .col-6
             %h5 Subject:
-            %p= @homework.subject_id.present? ? @homework.subject.name : "None Provided"
+            %p=  @homework.subject.present? ? @homework.subject : "None Provided"
           .col-6
             %h5 Words:
             %p= @homework.words

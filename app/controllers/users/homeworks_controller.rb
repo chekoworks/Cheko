@@ -123,12 +123,8 @@ class Users::HomeworksController < Users::UserAppController
     @homework = Homework.update(@homework.id, status: "reviewing", admin_id: @admin.id)
 
     HomeworkMailerJob.set(wait: 2.seconds).perform_later(@homework, "NewOrder")
-    # #send email all tutors that new homework is up for bidding
-    # tutors = Tutor.all 
-    # tutors.each do |tutor|
-    #   NotifyTutorJob.set(wait: 2.seconds).perform_later("new_order", tutor)
-    # end
-
+    #send email all tutors that new homework is up for bidding
+  
     HomeworkMailerJob.set(wait: 2.seconds).perform_later(@homework, "BookedOrder")
 
     redirect_to users_homeworks_path

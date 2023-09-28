@@ -42,3 +42,5 @@ yarn-debug.log*
 
 Gemfile.lock
 dump.rdb
+.env
+config/credentials.yml.enc

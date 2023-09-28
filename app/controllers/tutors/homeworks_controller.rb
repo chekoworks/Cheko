@@ -35,9 +35,9 @@ class Tutors::HomeworksController < ApplicationController
 
     # HomeworkMailerJob.set(wait: 2.seconds).perform_later(@homework, "User")
     if @homework.manager.present?
-      HomeworkMailerJob.set(wait: 2.seconds).perform_later(@homework, "NotifyTM")
+      HomeworkMailerJob.set(wait: 2.seconds).perform_later(@homework, "FinishedByTutor")
       else
-      HomeworkMailerJob.set(wait: 2.seconds).perform_later(@homework, "NotifyAdmin")
+      HomeworkMailerJob.set(wait: 2.seconds).perform_later(@homework, "ForAdminApproval")
     end
     redirect_to tutors_homework_path(@homework.id)
   end
