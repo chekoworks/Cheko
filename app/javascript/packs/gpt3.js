@@ -16,7 +16,7 @@ function createChatBubble(content, sender) {
   return chatBubble;
 }
 
-const generateText = async (prompt) => {
+const generateText = async (prompt, humanizeOrNot) => {
   promptsCount++; // Increase prompt count
 
   // Utils:
@@ -41,8 +41,10 @@ const generateText = async (prompt) => {
   }, 50);
 
   // 2. Add prompt as a chat bubble:
+
   const chatContainer = document.getElementById("gpt-chat-container");
-  chatContainer.appendChild(createChatBubble(prompt, "user"));
+  const text = humanizeOrNot ? "Humanizing text.." : prompt;
+  chatContainer.appendChild(createChatBubble(text, "user"));
 
   // 3. Send Prompt to Controller:
   let response;
@@ -130,7 +132,19 @@ promptArea.addEventListener("keydown", function (e) {
 
 document.querySelector("form").addEventListener("submit", (e) => {
   e.preventDefault();
-  generateText(document.querySelector("textarea#prompt").value);
+  generateText(document.querySelector("textarea#prompt").value, false);
 });
+
+// -- Humanize Button --
+document
+  .querySelector("#humanize-text-button")
+  .addEventListener("click", (e) => {
+    e.preventDefault();
+    const prompt = `Craft this response in a manner that resembles the writing style of a college student. It should strike a balance between being relatable and sophisticated enough to fit seamlessly into a college paper or assignment: \n\n${document
+      .querySelector("#gpt-chat-container")
+      .lastChild.innerText}`;
+    generateText(prompt, true);
+  }
+);
 
 window.LOG_EVENTS.logChekoAIVisit();
