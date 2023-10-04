@@ -54,5 +54,24 @@ Things you may want to cover:
    > Without this, it takes **_22 seconds_** to compile after making changes to `app/javascript/packs`. Doing this cuts it down to **_6 seconds_** (helps iteratively see changes). The caveat is that any page load takes **_3-5 seconds_** long.
    ```sh
    ruby ./bin/webpack-dev-server # run the webpack-dev-server
+   sudo service postgresql restart  # restart postgresql
    rails server
    ```
+
+- add config.hosts << "miniature-computing-machine-594p9gx964qhvpp6-3000.app.github.dev"
+- bundle install
+- adjust ruby version to 2.7.0 (?)
+- switch to nvm 16
+
+go to: /etc/postgresql/[version]/main/pg_hba.conf
+sudo nano pg_hba.conf
+
+change: local all postgres peer to local all postgres trust
+control + o to save and control + x to exit
+
+sudo service postgresql restart
+
+rails db:create
+rails db:seed
+
+try psql
