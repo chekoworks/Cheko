@@ -44,4 +44,4 @@ Gemfile.lock
 dump.rdb
 .env
 config/credentials.yml.enc
-.devcontainer/devcontainer.json
+.devcontainer
