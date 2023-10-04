@@ -24,6 +24,8 @@
               -# %label{for: "prompt"} Prompt
               %textarea.form-control#prompt{rows: "3"}(placeholder='Ask any question here. (Enter to send, Shift + Enter for new line)')
             = submit_tag "Send", class: "btn btn-primary mt-2", id: "generate-btn"
-
+            %button.btn.btn-secondary.mt-2#humanize-text-button Humanize Text
+            %button.btn.btn-secondary.mt-2#add-citations-button Add Citations
+    
 = javascript_pack_tag 'gpt3', 'data-turbolinks-track': 'reload'
 = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
