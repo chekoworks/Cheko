@@ -33,6 +33,8 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+/.devcontainer/
+
 /public/packs
 /public/packs-test
 /node_modules
@@ -44,4 +46,3 @@ Gemfile.lock
 dump.rdb
 .env
 config/credentials.yml.enc
-/.devcontainer
