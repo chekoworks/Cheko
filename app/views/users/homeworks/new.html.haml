@@ -1,0 +1,45 @@
+= render 'users/shared/header'
+= render 'users/shared/chat-widget'
+
+.container.mt-5
+  .card{class: "card-#{cookies[:theme]}"}
+    .card-body
+      .row 
+        .col-8.text-start 
+          %h5= "Add Homework - #{params[:title].present? ? params[:title].titleize : params[:type].titleize}"
+        .col-4{style: "text-align:right;"} 
+          %a#saveDraft{class: "btn btn-warning"} Save to Draft
+        .col-xl-8.col-lg-10.col-md-12.ms-auto.me-auto
+          - case params[:type]
+          - when 'essay'
+            = render 'users/homeworks/essay'
+            -# - when 'group_project'
+            -#   = render 'users/homeworks/group'
+          - when 'code'
+            = render 'users/homeworks/code'
+          - when 'math'
+            = render 'users/homeworks/math'
+          - when 'art'
+            = render 'users/homeworks/art'
+            -# - when 'translation'
+            -#   = render 'users/homeworks/translation'
+          - when 'law'
+            = render 'users/homeworks/law'
+          - when 'science'
+            = render 'users/homeworks/science'
+          - when 'economics'
+            = render 'users/homeworks/economics'
+          - when 'robotics'
+            = render 'users/homeworks/robotics'
+          - when 'sketchup'
+            = render 'users/homeworks/sketchup'
+          - when 'foreign_language'
+            = render 'users/homeworks/foreign_language'
+          - when 'thesis'
+            = render 'users/homeworks/thesis'
+            -# - when 'module'
+            -#   = render 'users/homeworks/module'
+          - else
+            .mb-3
+              %h5 Type of homework is not yet supported
+= javascript_pack_tag 'homeworks/new'

@@ -1,0 +1,200 @@
+= render "users/shared/header"
+-# .container-fluid
+-#   -unless user_signed_in?
+-#     .container-fluid.p-sm-1.p-md-5.my-sm-0.my-md-5
+-#       .row
+-#         .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+-#           .d-grid.gap-5
+-#             %a.btn.bg-cheko.text-white.btn-xl{href: pick_type_path}
+-#               .h2 HW-Help
+-#             %button.btn.bg-cheko.text-white.position-relative.btn-xl{type: "button"}
+-#               .h2 Past Documents
+-#               %span.position-absolute.top-0.translate-middle.badge.rounded-pill.bg-danger{style: "left: 90%"}
+-#                 Coming Soon
+-#                 %span.visually-hidden unread messages
+-#         .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+-#           .d-grid.gap-5
+-#             %a.btn.bg-cheko.text-white.btn-xl{href: professors_path}
+-#               .h2 Profs to Pick
+-#             %a.btn.bg-cheko.text-white.btn-xl{href: pick_type_qnas_path}
+-#               .h2 Q&A
+-#   -else
+-#     .container.p-sm-1.p-md-5.my-sm-0.my-md-5
+-#       .row
+-#         .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+-#           .d-grid.gap-5
+-#             %a.btn.bg-cheko.text-white.btn-xl{href: users_homeworks_path}
+-#               .h2 HW-Help
+-#             %button.btn.bg-cheko.text-white.position-relative.btn-xl{type: "button"}
+-#               .h2 Past Documents
+-#               %span.position-absolute.top-0.translate-middle.badge.rounded-pill.bg-danger{style: "left: 90%"}
+-#                 Coming Soon
+-#                 %span.visually-hidden unread messages
+-#         .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+-#           .d-grid.gap-5
+-#             %a.btn.bg-cheko.text-white.btn-xl{href: professors_path}
+-#               .h2 Profs to Pick
+-#             %a.btn.bg-cheko.text-white.btn-xl{href: pick_type_qnas_path}
+-#               .h2 Q&A
+
+
+.container.mt-3
+  .row
+    .col-sm-12.col-md-6
+      = image_tag "main.png", class: "full-width"
+    .col-sm-12.col-md-6
+      .container.text-center.pt-5
+        %h1 HW-Help
+      .container.text-center.pb-5
+        %h5 Connect with a tutor, get homework support, and understand the homework
+.container.mt-3
+  .text-center
+    %h2 Order Your Homework in 4 Simple Steps
+  .row  
+    .col-xl-6.col-lg-6.col-md-6.col-sm-12
+      .row
+        .col-xl-6.col-lg-6.col-md-12.col-sm-12
+          .container
+            = image_tag "works1.png"
+        .col-xl-6.col-lg-6.col-md-12.col-sm-12
+          %h5{style: "padding-top: 25px; margin: 0px; color: rgb(0, 74, 173); --fontSize: 24; line-height: 1.4;"} Step 1
+          %h6 Create an Account
+          %p If you already have an account, welcome back! If not, it’s never too late. Sign up with our easy account creation process & get on-board.
+    .col-xl-6.col-lg-6.col-md-6.col-sm-12
+      .row
+        .col-xl-6.col-lg-6.col-md-12.col-sm-12
+          .container
+            = image_tag "works2.png"
+        .col-xl-6.col-lg-6.col-md-12.col-sm-12
+          %h5{style: "padding-top: 25px; margin: 0px; color: rgb(0, 74, 173); --fontSize: 24; line-height: 1.4;"} Step 2
+          %h6 Tell us about your work
+          %p Submit instructions by filling out the order form & include as many details as possible: your notes, preferred sources, sample problems, etc.
+    .col-xl-6.col-lg-6.col-md-6.col-sm-12
+      .row
+        .col-xl-6.col-lg-6.col-md-12.col-sm-12
+          .container
+            = image_tag "works3.png"
+        .col-xl-6.col-lg-6.col-md-12.col-sm-12
+          %h5{style: "padding-top: 25px; margin: 0px; color: rgb(0, 74, 173); --fontSize: 24; line-height: 1.4;"} Step 3
+          %h6 Pay for your order
+          %p Filled up the order form? Now it’s time to preview the details and make the payment.
+    .col-xl-6.col-lg-6.col-md-6.col-sm-12
+      .row
+        .col-xl-6.col-lg-6.col-md-12.col-sm-12
+          .container
+            = image_tag "works4.png"
+        .col-xl-6.col-lg-6.col-md-12.col-sm-12
+          %h5{style: "padding-top: 25px; margin: 0px; color: rgb(0, 74, 173); --fontSize: 24; line-height: 1.4;"} Step 4
+          %h6 Download file from user area
+          %p A Cheko Tutor will start your session as soon as the payment has been made. You’ll receive an email notification when your order is ready.
+
+.container-fluid.bg-cheko.text-white.mt-5.mb-5.py-5
+  .container.text-center
+    %h2.mb-5 Hear from Our Most Satisfied Customers!
+    #carouselExampleSlidesOnly.carousel.slide{"data-bs-ride" => "carousel"}
+      .carousel-inner
+        .carousel-item.active.text-center
+          %h5 When I was going through a rough time in my life and it was greatly affecting my academic performance, I turned to Cheko to write quality papers for me to turn in. With their help, I was still able to retain my standing and finish third year with second honors. I will definitely come back as a repeat client and recommend their amazing services to my friends and family!
+          %h5 ★★★★★
+          %h5 M.D
+        .carousel-item.text-center
+          %h5 In the new world of Online Learning, managing your real life and your academic life can be very challenging. Especially, if your workload is a lot. That’s why I try to look for services that can help me in accomplishing my tasks. I tried multiple services and different tutors, but by far Cheko is the most reliable and transparent out of them all. I am currently still using Cheko, and I will continue to use their services in the future.
+          %h5 ★★★★★
+          %h5 A.L
+        .carousel-item.text-center
+          %h5 Cheko does great in Calculus – related tasks. Everytime I get homework help from their creators, I get a B+ for my grade!
+          %h5 ★★★★★
+          %h5 Z.U
+        .carousel-item.text-center
+          %h5 Cheko is really a life-saver. I would always send them super last-minute tasks and they somehow still find a way to finish it. Great team, very responsive and accommodating project managers, and excellent creators!
+          %h5 ★★★★★
+          %h5 Z.Y
+        .carousel-item.text-center
+          %h5 I trust Cheko. I’ve been using their services for about a year now and can I just say, without them, I wouldn’t have gotten this far in college. The creators are very capable of doing the task. They also make sure to constantly update clients with updates and any changes. Great experience always. I look forward to more deals with Cheko!
+          %h5 ★★★★★
+          %h5 F.L
+
+
+.container.mt-5.p-5
+  .row{style:"align-content:center; justify-content:center;"}
+    .col-xl-3.col-lg-3.col-md-6.col-sm-12
+      .row
+        .col-12
+          .container
+            = image_tag "years.png", class: "card-img-top"
+        .col-12.mt-5
+          .container.text-center
+            %h3 4 years in Service
+    .col-xl-3.col-lg-3.col-md-6.col-sm-12
+      .row
+        .col-12
+          .container
+            = image_tag "tasks.png", class: "card-img-top" 
+        .col-12.mt-5
+          .container.text-center
+            %h3 Accomplished 5,500
+    .col-xl-3.col-lg-3.col-md-6.col-sm-12
+      .row
+        .col-12
+          .container
+            = image_tag "creators.png", class: "card-img-top" 
+        .col-12.mt-5
+          .container.text-center
+            %h3 Over 300 tutors
+    -# .col-xl-3.col-lg-3.col-md-6.col-sm-12
+      -# .row
+      -#   .col-12
+      -#     .container
+      -#       = image_tag "secret.png", class: "card-img-top" 
+      -#   .col-12.mt-5
+      -#     .container.text-center
+      -#       %h3 100% Confidential
+
+.container.mt-5.p-5
+  .row  
+    .col-xl-6.col-lg-6.col-md-12.col-sm-12
+      .container
+        = image_tag "about_pic.png", class: "full-width"
+    .col-xl-6.col-lg-6.col-md-12.col-sm-12
+      %h2 About Cheko 
+      %p Cheko started in 2019 when a college student wanted to improve students’ lives. Now, our goal is to craft tools and services built around the everyday problems of students. Ultimately, we should help students save time and graduate. Currently, we have four services to do that.
+
+      %p 
+        The first one is 
+        %strong HW-Help. 
+        When you need help with homework, we will connect you to a tutor that is an expert in the subject. We work with over 300 tutors that we have interviewed, vetted, and tested, and built this expert team throughout the years.
+
+      %p 
+        The second is 
+        %strong Profs to Pick. 
+        It is a professor-rating and review system that contains comments and ratings on various professors collected from the students themselves. To create this tool, we turn qualitative data into quantitative data so that at one look, you can see how easy, strict, and effective the prof is. We also have metrics specific to students, no complicated words. Students can help refine the ratings by adding a prof review too!
+
+      %p 
+        The third is 
+        %strong Q&A. 
+        This is a question and answer section where you can talk directly to one of our tutors. It is built for quick answers to quick questions. Snap a photo and get an answer!
+
+      %p
+        The fourth is 
+        %strong Cheko AI. 
+        This is our latest venture in using AI to help you solve your writing problems. Just ask Cheko AI a question, and it will answer it! It is best to use this as an AI-writing academic assistant. 
+
+      %p We plan to continue building the company around you. We will use any tool – be it AI, IT, or even venture into the Metaverse – just to better interact with you. Ultimately, we want to solve every one of your problems. That is what Cheko is here for.
+
+= render "users/shared/footer"
+
+:javascript
+  (function(d,t) {
+    var BASE_URL="http://localhost:4000";
+    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=BASE_URL+"/packs/js/sdk.js";
+    g.defer = true;
+    g.async = true;
+    s.parentNode.insertBefore(g,s);
+    g.onload=function(){
+      window.chatwootSDK.run({
+        websiteToken: 'sTtmizUdXAPL7pXKFsPhn5xK',
+        baseUrl: BASE_URL
+      })
+    }
+  })(document,"script");

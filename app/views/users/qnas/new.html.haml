@@ -1,0 +1,26 @@
+= render 'users/shared/header'
+= render 'users/shared/chat-widget'
+
+.container.mt-5
+  .card{class: "card-#{cookies[:theme]}"}
+    .card-body
+      .row 
+        .col-12.text-start 
+          %h5= "Tutor QnA  "
+        .col-xl-8.col-lg-10.col-md-12.ms-auto.me-auto
+          = form_for @qna, url: users_qnas_path, method: :post do |f|
+            .mb-3
+              .field
+                = f.label :subject, class: "form-label"
+                = f.text_field :subject, class: "form-control", required: true
+            .mb-3
+              .field
+                = f.label :question, class: "form-label"
+                = f.text_area :question, class: "form-control", required: true
+            .mb-3
+              .field
+                = f.label :document, "Files (optional) [Drag & Drop to Upload Files]", class: "form-label"
+                = f.file_field :document, class: "form-control", :multiple => true
+            .mb-3
+              .actions
+                = f.submit "Create", class: "btn btn-primary"

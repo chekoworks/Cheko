@@ -1,0 +1,123 @@
+= render 'admins/shared/header'
+.row
+  .col-md-3.col-lg-2
+    = render 'admins/shared/sidebar'
+  .col-md-9.col-lg-10
+    .row 
+      .col-xl-8.col-lg-10.col-sm-12.ms-auto.me-auto 
+        .container.mt-5
+          .card{class: "card card-#{cookies[:theme]}" }  
+            .card-body
+              .row.mb-3
+                .col-6.text-start.ms-auto.me-auto 
+                  %h5 Add Professor
+              .row
+                .col-6.ms-auto.me-auto
+                  = form_for @professor, url: admins_professors_path, method: :post do |f|
+                    .mb-3
+                      .field
+                        = f.label :first_name, class: "form-label"
+                        = f.text_field :first_name, class: "form-control", required: true
+                    .mb-3
+                      .field
+                        = f.label :last_name, class: "form-label"
+                        = f.text_field :last_name, class: "form-control", required: true
+                    .mb-3
+                      .field
+                        = f.label :school, class: "form-label"
+                        = f.select :school_id, School.all.collect {|p| [ p.name, p.id ] }, { include_blank: false }, class: "form-select"
+                        #school_string.mt-3{class: "d-none"}
+                          %h6 *if school is not in selection, type the school
+                          = text_field_tag :school_name, "", class: "form-control", id: "professor_school_name", required: true
+                    .mb-3
+                      .field
+                        = f.label :easiness, class: "form-label"
+                        %h6#percent 50%
+                        = f.range_field :easiness, class: "form-range", in: 0..100, value: 50
+                    .mb-3
+                      .field
+                        = f.label :effectiveness, class: "form-label"
+                        %h6#percent_ef 50%
+                        = f.range_field :effectiveness, class: "form-range", in: 0..100, value: 50
+                    .mb-3
+                      .field
+                        = f.label :life_changing, class: "form-label"
+                        %h6#percent_lf 50%
+                        = f.range_field :life_changing, class: "form-range", in: 0..100, value: 50
+                    .mb-3
+                      .field
+                        = f.label :light_workload, class: "form-label"
+                        %h6#percent_lw 50%
+                        = f.range_field :light_workload, class: "form-range", in: 0..100, value: 50
+                    .mb-3
+                      .field
+                        = f.label :leniency, class: "form-label"
+                        %h6#percent_len 50%
+                        = f.range_field :leniency, class: "form-range", in: 0..100, value: 50
+                    .mb-3
+                      .field.row
+                        .col-6
+                          -# = f.label :average, class: "form-label"
+                          %h2 Average:
+                        .col-6 
+                          %h2#percent_av 50%
+                        = f.hidden_field :average, class: "form-range", id: "professor_average"
+                    %hr
+                    .mb-3
+                      %h4 Additional Metrics: 
+                    .mb-3
+                      .field
+                        %h6#additional_metric B 
+                        =f.range_field :additional_metric_grade, class: "form-range", in: 0..100, step: 25, value: 50
+                    -# .mb-3
+                    -#   .field
+                    -#     = f.label :a_able, "A-able", class: "form-label"
+                    -#     %h6#percent_aable 50%
+                    -#     = f.range_field :a_able, class: "form-range", in: 0..100
+                    -# .mb-3
+                    -#   .field
+                    -#     = f.label :b_pls_able, "B+-able", class: "form-label"
+                    -#     %h6#percent_bbable 50%
+                    -#     = f.range_field :b_pls_able, class: "form-range", in: 1..100
+                    -# .mb-3
+                    -#   .field
+                    -#     = f.label :b_able, "B-able", class: "form-label"
+                    -#     %h6#percent_bable 50%
+                    -#     = f.range_field :b_able, class: "form-range", in: 1..100
+                    -# .mb-3
+                    -#   .field
+                    -#     = f.label :c_able, "C-able", class: "form-label"
+                    -#     %h6#percent_cable 50%
+                    -#     = f.range_field :c_able, class: "form-range", in: 1..100
+                    %hr
+                    -# .mb-3
+                    -#   .field
+                    -#     = f.label :batch1_able, "Batch 1-able", class: "form-label"
+                    -#     %h6#percent_b1able 50%
+                    -#     = f.range_field :batch1_able, class: "form-range", in: 1..100
+                    -# .mb-3
+                    -#   .field
+                    -#     = f.label :batch2_able, "Batch 2-able", class: "form-label"
+                    -#     %h6#percent_b2able 50%
+                    -#     = f.range_field :batch2_able, class: "form-range", in: 1..100
+                    -# .mb-3
+                    -#   .field
+                    -#     = f.label :batch3_able, "Batch 3-able", class: "form-label"
+                    -#     %h6#percent_b3able 50%
+                    -#     = f.range_field :batch3_able, class: "form-range", in: 1..100
+                    -# .mb-3
+                    -#   .field
+                    -#     = f.label :batch4_able, "Batch 4-able", class: "form-label"
+                    -#     %h6#percent_b4able 50%
+                    -#     = f.range_field :batch4_able, class: "form-range", in: 1..100
+                    -# %hr
+                    %h4 Our comment
+                    .mb-3
+                      .field
+                        = f.label :our_comments, class: "form-label"
+                        = f.text_area :our_comments, class: "form-control", rows: 10
+                    .mb-3
+                      .actions
+                        = f.submit "Create", class: "btn btn-primary"
+
+= javascript_pack_tag 'professors/new'

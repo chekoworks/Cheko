@@ -1,0 +1,2 @@
+module Tutors::MessagesHelper
+end

@@ -1,0 +1,87 @@
+= render 'users/shared/header'
+= render 'users/shared/chat-widget'
+.container.my-5
+  .row
+    .col-sm-12.col-md-3.mt-3
+      -# .card{class: "card-#{cookies[:theme]}"}
+      -#   = image_tag "Essay.jpeg", class: "card-img-top"
+      -#   .card-body
+      -#     %h5.card-title Essay
+      -#     %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "essay")} Order
+      .card.bg-dark.text-white
+        = image_tag "Essay2.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Essay
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "essay")} Order
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "Math2.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Math
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "math")} Order
+    -# .col-sm-12.col-md-3.mt-3
+    -#   .card.bg-dark.text-white
+    -#     = image_tag "Translations2.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+    -#     .card-pick-type
+    -#       %h5.card-title Translation
+    -#       %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "translation")} Order
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "Coding2.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Code
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "code")} Order
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "Art2.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Art
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "art")} Order
+    -# .col-sm-12.col-md-3.mt-3.mt-3
+    -#   .card.bg-dark.text-white
+    -#     = image_tag "Group-Assignments.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+    -#     .card-pick-type
+    -#       %h5.card-title Group Assignment
+    -#       %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "group_project")} Order
+    .col-sm-12.col-md-3.mt-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "Law.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Law
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "law")} Order
+    .col-sm-12.col-md-3.mt-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "Sciences.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Science
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "science")} Order
+    .col-sm-12.col-md-3.mt-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "Economics.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Economics
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "economics")} Order
+    .col-sm-12.col-md-3.mt-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "Autocad.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Engineering, Sketchup & Autocad
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "sketchup", title: "Engineering, Sketchup & Autocad")} Order
+    .col-sm-12.col-md-3.mt-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "Foreign-languages.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Translations & Foreign Language
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "foreign_language", title: "Translations & Foreign Language")} Order
+    .col-sm-12.col-md-3.mt-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "Robotics.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+        .card-pick-type
+          %h5.card-title Robotics/Machine Learning
+          %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "robotics")} Order
+    -# .col-sm-12.col-md-3.mt-3.mt-3
+    -#   .card.bg-dark.text-white
+    -#     = image_tag "Module.png", class: "card-img-top" #, style: "filter: brightness(70%);"
+    -#     .card-pick-type
+    -#       %h5.card-title Module
+    -#       %a.btn.btn-primary.stretched-link{href: new_users_homework_path(type: "module")} Order

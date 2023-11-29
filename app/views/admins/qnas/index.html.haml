@@ -1,0 +1,68 @@
+= render 'admins/shared/header'
+-# = render 'admins/shared/sidebar'
+.row
+  .col-md-3.col-lg-2
+    = render 'admins/shared/sidebar'
+  .col-md-9.col-lg-10
+    .row 
+      .col-xl-10.col-lg-10.col-sm-12.ms-auto.me-auto 
+        .container-flex.mt-5
+          %h3 Q&A
+          .card{class: "card card-#{cookies[:theme]}" }
+            .card-body
+              .row 
+                .col-6.text-start
+                  %h3 Active
+              .table-responsive
+                %table.datatableBasic.display.nowrap
+                  %thead
+                    %tr
+                      %th ID
+                      %th Order created
+                      %th Order Type
+                      -# %th Deadline
+                      %th Subject
+                      %th Question
+                      %th Status
+                      %th Action
+                  %tbody
+                    - @qnas.each do |qna|
+                      %tr
+                        %td= qna.id
+                        %td= qna.created_at.strftime("%b %d, %Y - %l:%M %p")
+                        %td= qna.qna_type.name.titleize
+                        %td= truncate(qna.subject.titleize)
+                        %td= truncate(qna.question)
+                        %td= qna.status.upcase
+                        %td 
+                          %a.fas.fa-eye.text-success.font-16.mr-3{href: admins_qna_path(qna.id)}
+          .card.mt-5{class: "card card-#{cookies[:theme]}" }
+            .card-body
+              .row 
+                .col-6.text-start
+                  %h3 History
+              .table-responsive
+                %table.datatableBasic.display.nowrap
+                  %thead
+                    %tr
+                      %th ID
+                      %th Order created
+                      %th Order Type
+                      -# %th Deadline
+                      %th Subject
+                      %th Question
+                      %th Status
+                      %th Action
+                  %tbody
+                    - @history.each do |qna|
+                      %tr
+                        %td= qna.id
+                        %td= qna.created_at.strftime("%b %d, %Y - %l:%M %p")
+                        %td= qna.qna_type.name.titleize
+                        %td= truncate(qna.subject.titleize)
+                        %td= truncate(qna.question)
+                        %td= qna.status.upcase
+                        %td 
+                          %a.fas.fa-eye.text-success.font-16.mr-3{href: admins_qna_path(qna.id)}
+                          
+= javascript_pack_tag 'datatable_basic'

@@ -1,0 +1,141 @@
+= render 'users/shared/header'
+= render 'users/shared/chat-widget'
+
+.container-fluid.mt-5.pb-5
+  .mx-2
+    .container
+      .row
+      -if flash.any?
+        .row.text-center
+        - flash.each do |type, msg|
+          .col-lg-12.col-md-12.col-sm-12.alert.mt-3.mb-3{class: type == "alert" ? "alert-danger" : "alert-success"}
+            = msg
+    .container
+      .card{class: "bg-#{cookies[:theme]}"}
+        .card-body
+          .row 
+            .col-6.text-start
+              %h4= @homework.order_type.titleize
+            .col-6.text-end
+              %button.btn.btn-primary{"data-bs-target" => "#exampleModal", "data-bs-toggle" => "modal", type: "button"}
+                Files
+          .row.mt-3
+            .col-6
+              %h5= "Order ID: #{@homework.id}"
+              %h5= "Client: #{@homework.user.name}"
+          .row.mt-3
+            .col-sm-6
+              %h5 Deadline:
+              %p= @homework.deadline
+              %h5 Subject:
+              %p= @homework.subject.present? ? @homework.subject : "None Provided"
+            .col-sm-6.col-md-3
+              %h5 Words:
+              %p= @homework.words
+              %h5 Target Grade:
+              %p= @homework.grade
+            .col-xl-3.col-lg-6.col-md-6.col-sm-6
+              %h5 Payment:
+              -if @homework.payment_type == "gcash"
+                %h5 Gcash - 0915 619 3616
+                = image_tag "qr.jpg", class: "img-thumbnail ms-auto me-auto"
+              -else
+                -# %h5 BPI - 1234567889
+                %h5 Unionbank - 10277003830
+                %h5 PNB - 310470006546
+                -# %h5 BDO - 003368011699
+          - if @homework.hw_attachment.attached?
+            .row
+              .col-12
+                %h6 Download file
+                - @homework.hw_attachment.each do |attachment|
+                  =link_to attachment.filename, rails_blob_path(attachment, disposition: 'attachment'),class: "btn btn-success" 
+          %hr
+          -# .row.mt-3.d-flex.justify-content-center
+          -#   .col-2
+          -#     %h6 Priority
+          -#     - if @homework.priority?
+          -#       %button.btn.btn-success.btn-sm{type: "button"}= @homework.priority.to_s.capitalize
+          -#     -else 
+          -#       %button.btn.btn-danger.btn-sm{type: "button"}= @homework.priority.to_s.capitalize
+          -#   .col-2
+          -#     %h6 Tutor skills
+          -#     - if @homework.tutor_skills?
+          -#       %button.btn.btn-success.btn-sm{type: "button"}= @homework.tutor_skills.to_s.capitalize
+          -#     -else 
+          -#       %button.btn.btn-danger.btn-sm{type: "button"}= @homework.tutor_skills.to_s.capitalize
+          -#   .col-2
+          -#     %h6 Tutor Samples
+          -#     - if @homework.tutor_samples?
+          -#       %button.btn.btn-success.btn-sm{type: "button"}= @homework.tutor_samples.to_s.capitalize
+          -#     -else 
+          -#       %button.btn.btn-danger.btn-sm{type: "button"}= @homework.tutor_samples.to_s.capitalize
+          -#   .col-2
+          -#     %h6 View Bidders
+          -#     - if @homework.view_bidders?
+          -#       %button.btn.btn-success.btn-sm{type: "button"}= @homework.view_bidders.to_s.capitalize
+          -#     -else 
+          -#       %button.btn.btn-danger.btn-sm{type: "button"}= @homework.view_bidders.to_s.capitalize
+          -#   .col-2
+          -#     %h6 Login School
+          -#     - if @homework.login_school?
+          -#       %button.btn.btn-success.btn-sm{type: "button"}= @homework.login_school.to_s.capitalize
+          -#     -else 
+          -#       %button.btn.btn-danger.btn-sm{type: "button"}= @homework.login_school.to_s.capitalize
+          -# %hr
+          .row
+            .col-12 
+              %h5 Details:
+              %p= @homework.details
+
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", tabindex: "-1", id: "exampleModal"}
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title= @homework.name
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", type: "button"}
+      .modal-body
+        .row.mt-3
+          %h5 Uploaded files
+          -# .container-flex.mt-2
+          -#   %h6 
+          -#     %strong Tutor files:
+          -#   - @tutor.each do |docu|
+          -#     .row.d-flex.justify-content-between
+          -#       .col-3
+          -#         = docu.file.filename
+          -#       .col-3.text-end
+          -#         = link_to "Download File", rails_blob_path(docu.file, disposition: 'attachment'),class: "btn btn-success"
+          -#     %hr
+          -# .container-flex.mt-2
+          -#   %h6 
+          -#     %strong Quality Control Officer files:
+          -#   - @qco.each do |docu|
+          -#     .row.d-flex.justify-content-between
+          -#       .col-3
+          -#         = docu.file.filename
+          -#       .col-3.text-end
+          -#         = link_to "Download File", rails_blob_path(docu.file, disposition: 'attachment'),class: "btn btn-success"
+          -#     %hr
+          .contain-flex.mt-2 
+            %h6
+              -# %strong Admin Files:
+            - @admin.each do |docu|
+              .row.d-flex.justify-content-between
+                .col-3
+                  = docu.file.filename
+                .col-3.text-end 
+                  = link_to "Download File", rails_blob_path(docu.file, disposition: 'attachment'), class: "btn btn-success"
+              %hr
+          .contain-flex.mt-2
+            %h6
+              -# %strong Manager Files:
+            - @manager.each do |docu|
+              .row.d-flex.justify-content-between 
+                .col-3
+                  = docu.file.filename
+                .col-3.text-end
+                  = link_to "Download File", rails_blob_path(docu.file, disposition: 'attachment'), class: "btn btn-success"
+              %hr
+      .modal-footer
+        %button.btn.btn-secondary{"data-bs-dismiss" => "modal", type: "button"} Close

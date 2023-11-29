@@ -1,0 +1,2 @@
+module Tutors::ChatsHelper
+end

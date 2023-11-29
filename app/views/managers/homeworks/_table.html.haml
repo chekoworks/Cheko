@@ -1,0 +1,25 @@
+%tr
+  %td.text-start= home.id
+  %td.text-center= home.name
+  %td.text-center= home.created_at.strftime("%B %d, %Y") 
+  %td.text-center= home.order_type.titleize
+  %td.text-center= home.sub_type.titleize if home.sub_type.present?
+  %td.text-center= home.internal_deadline.strftime("%B %d, %Y") if home.internal_deadline.present?
+  %td.text-center= home.subject
+  %td.text-center= truncate(home.details)
+  %td.text-center= home.tutor_category.titleize if home.tutor_category.present?
+  %td.text-center= home.words
+  %td.text-center= home.priority
+  %td.text-center= home.login_school
+  %td.text-center= home.user.name
+  %td.text-center= home.tutor.name if home.tutor_id.present?
+  %td.text-center= home.sub_tutor.name if home.sub_tutor.present?
+  %td.text-center= home.hours_late
+  %td.text-center= home.prof
+  %td.text-center= home.grade
+  %td.text-center= home.status
+  %td.text-end
+    %a{href: managers_homework_path(home)}
+      .fas.fa-eye.text-success.font-16-mr-3
+    %a{href: edit_managers_homework_path(home)}
+      .fas.fa-pen.text-primary.font-16.mr-3

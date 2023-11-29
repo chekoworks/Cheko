@@ -1,0 +1,10 @@
+= render 'admins/shared/header'
+.container-fluid
+  .row
+    .col-md-3.col-lg-2
+      = render 'admins/shared/sidebar'
+    .col-md-9.col-lg-10
+      .row 
+        .col-xl-8.col-lg-10.col-sm-12.ms-auto.me-auto 
+          .container.mt-5
+            %h4= @accountant.name

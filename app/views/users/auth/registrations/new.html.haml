@@ -1,0 +1,59 @@
+= render 'users/shared/header'
+.container
+  .row 
+    .col-10.ms-auto.me-auto.mt-5
+      .card 
+        .card-body
+          %h2 User Sign up
+          = form_for(resource, as: resource_name, url: user_registration_path) do |f|
+            .mb-3
+              .row.field
+                .col-sm-12.col-md-6
+                  = f.label :first_name
+                  = f.text_field :first_name, class: "form-control", required: true
+                .col-sm-12.col-md-6
+                  = f.label :last_name
+                  = f.text_field :last_name, class: "form-control", required: true
+            .mb-3
+              .field
+                = f.label :email
+                = f.email_field :email, class: "form-control", required: true
+            .mb-3
+              .field
+                = f.label :phone_number
+                = f.number_field :phone_number, class: "form-control", required: true
+            .mb-3
+              .field
+                = f.label :school
+                = f.text_field :school, class: "form-control", required: true
+            -# .mb-3
+            -#   .field
+            -#     = f.label :college
+            -#     = f.text_field :college, class: "form-control", required: true
+            .mb-3
+              .row.field
+                .col-6
+                  = f.label :course
+                  = f.text_field :course, class: "form-control", required: true
+                .col-6
+                  = f.label :year, "School Year"
+                  = f.text_field :year, class: "form-control", required: true
+            -# .mb-3
+            -#   .field
+            -#     = f.label :address
+            -#     = f.text_field :address, class: "form-control", required: true
+            .mb-3
+              .field
+                = f.label :password
+                - if @minimum_password_length
+                  %em
+                    (#{@minimum_password_length} characters minimum)
+                = f.password_field :password, class: "form-control", required: true
+            .mb-3  
+              .field
+                = f.label :password_confirmation
+                = f.password_field :password_confirmation, class: "form-control", required: true
+            .mb-3  
+              .actions
+                = f.submit "Sign up", class: "btn btn-primary"
+= javascript_pack_tag 'user/new'

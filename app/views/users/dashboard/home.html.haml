@@ -1,0 +1,87 @@
+= render 'users/shared/header'
+.container.mt-3
+  .row
+    .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+      .d-grid.gap-5
+        %a.btn.bg-cheko.text-white.btn-xl{:href =>users_homeworks_path, "aria-describedby" => "tooltip", "data-bs-content" => "A premium service that starts at ₱500.", "data-bs-toggle" => "popover", :type => "button", "data-bs-trigger" => "hover", "data-bs-placement"=>"bottom"}
+          .h2 HW-Help
+        -# %button.btn.bg-cheko.text-white.position-relative.btn-xl{type: "button"}
+        -#   .h2 Past Documents
+        -#   %span.position-absolute.top-0.translate-middle.badge.rounded-pill.bg-danger{style: "left: 90%"}
+        -#     Coming Soon
+            %span.visually-hidden unread messages
+    .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+      .d-grid.gap-5
+        %a.btn.bg-cheko.text-white.btn-xl{href: professors_path, "aria-describedby" => "tooltip", "data-bs-content" => "Prof-rating & review system", "data-bs-toggle" => "popover", :type => "button", "data-bs-trigger" => "hover", "data-bs-placement"=>"bottom"}
+          .h2 Profs to Pick
+        -# %a.btn.bg-cheko.text-white.btn-xl{href: users_qnas_path}
+        -#   .h2 Q&A
+    .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+      %div{style:"display: flex; flex-direction: row; align-content: center; flex-wrap: inherit; justify-content: center;" }
+        %a.btn.bg-cheko.text-white.btn-xl{href: users_qnas_path, style: "width: 612px;", "aria-describedby" => "tooltip", "data-bs-content" => "₱500 and lower. A question & answer platform.", "data-bs-toggle" => "popover", :type => "button", "data-bs-trigger" => "hover", "data-bs-placement"=>"bottom"}
+          .h2 Q&A
+    .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+      %div{style:"display: flex; flex-direction: row; align-content: center; flex-wrap: inherit; justify-content: center;" }
+        %a.btn.bg-cheko.text-white.btn-xl{href: cheko_ai_path, style: "width: 612px;", "aria-describedby" => "tooltip", "data-bs-content" => "AI Homework assistant", "data-bs-toggle" => "popover", :type => "button", "data-bs-trigger" => "hover", "data-bs-placement"=>"bottom"}
+          .h2 ChekoAI
+  .col-xl-6.col-lg-6.col-md-6.col-sm-12{style: "padding: 11.8em;"}       
+= render "users/shared/footer"
+= javascript_pack_tag 'user/users'
+
+:javascript
+  window.addEventListener("chatwoot:ready", function () { 
+    var emailUser = '#{current_user.email}'
+    var nameUser = '#{current_user.name}'
+    var hasssh = '#{current_user.identifier_string}'
+    var identifier = '#{current_user.id}-client'
+  //  window.$chatwoot.setUser('#{current_user.email}', {
+  //    name: '#{current_user.name}',
+  //    email: '#{current_user.email}',
+  //    phone_number: '',
+  //    avatar_url: '',
+  //    identifier_hash: '#{current_user.identifier_string}',
+  //    social_profiles: {
+  //      github: "Bret-koda", // Github user name
+  //    },
+  //  });
+
+    window.$chatwoot.setUser(identifier, {
+      email: emailUser,
+      name: nameUser,
+      identifier_hash: hasssh,
+    });
+
+    window.$chatwoot.setCustomAttributes({
+      accountId: '#{current_user.id}-client',
+      note: "THIS IS A TEST NOTE",
+    });
+  });
+
+  /*window.chatwootSettings = {
+    type: "expanded_bubble",
+    launcherTitle: "Chat with us",
+  };*/
+
+  window.chatwootSettings = {
+    position: "left",
+    type: "standard",
+    launcherTitle: "",
+  };
+  
+  
+  (function(d,t) {
+    var BASE_URL="https://chatwoot.chekohomeworkhelp.com";
+    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=BASE_URL+"/packs/js/sdk.js";
+    g.defer = true;
+    g.async = true;
+    s.parentNode.insertBefore(g,s);
+    g.onload=function(){
+      window.chatwootSDK.run({
+        websiteToken: '7RG6pzEtMjQ19aDaPze9vxnu',
+        baseUrl: BASE_URL
+      });
+    }
+  })(document,"script");
+
+    

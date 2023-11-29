@@ -1,0 +1,62 @@
+= render "users/shared/header"
+
+.container-fluid.bg-cheko.text-white.p-5
+  .container
+    #carouselExampleSlidesOnly.carousel.slide{"data-bs-ride" => "carousel"}
+      .carousel-inner
+        .carousel-item.active.text-center.fixed
+          %h5 When I was going through a rough time in my life and it was greatly affecting my academic performance, I turned to Cheko to write quality papers for me to turn in. With their help, I was still able to retain my standing and finish third year with second honors. I will definitely come back as a repeat client and recommend their amazing services to my friends and family!
+          %h5 ★★★★★
+          %h5 M.D
+        .carousel-item.text-center.fixed
+          %h5 In the new world of Online Learning, managing your real life and your academic life can be very challenging. Especially, if your workload is a lot. That’s why I try to look for services that can help me in accomplishing my tasks. I tried multiple services and different tutors, but by far Cheko is the most reliable and transparent out of them all. I am currently still using Cheko, and I will continue to use their services in the future.
+          %h5 ★★★★★
+          %h5 A.L
+        .carousel-item.text-center.fixed
+          %h5 Cheko does great in Calculus – related tasks. Everytime I get homework help from their creators, I get a B+ for my grade!
+          %h5 ★★★★★
+          %h5 Z.U
+        .carousel-item.text-center.fixed
+          %h5 Cheko is really a life-saver. I would always send them super last-minute tasks and they somehow still find a way to finish it. Great team, very responsive and accommodating project managers, and excellent creators!
+          %h5 ★★★★★
+          %h5 Z.Y
+        .carousel-item.text-center.fixed
+          %h5 I trust Cheko. I’ve been using their services for about a year now and can I just say, without them, I wouldn’t have gotten this far in college. The creators are very capable of doing the task. They also make sure to constantly update clients with updates and any changes. Great experience always. I look forward to more deals with Cheko!
+          %h5 ★★★★★
+          %h5 F.L
+.container.my-5
+  .row{style:"align-content:center; justify-content:center;"}
+    .col-xl-3.col-lg-3.col-md-6.col-sm-12
+      .row
+        .col-12
+          .container
+            = image_tag "years.png", class: "card-img-top" 
+        .col-12.mt-5
+          .container.text-center
+            %h3 4 years in Service
+    .col-xl-3.col-lg-3.col-md-6.col-sm-12
+      .row
+        .col-12
+          .container
+            = image_tag "tasks.png", class: "card-img-top" 
+        .col-12.mt-5
+          .container.text-center
+            %h3 Accomplished 5,500
+    .col-xl-3.col-lg-3.col-md-6.col-sm-12
+      .row
+        .col-12
+          .container
+            = image_tag "creators.png", class: "card-img-top" 
+        .col-12.mt-5
+          .container.text-center
+            %h3 Over 300 tutors
+    -# .col-xl-3.col-lg-3.col-md-6.col-sm-12
+    -#   .row
+    -#     .col-12
+    -#       .container
+    -#         = image_tag "secret.png", class: "card-img-top" 
+    -#     .col-12.mt-5
+    -#       .container.text-center
+    -#         %h3 100% Confidential
+    .col-xl-6.col-lg-6.col-md-6.col-sm-12{style: "padding: 2.1em;"}
+= render "users/shared/footer"

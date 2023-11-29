@@ -1,0 +1,3 @@
+<p>Hi <%=@tutor.first_name%> <%=@tutor.last_name%>,</p>
+
+<p>Congratulations! Order <%=@homework.id%> is yours. Check out the details through this <%= link_to "link", tutors_homework_url(@homework.id)%>.</p>

@@ -1,0 +1,137 @@
+= form_for @homework, url: user_registration_path, method: :post do |f|
+  = hidden_field_tag "homework[order_type]", params[:type]
+  %h3 Subject
+  %stuff
+    .mb-3
+      .field
+        = label_tag :subject, "Subject", class: "form-label", required: true
+        = text_field_tag "homework[subject]", '', class: "form-control", required: true
+    .mb-3
+      .field
+        = label_tag :type, "Type", class: "form-label"
+        = select_tag "homework[sub_type]", options_for_select([["Short Essay" , "short_essay" ], ["Essay" , "essay" ], ["Research Paper" , "research_paper" ], ["Script" , "script" ], ["Admissions Essay" , "admission_essay" ]], selected: :payment_type), class: "form-select"
+  %h3 Details
+  %stuff
+    .mb-3
+      .field
+        = label_tag :deadline, "Deadline", class: "form-label"
+        #datetimepicker1.input-group{"data-td-target-input" => "nearest", "data-td-target-toggle" => "nearest"}
+          -# %input#datetimepicker1Input.form-control{"data-td-target" => "#datetimepicker1", type: "text"}/
+          = text_field_tag "homework[deadline]", "", class: "form-control", id: "datetimepicker1Input", "data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker", readonly: true, required: true, style: "background: white"
+          %span.input-group-text{"data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker"}
+            %span.fas.fa-calendar
+    .mb-3
+      .field
+        = label_tag :target_words, "Target Words", class: "form-label"
+        = f.number_field :words, class: "form-control", placeholder: "Input an amount", required: true
+    .mb-3
+      .field
+        = label_tag :details, "Details", class: "form-label"
+        = text_area_tag "homework[details]", '', rows: 10, class: "form-control", required: true
+    .mb-3
+      .field
+        = label_tag :hw_attachments, "Files [Drag & Drop to Upload Files]", class: "form-label"
+      .field.borders
+        = f.file_field :hw_attachment, multiple: true, class: "form-control"
+  %h3 Payment
+  %stuff
+    .mb-3
+      %h5 Estimate
+      %h4#testEstimate
+    .mb-3
+      .field
+        = label_tag :payment_type, "Payment Type", class: "form-label"
+        = select_tag "homework[payment_type]", options_for_select([["GCash" , "gcash" ], ["Bank Transfer" , "bank" ]], selected: :payment_type), class: "form-select"
+    .mb-3 
+      .field 
+        = label_tag :tutor_category, "Pick a type of writer"
+        .form-check
+          = f.radio_button :tutor_category, "a_plus", class: "form-check-input", "data-bal" => 2.5
+          = label_tag :tutor_category, "Best Writers (₱2.50 per word)", :value => 0, class: "form-check-label"
+        .form-check
+          = f.radio_button :tutor_category, "cheko", class: "form-check-input", "data-bal" => 1.6
+          = label_tag :tutor_category, "Great Writers (₱1.60 per word)", :value => 1, class: "form-check-label"
+        .form-check
+          = f.radio_button :tutor_category, "standard", class: "form-check-input", checked: true, "data-bal" => 1
+          = label_tag :tutor_category, "Standard Writers (₱1 per word)", :value => 2, class: "form-check-label"
+    .mb-3.d-flex.flex-row
+      .container.p-1
+        = label_tag :view_skill, "View tutor's skill profile for ₱100"
+        .form-check.form-switch
+          = check_box_tag "homework[tutor_skills]", true, false, class: "form-check-input"
+      
+      .container.p-1
+        = label_tag :view_sample, "View tutor's sample works for ₱100"
+        .form-check.form-switch
+          = check_box_tag "homework[tutor_samples]", true, false, class: "form-check-input"
+
+      .container.p-1
+        = label_tag :view_bidders, "View all bidders, their skill profiles and their sample works for ₱300"
+        .form-check.form-switch
+          = check_box_tag "homework[view_bidders]", true, false, class: "form-check-input"
+          
+      
+          
+      .container.p-1
+        = label_tag :priority, "Make it a priority? +30%"
+        .form-check.form-switch
+          = check_box_tag "homework[priority]", true, false, class: "form-check-input"
+          
+  %h3 Register
+  %stuff
+    .row
+      .col-6.mb-3
+        .field
+          = label_tag :first_name, "First Name"
+          = text_field_tag "user[first_name]", "", class: "form-control", required: true
+      .col-6.mb-3
+        .field
+          = label_tag :last_name, "Last Name"
+          = text_field_tag "user[last_name]", "", class: "form-control", required: true
+    .mb-3
+      .field
+        = label_tag :email, "Email"
+        = email_field_tag "user[email]", "", class: "form-control", required: true
+    -# .mb-3
+    -#   .field
+    -#     = label_tag :birthday,"Birthday", class: "form-label"
+    -#     = date_field_tag :birthday, "", class: "form-control"
+    .mb-3
+      .field
+        = label_tag :phone_number
+        = number_field_tag :phone_number, "", class: "form-control", required: true
+    .row
+      .col-6.mb-3
+        .field
+          = label_tag :school
+          = text_field_tag :school, "", class: "form-control", required: true
+      .col-6.mb-3
+        .field
+          = label_tag :college
+          = text_field_tag :college, "", class: "form-control", required: true
+    .row
+      .col-6.mb-3
+        .field
+          = label_tag :course
+          = text_field_tag :course, "", class: "form-control", required: true
+      .col-6.mb-3
+        .field
+          = label_tag :year
+          = text_field_tag :year, "", class: "form-control", required: true
+    .mb-3
+      .field
+        = label_tag :address
+        = text_field_tag :address, "", class: "form-control", required: true
+    .mb-3
+      .field
+        = label_tag :password, "Password"
+        %em
+          (6 characters minimum)
+        = password_field_tag "user[password]", "", class: "form-control"
+    .mb-3  
+      .field
+        = label_tag :password, "Password Confirmation"
+        = password_field_tag "user[password_confirmation]", "", class: "form-control"
+  -# .mb-3  
+  -#   .actions
+  -#     = submit_tag "Sign up", class: "btn btn-primary"

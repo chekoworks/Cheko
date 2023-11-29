@@ -1,0 +1,87 @@
+= render 'users/shared/header'
+= hidden_field_tag "chat_id", @qna.chat.id, id: "chat_id" if @qna.chat.present?
+= hidden_field_tag "type", "user", id: "type"
+= hidden_field_tag "qna_id", @qna.id, id: "qna_id"
+
+-unless @qna.status == "assigned"
+  .container
+    .row.text-center
+      .col-lg-12.col-md-12.col-sm-12.alert.mt-3.mb-3{class: "alert-danger"}
+        No tutor has accepted yet
+
+.container.mt-5
+  .row
+    .card{class: "card-#{cookies[:theme]}"}
+      .card-body
+        .row 
+          .col-sm-6.col-md-10.text-start 
+            %h5= "#{@qna.subject.titleize}"
+          .col-sm-6.col-md-2{style: "text-align:right;"}
+            -if @qna.status == "assigned"
+              = link_to  "Finish", users_qna_finish_path(qna_id: @qna.id), class: "btn btn-success"
+            -elsif @qna.status == "done"
+              //= link_to "Cancel", users_qna_cancel_path(qna_id: @qna.id), class: "btn btn-danger disabled"
+            -else
+              = link_to "Cancel", users_qna_cancel_path(qna_id: @qna.id), class: "btn btn-danger"
+          %div{style: "display: flex; gap: 35px; padding-top: 10px;"}
+          %hr.mt-3
+          -if @qna.document_attachments.attached?
+            %div{style: "width: 80%;"}
+              %p= @qna.question
+              %h6 Download File:
+              %div{style:"width: 50%"}
+              -@qna.document_attachments.each do |attachment|
+                =link_to attachment.filename, rails_blob_path(attachment, disposition: 'attachment'), class: "btn btn-success" 
+            %div{style: "width: 20%;"}
+              = image_tag "qr.jpg", class: "img-thumbnail ms-auto me-auto"
+  .row.mt-3.mb-5
+    .card{class: "card-#{cookies[:theme]}"}
+      .card-body
+        .container-fluid#messages{style: "overflow: auto; height: 550px;"}
+          -if @qna.chat.present?
+            - @qna.chat.messages.order(id: :asc).each do |msg|
+              - next if msg.sendable_type == nil
+              - if msg.sendable_type == "User"
+                .row.mt-3
+                  .col-6.ms-auto.text-white.rounded.pt-2
+                    -# {style: "background: #24a64d"}
+                    %div.ms-auto.rounded{style: "padding: 10px; width: 20em; background: #24a64d"}
+                      %div.ms-auto{style: "width: -moz-fit-content; width: fit-content; font-size: 0.9rem"}You
+                      %div.ms-auto{style: "width: -moz-fit-content; width: fit-content"}= msg.content
+                      - if msg.document.attached?
+                        %div.ms-auto{style: "width: -moz-fit-content; width: fit-content"}
+                          -# %a{href: msg.document} Document
+                          = link_to  "#{msg.document.blob.filename}", rails_blob_path(msg.document, disposition: 'attachment')
+              - else 
+                .row.mt-3
+                  .col-6.me-auto.text-white.rounded.pt-2
+                    -# {style: "background: #24a64d"}
+                    %div.me-auto.rounded{style: "padding: 10px; width: 20em; background: #c97b0c"}
+                      %div.me-auto{style: "width: -moz-fit-content; width: fit-content"}Tutor012345
+                      %div.me-auto{style: "width: -moz-fit-content; width: fit-content"}= msg.content
+                      - if msg.document.attached?
+                        %div.me-auto{style: "width: -moz-fit-content; width: fit-content"}
+                          -# %a{href: msg.content} Document
+                          = link_to "#{msg.document.blob.filename}", rails_blob_path(msg.document, disposition: 'attachment')
+        .container#text-box.mt-3
+          - if @qna.status == "assigned" || @qna.status == "pending"
+            = form_for @message, url: qna_chat_messages_path(qna_id: @qna.id, chat_id: @qna.chat.id) do |f|
+              .row
+                .col-4
+                  = f.file_field :document, class: "form-control"
+                .col-8
+                  %div#send_icon
+                    = f.text_field :content, class: "form-control", autocomplete: 'off', disabled:(true if @qna.status == "done")
+                    %i.fa-regular.fa-paper-plane.btn-default
+            -# = form_tag( "#", method: :get, id: "new_message", multipart: true) do
+            -#   .row
+            -#     .col-4
+            -#       = file_field_tag "message[document]", class: "form-control"
+            -#     .col-8
+            -#       = text_field_tag "message[content]", "", class: "form-control", autocomplete: 'off'
+              -# .row
+              -#   .col-4
+              -#     = file_field_tag "document", class: "form-control"
+              -#   .col-8
+              -#     = text_field_tag "content", "", class: "form-control"
+= javascript_pack_tag 'messages/new'

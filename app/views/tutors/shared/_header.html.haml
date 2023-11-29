@@ -1,0 +1,26 @@
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-cheko
+  .container-fluid
+    %a.navbar-brand{href: tutors_homeworks_path}
+      = image_tag "logo-white.png", id: "logo-image"
+    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarSupportedContent", "data-bs-toggle" => "collapse", type: "button"}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+        %li.nav-item
+          %a.nav-link{href: tutors_homeworks_path} HW-Help
+        %li.nav-item
+          %a.nav-link{href: tutors_qnas_path} QnA
+          -# %a.nav-link{href: admins_documents_path} Documents
+      %ul.navbar-nav.ms-auto.mb-2.mb-lg-0
+        %li.nav-item.dropdown
+          %a#navbarDropdown.nav-link.active.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}= current_tutor.first_name
+          %ul.dropdown-menu.dropdown-menu-end{"aria-labelledby" => "navbarDropdown"}
+            %li
+              %a.dropdown-item{href: "#"} Profile
+            %li
+              %hr.dropdown-divider/
+            %li
+              %a.dropdown-item{href: destroy_tutor_session_path, data: {method: :delete}} Log out
+      -# %form.d-flex
+      -#   %input.form-control.me-2{"aria-label" => "Search", placeholder: "Search", type: "search"}/
+      -#   %button.btn.btn-outline-success{type: "submit"} Search

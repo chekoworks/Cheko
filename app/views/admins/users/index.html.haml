@@ -1,0 +1,46 @@
+= render 'admins/shared/header'
+.row
+  .col-md-3.col-lg-2
+    = render 'admins/shared/sidebar'
+  .col-md-9.col-lg-10
+    .row 
+      .col-xl-10.col-lg-10.col-sm-12.ms-auto.me-auto 
+        .container-flex.mt-5
+          .card{class: "card card-#{cookies[:theme]}" } 
+            .card-body
+              .row 
+                .col-12.text-start
+                  %h3 Users
+                  -if flash.any?
+                    .row.text-center
+                      - flash.each do |type, msg|
+                        .col-lg-12.col-md-12.col-sm-12.alert.mt-3.mb-3{class: type == "alert" ? "alert-danger" : "alert-success"}
+                          = msg
+              .table-responsive
+                %table.datatableBasic.display.nowrap
+                  %thead
+                    %tr
+                      %th.text-start id
+                      %th.text-center Name
+                      %th.text-center Email
+                      %th.text-center School
+                      %th.text-center Course
+                      %th.text-center Year
+                      %th.text-center Status
+                      %th.text-end Action
+                  %tbody
+                    - unless @users.blank?
+                      - @users.each do |user|
+                        %tr
+                          %td.text-start= user.id
+                          %td.text-center= user.name
+                          %td.text-center= user.email
+                          %td.text-center= user.school
+                          %td.text-center= user.course
+                          %td.text-center= user.year 
+                          %td.text-center= user.status.capitalize
+                          %td.text-end
+                            %a.fas.fa-eye.text-success.font-16.mr-3{href: admins_user_path(user)}
+                            %a.fas.fa-pen.text-primary.font-16.mr-3{href: edit_admins_user_path(user)}
+                            = link_to '', admins_user_path(user), method: :delete, data: {confirm: "Are you sure?"}, class: "fas fa-trash text-danger font-16 mr-3"
+= javascript_pack_tag 'datatable_basic'

@@ -1,0 +1,3 @@
+<p>Hi <%=@tutor.first_name%> <%=@tutor.last_name%>,</p>
+
+<p>We have a <span><%=@homework.subject%></span> task up for bidding, kindly <%= link_to "check it out", tutors_homework_url(@homework.id)%> and place your bid!</p>

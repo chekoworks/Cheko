@@ -1,0 +1,57 @@
+= render 'users/shared/header'
+= render 'users/shared/chat-widget'
+.container
+  .col-12.ms-auto.me-auto 
+    .mt-5.mx-2
+      %div{class: "card card-#{cookies[:theme]}" }
+        .card-body
+          .row 
+            .col-6.text-start
+              %h3 Tutor Q&A - Active
+            .col-6.text-end 
+              = link_to "New Order", pick_type_qnas_path, class: "btn btn-primary"
+          %div{class: "table-responsive "}
+            %table.datatableBasic
+              %thead
+                %tr
+                  %th.text-start Order no.
+                  %th.text-center Question
+                  %th.text-center Subject
+                  %th.text-end Action
+              %tbody
+                - @qnas.each do |qna|
+                  %tr
+                    %td.text-start= qna.id
+                    %td.text-center= truncate(qna.question)
+                    %td.text-center= qna.subject.titleize
+                    %td.text-end
+                      %a{href: users_qna_path(qna)}
+                        .fas.fa-eye.text-success.font-16.mr-3
+
+  .col-12.ms-auto.me-auto 
+    .mt-5.mx-2
+      %div{class: "card card-#{cookies[:theme]}" }
+        .card-body
+          .row 
+            .col-6.text-start
+              %h3 Tutor Q&A - History
+          %div{class: "table-responsive "}
+            %table.datatableBasic
+              %thead
+                %tr
+                  %th.text-start Order no.
+                  %th.text-center Question
+                  %th.text-center Subject
+                  %th.text-end Action
+              %tbody
+                - @finish.each do |qna|
+                  %tr
+                    %td.text-start= qna.id
+                    %td.text-center= truncate(qna.question)
+                    %td.text-center= qna.subject.titleize
+                    %td.text-end
+                      %a{href: users_qna_path(qna)}
+                        .fas.fa-eye.text-success.font-16.mr-3
+  .col-xl-6.col-lg-6.col-md-6.col-sm-12{style: "padding: 2em;"}       
+= render "users/shared/footer"
+= javascript_pack_tag 'datatable_basic'

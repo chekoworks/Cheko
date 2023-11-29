@@ -1,0 +1,58 @@
+-# .d-flex.flex-column.align-items-center.align-items-sm-start.px-3.pt-2.text-white.min-vh-100.bg-dark
+.sidenav.d-flex.flex-column.flex-shrink-0.p-3.text-white.bg-dark
+  %ul.nav.nav-pills.flex-column.mb-auto.mt-5
+    %li.nav-item
+      %a.nav-link.text-white{href: admins_homeworks_path} 
+        %svg.bi.me-2{height: "16", width: "16"}
+          %use{"xlink:href" => "#home"}
+        HW-Help
+    %li.nav-item
+      %a.nav-link.text-white{href: admins_qnas_path} 
+        %svg.bi.me-2{height: "16", width: "16"}
+          %use{"xlink:href" => "#home"}
+        Q&A
+    - if current_admin.role == "super_admin"
+      %li
+        %a.nav-link.text-white{href: admins_users_path} 
+          %svg.bi.me-2{height: "16", width: "16"}
+            %use{"xlink:href" => "#speedometer2"}
+          Users
+      %li
+        %a.nav-link.text-white{href: admins_admins_path}
+          %svg.bi.me-2{height: "16", width: "16"}
+            %use{"xlink:href" => "#speedometer2"}
+          Leads
+      %li
+        %a.nav-link.text-white{href: admins_accountants_path} 
+          %svg.bi.me-2{height: "16", width: "16"}
+            %use{"xlink:href" => "#speedometer2"}
+          Accountants
+      %li
+        %a.nav-link.text-white.fs-6{href: admins_quality_officers_path} 
+          %svg.bi.me-2{height: "16", width: "16"}
+            %use{"xlink:href" => "#speedometer2"}
+          QCO
+
+          
+    %li
+      %a.nav-link.text-white{href: admins_managers_path} 
+        %svg.bi.me-2{height: "16", width: "16"}
+          %use{"xlink:href" => "#table"}
+        Managers
+    %li
+      %a.nav-link.text-white{href: admins_tutors_path}  
+        %svg.bi.me-2{height: "16", width: "16"}
+          %use{"xlink:href" => "#grid"}
+        Tutors
+    - if current_admin.role == "super_admin"
+      %hr
+      %li
+        %a.nav-link.text-white{href: admins_professors_path}  
+          %svg.bi.me-2{height: "16", width: "16"}
+            %use{"xlink:href" => "#grid"}
+          Professors
+    -# %li
+    -#   %a.nav-link.text-white{href: admins_documents_path} 
+    -#     %svg.bi.me-2{height: "16", width: "16"}
+    -#       %use{"xlink:href" => "#people-circle"}
+    -#     Documents

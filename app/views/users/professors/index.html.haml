@@ -1,0 +1,14 @@
+= render 'users/shared/header'
+= render 'users/shared/chat-widget'
+
+.container-fluid.mt-2
+  = image_tag "prof-pick-beta-dark.png", class: "img-fluid mx-auto d-block"
+.container.text-center.mt-2.mb-5
+  .row.mt-5
+    %p Cheko Profs-To-Pick is a database that contains up-to-date and complete reviews of professors with metrics specific to different universities. Researching 36 professors on Profs to Pick Facebook pages will take you 2 days. With Cheko Profs-to-Pick, you can do it in 1 hour!
+    %form{action: "/test", autocomplete: "off"}
+      .autocomplete
+        %input#myInput.form-control{name: "prof", type: "text", placeholder:"Search the name of your Prof"}/
+  .col-xl-6.col-lg-6.col-md-6.col-sm-12{style: "padding: 9.6em;"}       
+= render "users/shared/footer"
+= javascript_pack_tag 'professors/index'

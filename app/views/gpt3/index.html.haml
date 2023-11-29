@@ -1,0 +1,31 @@
+.ai-chat-container
+  = render "users/shared/header"
+  .container
+    .card
+      .card-header.d-flex.align-items-center.py-3
+        = image_tag("cheko_ai_profile.jpg", class:"rounded-circle", style: 'height: 4.25rem; width: 4.25rem;')
+        %div.d-flex.flex-column.justify-content-center.font-weight-bold(style='padding-left:10px;')
+          %h2.mb-0 Cheko AI
+          %p.mb-0.text-secondary Ask me anything!
+      .card-body
+        .card-body-top
+          #gpt-chat-container
+            .chat-bubble-cheko
+              Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!
+          -# Loading animation (enabled/disabled when prompting)
+          #cheko-loading-bubble.d-none
+            .loading-icon
+              %span
+              %span
+              %span
+        .prompt-container
+          = form_tag do
+            .form-group
+              -# %label{for: "prompt"} Prompt
+              %textarea.form-control#prompt{rows: "3"}(placeholder='Ask any question here. (Enter to send, Shift + Enter for new line)')
+            = submit_tag "Send", class: "btn btn-primary mt-2", id: "generate-btn"
+            %button.btn.btn-secondary.mt-2#humanize-text-button Humanize Text
+            %button.btn.btn-secondary.mt-2#add-citations-button Add Citations
+    
+= javascript_pack_tag 'gpt3', 'data-turbolinks-track': 'reload'
+= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'

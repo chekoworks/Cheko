@@ -1,0 +1,101 @@
+= form_for @homework, url: users_homeworks_path, method: :post do |f|
+  = f.hidden_field :order_type, :value => params[:type]
+  %h3 Type
+  %stuff
+    .mb-3 
+      .field 
+        = f.label :sub_type, "Type"
+        %br/
+        .form-check
+          = f.radio_button :sub_type, "Magazine", class: "form-check-input", checked: true
+          = f.label :sub_type, "Magazine", :value => "magazine", class: "form-check-label"
+        .form-check
+          = f.radio_button :sub_type, "Infographic", class: "form-check-input"
+          = f.label :sub_type, "Infographic", :value => "infographic", class: "form-check-label"
+        .form-check
+          = f.radio_button :sub_type, "Drawing", class: "form-check-input"
+          = f.label :sub_type, "Drawing", :value => "drawing", class: "form-check-label"
+        .form-check
+          = f.radio_button :sub_type, "Painting", class: "form-check-input"
+          = f.label :sub_type, "Painting", :value => "painting", class: "form-check-label"
+        .form-check
+          = f.radio_button :sub_type, "Painting", class: "form-check-input"
+          = f.label :sub_type, "Others", :value => "others", class: "form-check-label"
+    .mb-3 
+      .field 
+        = f.label :sub_type, "Type of Art"
+        %br/
+        .form-check
+          = f.radio_button :sub_subject, "Digital", class: "form-check-input", checked: true
+          = f.label :sub_subject, "Digital", :value => "digital", class: "form-check-label"
+        .form-check
+          = f.radio_button :sub_subject, "Traditional", class: "form-check-input"
+          = f.label :sub_subject, "Traditional", :value => "traditional", class: "form-check-label"
+    .mb-3
+      .field
+        = f.label "Subject", class: "form-label"
+        = f.text_field :subject, class: "form-control", required: true
+    
+  %h3 Details
+  %stuff
+    .mb-3
+      .field
+        = f.label :deadline, class: "form-label"
+        #datetimepicker1.input-group{"data-td-target-input" => "nearest", "data-td-target-toogle" => "nearest"}
+          = text_field_tag "homework[deadline]", "", class: "form-control", id: "datetimepicker1Input", "data-td-target" => "datetimepicker1", "data-td-toggle" => "datetimepicker", readonly: true, required: true, style: "background: white"
+          %span.input-group-text{"data-td-target" => "datetimepicker1", "data-td-toggle" => "datetimepicker"}
+            %span.fas.fa-calendar
+    .mb-3
+      .field
+        = f.label :details, class: "form-label"
+        = f.text_area :details, class: "form-control",  :rows => 10, required: true
+    .mb-3
+      .field
+        = label_tag :hw_attachments, "Files [Drag & Drop to Upload Files]", class: "form-label"
+      .field.borders
+        %center
+          %strong Drag and Drop Files
+        = f.file_field :hw_attachment, :multiple => true, class: "form-control"
+  %h3 Payment
+  %stuff
+    .mb-3
+      %h5 Estimate
+      %h4#testEstimate
+    .mb-3
+      .field
+        = f.label :payment_type, class: "form-label"
+        = f.select :payment_type, options_for_select([["GCash" , "gcash" ], ["Bank Transfer" , "bank" ]], selected: :payment_type), {include_blank: false} , class: "form-select"
+    -# .mb-3
+    -#   .field
+    -#     = f.label :deadline, class: "form-label"
+    -#     #datetimepicker1.input-group{"data-td-target-input" => "nearest", "data-td-target-toggle" => "nearest"}
+    -#       -# %input#datetimepicker1Input.form-control{"data-td-target" => "#datetimepicker1", type: "text"}/
+    -#       = text_field_tag "homework[deadline]", "", class: "form-control", id: "datetimepicker1Input", "data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker", readonly: true, required: true, style: "background: white"
+    -#       %span.input-group-text{"data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker"}
+    -#         %span.fas.fa-calendar
+    .mb-3.d-flex.flex-row
+      .container.p-1
+        = label_tag :view_skill, "View tutor's skill profile for ₱100"
+        .form-check.form-switch
+          = check_box_tag "homework[tutor_skills]", true, false, class: "form-check-input"
+    
+      .container.p-1
+        = label_tag :view_sample, "View tutor's sample works for ₱100"
+        .form-check.form-switch
+          = check_box_tag "homework[tutor_samples]", true, false, class: "form-check-input"
+
+      .container.p-1
+        = label_tag :view_bidders, "View all bidders, their skill profiles and their sample works for ₱300"
+        .form-check.form-switch
+          = check_box_tag "homework[view_bidders]", true, false, class: "form-check-input"
+          
+      
+          
+      .container.p-1
+        = label_tag :priority, "Make it a priority? +30%"
+        .form-check.form-switch
+          = check_box_tag "homework[priority]", true, false, class: "form-check-input"
+    -# .mb-3
+    -#   .actions
+    -#     -# %a{href: "#", class: "btn btn-warning"} Save to Draft
+    -#     -# = f.submit "Create", class: "btn btn-primary"

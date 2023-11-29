@@ -1,0 +1,2 @@
+module QualityOfficers::DashboardHelper
+end

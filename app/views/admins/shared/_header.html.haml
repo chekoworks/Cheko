@@ -1,0 +1,36 @@
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-cheko.sticky-top{style: "z-index: 2"}
+  .container-fluid
+    %a.navbar-brand{href: admins_path}
+      = image_tag "logo-white.png", id: "logo-image"
+    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarSupportedContent", "data-bs-toggle" => "collapse", type: "button"}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      -# %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+      -#   %li.nav-item
+      -#     %a.nav-link{href: admins_homeworks_path} Homeworks
+      -#   - if current_admin.role == "super_admin"
+      -#     %li.nav-item
+      -#       %a.nav-link{href: admins_users_path} Users
+      -#     %li.nav-item
+      -#       %a.nav-link{href: admins_admins_path} Team Leads
+      -#     %li.nav-item
+      -#       %a.nav-link{href: admins_accountants_path} Accountants
+      -#   %li.nav-item
+      -#     %a.nav-link{href: admins_managers_path} Task Managers
+      -#   %li.nav-item
+      -#     %a.nav-link{href: admins_tutors_path} Tutors 
+      -#   %li.nav-item
+      -#     %a.nav-link{href: admins_documents_path} Documents
+      %ul.navbar-nav.ms-auto.mb-2.mb-lg-0
+        %li.nav-item.dropdown
+          %a#navbarDropdown.nav-link.active.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}= current_admin.first_name
+          %ul.dropdown-menu.dropdown-menu-end{"aria-labelledby" => "navbarDropdown"}
+            -# %li
+            -#   %a.dropdown-item{href: "#"} Profile
+            -# %li
+            -#   %hr.dropdown-divider/
+            %li
+              %a.dropdown-item{href: destroy_admin_session_path, data: {method: :delete}} Log out
+      -# %form.d-flex
+      -#   %input.form-control.me-2{"aria-label" => "Search", placeholder: "Search", type: "search"}/
+      -#   %button.btn.btn-outline-success{type: "submit"} Search

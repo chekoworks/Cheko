@@ -1,0 +1,35 @@
+= render 'tutors/shared/header'
+= render 'tutors/shared/chat-widget'
+-# :javascript
+-#   window.addEventListener("chatwoot:ready", function () { 
+-#     window.$chatwoot.setUser('#{current_tutor.email}', {
+-#       name: '#{current_tutor.name}',
+-#       email: '#{current_tutor.email}'
+-#       identifier_hash: '#{current_tutor.identifier_string}'
+-#     }, console.log("#{current_tutor.identifier_string}"));
+
+-#     window.$chatwoot.setCustomAttributes({
+-#       accountId: '#{current_tutor.id}-client',
+-#       note: "THIS IS A TEST NOTE",
+-#     });
+-#   });
+
+-#   window.chatwootSettings = {
+-#     type: "expanded_bubble",
+-#     launcherTitle: "Chat with us",
+-#   };
+  
+-#   (function(d,t) {
+-#     var BASE_URL="http://localhost:4000";
+-#     var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+-#     g.src=BASE_URL+"/packs/js/sdk.js";
+-#     g.defer = true;
+-#     g.async = true;
+-#     s.parentNode.insertBefore(g,s);
+-#     g.onload=function(){
+-#       window.chatwootSDK.run({
+-#         websiteToken: 'ocpf6AS4iMEVzfJT5QE8QSAE',
+-#         baseUrl: BASE_URL
+-#       });
+-#     }
+-#   })(document,"script");

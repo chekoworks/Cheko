@@ -1,0 +1,39 @@
+= render 'admins/shared/header'
+.container-fluid
+  .row
+    .col-md-3.col-lg-2
+      = render 'admins/shared/sidebar'
+    .col-md-9.col-lg-10
+      .row 
+        .col-xl-8.col-lg-10.col-sm-12.ms-auto.me-auto 
+          .container.mt-5
+            .card{class: "card card-#{cookies[:theme]}" } 
+              .card-body
+                .row 
+                  .col-6.text-start
+                    %h3 Accountants
+                  .col-6.text-end 
+                    = link_to "New Accountant", new_admins_accountant_path, class: "btn btn-primary"
+                .table-responsive
+                  %table.datatableBasic.display.nowrap
+                    %thead
+                      %tr
+                        %th.text-start id
+                        %th.text-center Name
+                        %th.text-center Email
+                        -# %th.text-center Status
+                        %th.text-end Action
+                    %tbody
+                      - unless @accountants.blank?
+                        - @accountants.each do |acc|
+                          %tr
+                            %td.text-start= acc.id
+                            %td.text-center= acc.name
+                            %td.text-center= acc.email 
+                            -# %td.text-center= manager.status.capitalize
+                            %td.text-end
+                              %a.fas.fa-eye.text-success.font-16.mr-3{href: admins_accountant_path(acc)}
+                              %a.fas.fa-pen.text-primary.font-16.mr-3{href: edit_admins_accountant_path(acc)}
+                              %a.fas.fa-trash.text-danger.font-16.mr-3{href: admins_accountant_path(acc), data: {method: :delete}}
+              
+= javascript_pack_tag 'datatable_basic'

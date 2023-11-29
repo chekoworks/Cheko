@@ -1,0 +1,40 @@
+= render 'admins/shared/header'
+.container-fluid
+  .row
+    .col-md-3.col-lg-2
+      = render 'admins/shared/sidebar'
+    .col-md-9.col-lg-10 
+      .col-xl-8.col-lg-10.col-sm-12.ms-auto.me-auto 
+        .container-flex.mt-5
+          .card{class: "card card-#{cookies[:theme]}" }
+            .card-body
+              .row 
+                .col-6.text-start
+                  %h3 Leads
+                .col-6.text-end 
+                  = link_to "New admin", new_admins_admin_path, class: "btn btn-primary"
+              .table-responsive
+                %table.datatableBasic.display.nowrap
+                  %thead
+                    %tr
+                      %th.text-start id
+                      %th.text-center Name
+                      %th.text-center Email
+                      %th.text-center Role
+                      %th.text-end Action
+                  %tbody
+                    - unless @admins.blank?
+                      - @admins.each do |admin|
+                        %tr
+                          %td.text-start= admin.id
+                          %td.text-center= admin.name
+                          %td.text-center= admin.email 
+                          %td.text-center= admin.role.titleize
+                          %td.text-end
+                            %a.fas.fa-eye.text-success.font-16.mr-3{href: admins_admin_path(admin)}
+                            %a.fas.fa-pen.text-primary.font-16.mr-3{href: edit_admins_admin_path(admin)}
+                            = link_to '', admins_admin_path(admin), method: :delete, data: {confirm: "Are you sure?"}, class: "fas fa-trash text-danger font-16 mr-3"
+                    -else
+                      %td No Data found
+
+= javascript_pack_tag 'datatable_basic'

@@ -1,0 +1,135 @@
+= render 'managers/shared/header'
+.container-fluid#manager-homework-table
+  .row
+    .col-md-3.col-lg-2 
+      = render 'managers/shared/sidebar'
+    .col-md-9.col-lg-10
+      .row 
+        .col-xl-10.col-lg-10.col-sm-12.ms-auto.me-auto 
+          .container-flex.mt-5
+            %h3 HW-Help
+            .card.mt-5{class: "card card-#{cookies[:theme]}"}
+              .card-body
+                .row 
+                  .col-6.text-start 
+                    %h3 Pending
+                .table-responsive.manager
+                  %table#pending.display.nowrap
+                    %thead
+                      %tr
+                        %th.text-start id
+                        %th.text-center Task Code
+                        %th.text-center Order Date
+                        %th.text-center Order Type
+                        %th.text-center Type
+                        %th.text-center Deadline
+                        %th.text-center Subject
+                        %th.text-center Details
+                        %th.text-center Tutor Category
+                        %th.text-center Word count
+                        %th.text-center Priority
+                        %th.text-center Login School Account
+                        %th.text-center Client
+                        %th.text-center Tutor
+                        %th.text-center Sub-tutor
+                        %th.text-center Hours Late
+                        %th.text-center Prof
+                        %th.text-center Grade
+                        %th.text-center Status
+                        %th.text-end Action
+                    %tbody
+                      =render partial: 'managers/homeworks/table', collection: @pending, as: :home
+            .card.mt-5{class: "card card-#{cookies[:theme]}"}
+              .card-body
+                .row 
+                  .col-6.text-start 
+                    %h3 Ongoing
+                .table-responsive
+                  %table#ongoing.display.nowrap
+                    %thead
+                      %tr
+                        %th.text-start id
+                        %th.text-center Task Code
+                        %th.text-center Order Date
+                        %th.text-center Order Type
+                        %th.text-center Type
+                        %th.text-center Deadline
+                        %th.text-center Subject
+                        %th.text-center Details
+                        %th.text-center Tutor Category
+                        %th.text-center Word count
+                        %th.text-center Priority
+                        %th.text-center Login School Account
+                        %th.text-center Client
+                        %th.text-center Tutor
+                        %th.text-center Sub-tutor
+                        %th.text-center Hours Late
+                        %th.text-center Prof
+                        %th.text-center Grade
+                        %th.text-center Status
+                        %th.text-end Action
+                    %tbody
+                      =render partial: 'managers/homeworks/table', collection: @ongoing, as: :home
+            .card.mt-5{class: "card card-#{cookies[:theme]}"}
+              .card-body
+                .row 
+                  .col-6.text-start 
+                    %h3 For Approval
+                .table-responsive
+                  %table#forApproval.display.nowrap
+                    %thead
+                      %tr
+                        %th.text-start id
+                        %th.text-center Task Code
+                        %th.text-center Order Date
+                        %th.text-center Order Type
+                        %th.text-center Type
+                        %th.text-center Deadline
+                        %th.text-center Subject
+                        %th.text-center Details
+                        %th.text-center Tutor Category
+                        %th.text-center Word count
+                        %th.text-center Priority
+                        %th.text-center Login School Account
+                        %th.text-center Client
+                        %th.text-center Tutor
+                        %th.text-center Sub-tutor
+                        %th.text-center Hours Late
+                        %th.text-center Prof
+                        %th.text-center Grade
+                        %th.text-center Status
+                        %th.text-end Action
+                    %tbody
+                      =render partial: 'managers/homeworks/history', collection: @finished_by_tutor, as: :home
+            .card.mt-5{class: "card card-#{cookies[:theme]}"}
+              .card-body
+                .row 
+                  .col-6.text-start 
+                    %h3 History
+                .table-responsive
+                  %table#history.display.nowrap
+                    %thead
+                      %tr
+                        %th.text-start id
+                        %th.text-center Task Code
+                        %th.text-center Order Date
+                        %th.text-center Order Type
+                        %th.text-center Type
+                        %th.text-center Deadline
+                        %th.text-center Subject
+                        %th.text-center Details
+                        %th.text-center Tutor Category
+                        %th.text-center Word count
+                        %th.text-center Priority
+                        %th.text-center Login School Account
+                        %th.text-center Client
+                        %th.text-center Tutor
+                        %th.text-center Sub-tutor
+                        %th.text-center Hours Late
+                        %th.text-center Prof
+                        %th.text-center Grade
+                        %th.text-center Status
+                        %th.text-end Action
+                    %tbody
+                      =render partial: 'managers/homeworks/history', collection: @homeworks, as: :home
+= javascript_pack_tag 'datatable_basic'

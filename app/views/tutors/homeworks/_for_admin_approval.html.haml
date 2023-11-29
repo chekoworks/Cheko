@@ -1,0 +1,18 @@
+%tr
+  %td.text-start= home.id
+  %td.text-center=home.name
+  %td.text-center= home.created_at.strftime("%B %d, %Y") 
+  %td.text-center= home.order_type.titleize
+  %td.text-center= home.sub_type.titleize if home.sub_type.present?
+  %td.text-center= home.internal_deadline.strftime("%B %d, %Y")
+  %td.text-center= home.subject
+  %td.text-center= home.words
+  -# %td.text-center= home.priority
+  -# %td.text-center= home.login_school
+  -# %td.text-center= home.hours_late
+  -# %td.text-center= home.prof
+  -# %td.text-center= home.grade
+  %td.text-center= format_category(home)
+  %td.text-center= home.status
+  %td.text-end
+    %a.fas.fa-eye.text-success.font-16.mr-3{href: tutors_homework_path(home)}

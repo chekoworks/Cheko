@@ -1,0 +1,69 @@
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-cheko.sticky-top
+  .container-fluid
+    %a.navbar-brand{href: user_signed_in? ? users_path : root_path}
+      = image_tag "logo-white.png", id: 'logo-image'
+    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarSupportedContent", "data-bs-toggle" => "collapse", type: "button"}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+        -if user_signed_in?
+          %li.nav-item
+            %a.nav-link{href: users_homeworks_path} HW-Help
+          %li.nav-item
+            %a.nav-link{href: users_qnas_path} Q&A
+          %li.nav-item.dropdown
+            %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"} Profs to Pick
+            %ul.dropdown-menu{"aria-labelledby" => "navbarDropdown"}
+              %li
+                %a.dropdown-item{href: users_professors_path} Search Prof
+              %li
+                %a.dropdown-item{href: new_users_professor_path} Add a prof review
+          %li.nav-item
+            %a.nav-link{href: cheko_ai_path} Cheko AI
+        -else 
+          %li.nav-item
+            %a.nav-link{href: pick_type_path} HW-Help
+          %li.nav-item
+            %a.nav-link{href: professors_path} Profs to pick
+          %li.nav-item
+            %a.nav-link{href: pick_type_qnas_path} Q&A
+          %li.nav-item
+            %a.nav-link{href: cheko_ai_path} Cheko AI
+          -# %li.nav-item
+          -#   %a.nav-link{href: about_us_path} About us
+          -# %li.nav-item
+          -#   %a.nav-link{href: how_it_works_path} How it works
+          -# %li.nav-item
+          -#   %a.nav-link{href: testimonies_path} Testimonials
+          -# %li.nav-item
+          -#   %a.nav-link{href: contact_us_path} Contact
+      
+      -if user_signed_in?
+        %ul.navbar-nav.ms-auto.mb-2.mb-lg-0
+          %li.nav-item.dropdown
+            %a#navbarDropdown.nav-link.dropdown-toggle.active{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"}= current_user.first_name
+            %ul.dropdown-menu.dropdown-menu-end{"aria-labelledby" => "navbarDropdown"}
+              %li
+                -# %a.dropdown-item{href: "#"} Profile
+              - if current_user.theme == "light" || cookies[:theme] == "light"
+                %li.nav-item
+                  %a.dropdown-item{href: request.path + "?theme=dark"} Change theme
+              - else
+                %li.nav-item
+                  %a.dropdown-item{href: request.path + "?theme=light"} Change theme
+              %li
+                %hr.dropdown-divider/
+              %li
+                %a.dropdown-item{onclick: "resetLogOut()", href: destroy_user_session_path, data: {method: :delete}} Log out
+                -# {href: destroy_user_session_path, data: {method: :delete}}
+      -else
+        %ul.navbar-nav.ms-auto.mb-2.mb-lg-0
+          %li.nav-item
+            %a.nav-link{href: new_user_session_path} Login
+          %li.nav-item
+            %a.nav-link{href: new_user_registration_path} Sign up
+
+:javascript
+  function resetLogOut() {
+    window.$chatwoot.reset()
+  }

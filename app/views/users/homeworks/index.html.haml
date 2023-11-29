@@ -1,0 +1,65 @@
+= render 'users/shared/header'
+= render 'users/shared/chat-widget'
+
+-# - if cookies[:theme] == "dark"
+-#   = stylesheet_link_tag 'datatable', media: 'all'
+-# - else 
+.container-fluid
+  .row
+    .col-sm-12.col-md-12.col-lg-10.ms-auto.me-auto.mt-2.p-4
+      .mt-5.mx-2
+        %div{class: "card card-#{cookies[:theme]}" }
+          .card-body
+            .row 
+              .col-6.text-start
+                %h3 HW-Help
+              .col-6.text-end 
+                = link_to "New Order", pick_type_users_homeworks_path, class: "btn btn-primary"
+            %div{class: "table-responsive "}
+              %table.datatableBasic
+                %thead
+                  %tr
+                    %th.text-start ID
+                    %th.text-center Homework Type
+                    %th.text-center Type
+                    %th.text-center Subject
+                    %th.text-center Price
+                    %th.text-center Deadline
+                    %th.text-center Status
+                    %th.text-end Action
+                %tbody
+                  - unless @homeworks.blank?
+                    - @homeworks.each do |home|
+                      -# - d = DateTime.parse(home.deadline.to_s)
+                      -# - l = d.new_offset('+0800')
+                      -# - u = l.new_offset('UTC')
+
+                      %tr
+                        %td.text-start= home.id if home.id.present?
+                        %td.text-center= home.order_type.titleize
+                        %td.text-center= home.sub_type.titleize if home.sub_type.present?
+                        %td.text-center= home.subject.present? ? home.subject.capitalize : "No subject provided"
+                        %td.text-center= home.price
+                        %td.text-center= home.deadline.strftime("%B %d, %Y - %I:%M %P") if home.deadline.present?
+                        %td.text-center= home.status.titleize if home.status.present?
+                        %td.text-end
+                          %a{href: users_homework_path(home)}
+                            .fas.fa-eye.text-success.font-16.mr-3
+                          -if home.status == "in_draft"
+                            %a{href:edit_users_homework_path(home.id)}
+                              .fas.fa-pen.text-warning.font-16.mr-3
+                            %a{href:users_homework_delete_draft_path(home.id)}
+                              .fas.fa-trash.text-danger.font-16-mr-3
+                  -else
+                    %td 
+                    %td
+                    %td
+                    %td 
+                    %td No Data found
+                    %td
+                    %td
+                    %td
+  .col-xl-6.col-lg-6.col-md-6.col-sm-12{style: "padding: 6em;"}       
+= render "users/shared/footer"
+= javascript_pack_tag 'datatable_basic'
+                

@@ -1,0 +1,105 @@
+= render 'users/shared/header'
+
+.container.my-5
+  .row
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "mathQ.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Math
+          %a.stretched-link{href: new_qna_path(type: "math")}
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "econq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Econ
+          %a.stretched-link{href: new_qna_path(type: "econ")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "accountingq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Accounting
+          %a.stretched-link{href: new_qna_path(type: "accounting")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "engiq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Engineering
+          %a.stretched-link{href: new_qna_path(type: "engineering")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "machineq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Machine Learning
+          %a.stretched-link{href: new_qna_path(type: "machine learning")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "lawq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Law
+          %a.stretched-link{href: new_qna_path(type: "law")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "essayq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Essay
+          %a.stretched-link{href: new_qna_path(type: "essay")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "programmingq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Programming
+          %a.stretched-link{href: new_qna_path(type: "programming")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "roboticsq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Robotics
+          %a.stretched-link{href: new_qna_path(type: "robotics")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "statq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Stat
+          %a.stretched-link{href: new_qna_path(type: "stat")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "techq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Tech
+          %a.stretched-link{href: new_qna_path(type: "tech")} 
+    .col-sm-12.col-md-3.mt-3
+      .card.bg-dark.text-white
+        = image_tag "othersq.png", class: "card-img-top" 
+        .card-img-overlay.d-flex.flex-column.justify-content-end
+          %h5.card-title Others
+          %a.stretched-link{href: new_qna_path(type: "others")} 
+          
+    -# .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+    -#   .d-grid.gap-5
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "math")}
+    -#       .h2 Math
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "econ")}
+    -#       .h2 Econ
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "accounting")}
+    -#       .h2 Accounting
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "engineering")}
+    -#       .h2 Engineering
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "machine learning")}
+    -#       .h2 Machine Learning
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "law")}
+    -#       .h2 Law
+    -# .col-sm-12.col-md-12.col-lg-6.ms-auto.me-auto.mt-2.p-4
+    -#   .d-grid.gap-5
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "essay")}
+    -#       .h2 Essay
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "programming")}
+    -#       .h2 Programming
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "robotics")}
+    -#       .h2 Robotics
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "stat")}
+    -#       .h2 Stat
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "tech")}
+    -#       .h2 Tech
+    -#     %a.btn.bg-cheko.text-white.btn-lg{href: new_qna_path(type: "others")}
+    -#       .h2 Others

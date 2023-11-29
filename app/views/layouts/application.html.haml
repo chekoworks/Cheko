@@ -1,0 +1,22 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{content: "reload", name: "turbolinks-visit-control"}/
+    %meta{content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport"}/
+    %title Cheko
+    = csrf_meta_tags
+    = csp_meta_tag
+    = action_cable_meta_tag
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_pack_tag 'application'
+  %body{class: " #{cookies[:theme]}", style: "font-family:Helvetica"}
+    = yield
+
+    -# #loading
+    -# .page
+      = yield
+    
+    -# %footer.footer.text-center{style: "background: black"} 
+    -#   %div{style: "color: rgba(255,255,255,0.4)"}
+    -#     Copyright 2021 | All Rights Reserved | ChekoHomeworkHelp.com

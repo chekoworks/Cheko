@@ -1,0 +1,115 @@
+= render 'tutors/shared/header'
+= render 'tutors/shared/chat-widget'
+.row 
+  .col-xl-8.col-lg-10.col-sm-12.ms-auto.me-auto 
+    .container.mt-5
+      .card 
+        .card-body
+          .row 
+            .col-6.text-start
+              %h3 Ongoing
+          .table-responsive
+            %table.homeworks-scrollX.display.nowrap
+              %thead
+                %tr
+                  %th.text-start id
+                  %th.text-center Task Code
+                  %th.text-center Order Date
+                  %th.text-center Order Type
+                  %th.text-center Type
+                  %th.text-center Deadline
+                  %th.text-center Subject
+                  %th.text-center Word count
+                  -# %th.text-center Priority
+                  -# %th.text-center Login School Account
+                  -# %th.text-center Hours Late
+                  -# %th.text-center Prof
+                  -# %th.text-center Grade
+                  %th.text-center Task Level
+                  %th.text-center Status
+                  %th.text-end Action
+              %tbody
+                =render partial: 'tutors/homeworks/ongoing', collection: @ongoing, as: :home
+      .card.mt-5
+        .card-body
+          .row 
+            .col-6.text-start
+              %h3 Up for bidding
+          .table-responsive
+            %table.homeworks-scrollX.display.nowrap
+              %thead
+                %tr
+                  %th.text-start id
+                  %th.text-center Task Code
+                  %th.text-center Order Date
+                  %th.text-center Order Type
+                  %th.text-center Type
+                  %th.text-center Deadline
+                  %th.text-center Subject
+                  %th.text-center Word count
+                  -# %th.text-center Priority
+                  -# %th.text-center Login School Account
+                  -# %th.text-center Hours Late
+                  -# %th.text-center Prof
+                  -# %th.text-center Grade
+                  %th.text-center Task Level
+                  %th.text-center Status
+                  %th.text-end Action
+              %tbody
+                =render partial: 'tutors/homeworks/pending', collection: @pending, as: :home
+      .card.mt-5
+        .card-body
+          .row
+            .col-6.text-start 
+              %h3 For Admin Approval 
+          .table-responsive
+            %table.homeworks-scrollX.display.nowrap
+              %thead
+                %tr
+                  %th.text-start id
+                  %th.text-center Task Code
+                  %th.text-center Order Date
+                  %th.text-center Order Type
+                  %th.text-center Type
+                  %th.text-center Deadline
+                  %th.text-center Subject
+                  %th.text-center Word count
+                  -# %th.text-center Priority
+                  -# %th.text-center Login School Account
+                  -# %th.text-center Hours Late
+                  -# %th.text-center Prof
+                  -# %th.text-center Grade
+                  %th.text-center Task Level
+                  %th.text-center Status
+                  %th.text-end Action
+              %tbody
+                =render partial: 'tutors/homeworks/for_admin_approval', collection: @for_admin_approval, as: :home
+      .card.mt-5
+        .card-body
+          .row 
+            .col-6.text-start
+              %h3 History
+          .table-responsive
+            %table.homeworks-scrollX.display.nowrap
+              %thead
+                %tr
+                  %th.text-start id
+                  %th.text-center Task Code
+                  %th.text-center Order Date
+                  %th.text-center Order Type
+                  %th.text-center Type
+                  %th.text-center Deadline
+                  %th.text-center Subject
+                  %th.text-center Word count
+                  -# %th.text-center Priority
+                  -# %th.text-center Login School Account
+                  -# %th.text-center Hours Late
+                  -# %th.text-center Prof
+                  -# %th.text-center Grade
+                  %th.text-center Task Level
+                  %th.text-center Status
+                  %th.text-end Action
+              %tbody
+                =render partial: 'tutors/homeworks/history', collection: @history, as: :home
+              
+= javascript_pack_tag 'datatable_basic'

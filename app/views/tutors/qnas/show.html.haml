@@ -1,0 +1,106 @@
+= render 'tutors/shared/header'
+= hidden_field_tag "chat_id", @qna.chat.id, id: "chat_id"
+= hidden_field_tag "qna_id", @qna.id, id: "qna_id"
+= hidden_field_tag "type", "tutor", id: "type"
+.container.mt-5
+  .row 
+  -# - if flash.any?
+  -#   .row.text-center
+  -#     - flash.each do |type, msg|
+  -#       .col-lg-12.col-md-12.col-sm12.alert.mt-3.mb-3{class: type == 'alert' ? 'alert-danger' : 'alert-success'}
+  -#         = msg
+  .card{class: "bg-#{cookies[:theme]}"}
+    .card-body
+      .row 
+        .col-sm-6.col-md-8.text-start 
+          %h5= "#{@qna.subject.titleize}"
+        .col-sm-6.col-md-4{style: "text-align: right;"}
+          = link_to  "Cancel", tutors_qna_cancel_path(qna_id: @qna.id), class: "btn btn-danger", method: 'put'
+          %button.btn.btn-warning{"data-bs-target" => "#exampleModal", "data-bs-toggle" => "modal", type: "button", :class => "#{'disabled' if @qna.payment_status == 'paid'}"} Add Payment Method
+        - if @qna.document_attachments.attached?
+          .col-12
+            %h6 Download file
+            -@qna.document_attachments.each do |attachment|
+              =link_to attachment.filename, rails_blob_path(attachment, disposition: 'attachment'), class: "btn btn-success" 
+        %hr.mt-3
+        .col-xl-10.col-lg-10.col-md-12.ms-auto.me-auto
+          %p= @qna.question
+  .mt-3.mb-5
+    .card{class: "card-#{cookies[:theme]}", style: "padding-bottom: 10px; padding-top: 10px"}
+      .card-body{style: "padding: 0"}
+        .container#messages{style: "overflow: auto; height: 550px;"}
+          - @qna.chat.messages.order(id: :asc).each do |msg|
+            - if msg.sendable_type == "Tutor"
+              .row.mt-3
+                .col-sm-12.col-md-6.ms-auto.text-white.rounded.pt-2
+                  -# {style: "background: #24a64d"}
+                  %div.ms-auto.rounded{style: "padding: 10px; width: 20em; background: #24a64d"}
+                    %div.ms-auto{style: "width: -moz-fit-content; width: fit-content"}You
+                    %div.ms-auto{style: "width: -moz-fit-content; width: fit-content"}= msg.content
+                    - if msg.document.attached?
+                      %div.ms-auto{style: "width: -moz-fit-content; width: fit-content"}
+                        -# %a{href: msg.content} Document
+                        = link_to  "#{msg.document.blob.filename}", rails_blob_path(msg.document, disposition: 'attachment')
+            - elsif msg.sendable_type == "User"
+              .row.mt-3
+                .col-sm-12.col-md-6.me-auto.text-white.rounded.pt-2
+                  -# {style: "background: #24a64d"}
+                  %div.me-auto.rounded{style: "padding: 10px; width: 20em; background: #c97b0c"}
+                    %div.me-auto{style: "width: -moz-fit-content; width: fit-content"}User012345
+                    %div.me-auto{style: "width: -moz-fit-content; width: fit-content"}= msg.content
+                    - if msg.document.attached?
+                      %div.me-auto{style: "width: -moz-fit-content; width: fit-content"}
+                        -# %a{href: msg.content} Document
+                        = link_to "#{msg.document.blob.filename}", rails_blob_path(msg.document, disposition: 'attachment')
+        .container#text-box.mt-3
+          - if @qna.tutor_id.present?
+            = form_for @message, url: tutors_qna_messages_path(qna_id: @qna.id, chat_id: @qna.chat.id) do |f|
+              .row
+                .col-4
+                  = f.file_field :document, class: "form-control"
+                .col-8
+                  %div#send_icon
+                    = f.text_field :content, class: "form-control", autocomplete: 'off', disabled:(true if @qna.status == "done")
+                    %i.fa-regular.fa-paper-plane.btn-default
+            -# = form_for @message, url: tutors_qna_messages_path(qna_id: @qna.id, chat_id: @qna.chats.first.id) do |f|
+            -#   .row
+            -#     .col-4
+            -#       = f.file_field :document, class: "form-control"
+            -#     .col-6
+            -#       = f.text_field :content, class: "form-control"
+
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", tabindex: "-1", id: "exampleModal"}
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title Add Payment Info
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", type: "button"}
+      .modal-body
+        = form_for @qna, url: tutors_qna_add_payment_path(@qna.id) do |f|
+          .row 
+            = f.hidden_field :qna_id, :value => @qna.id 
+            .col-4
+              = f.label :amount, class: 'form-label'
+            .col-6
+              = f.text_field :amount, class: "form-control", required: true
+            .w-100
+            %br
+            .col-4 
+              = label_tag :payment_receipt, "Attachment", class: "form-label"
+            .col-6
+              = f.file_field :payment_receipt, class: "form-control", required: true
+            %br
+            .col-4
+              = f.label :date_paid, class: "form-label"
+            %br
+            .col-6{style: "padding-top: 20px;"}  
+              #datetimepicker1.input-group{"data-td-target-input" => "nearest", "data-td-target-toggle" => "nearest"}
+                = text_field_tag "qna[date_paid]", "", class: "form-control", id: "datetimepicker1Input", "data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker", readonly: true, required: true, style: "background: white"
+                %span.input-group-text{"data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker"}
+                  %span.fas.fa-calendar
+          %div{style: "text-align: right; padding-top: 15px;"}
+            = f.submit "Submit", class: "btn btn-primary"
+            %button.btn.btn-secondary{"data-bs-dismiss" => "modal", type: "button"} Close
+        
+= javascript_pack_tag 'messages/new'
+= javascript_pack_tag 'tutors/qnas'

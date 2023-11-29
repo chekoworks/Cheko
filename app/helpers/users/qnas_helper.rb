@@ -1,0 +1,2 @@
+module Users::QnasHelper
+end

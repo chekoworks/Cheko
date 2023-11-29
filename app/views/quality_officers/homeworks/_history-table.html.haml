@@ -1,0 +1,16 @@
+%tr
+  %td= home.id
+  %td= home.name
+  %td= home.user.name
+  -# %td= home.type
+  %td= home.tutor_category.titleize if home.tutor_category.present?
+  %td= home.status.capitalize
+  %td= home.admin.name if home.admin_id.present?
+  %td= home.manager.name if home.manager_id.present?
+  %td= home.tutor.name if home.tutor_id.present?
+  %td= home.deadline.strftime("%B %d, %Y")
+  %td= home.subject
+  %td= home.tutor_category
+  %td= home.words
+  %td
+    %a.fas.fa-eye.text-success.font-16.mr-3{href: quality_officers_homework_path(home)}

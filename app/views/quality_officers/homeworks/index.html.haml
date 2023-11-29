@@ -1,0 +1,62 @@
+= render 'quality_officers/shared/header'
+.row
+  .col-12
+    .row 
+      .col-xl-10.col-lg-10.col-sm-12.ms-auto.me-auto 
+        .container-flex.mt-5
+          %h3 Homeworks
+          .card.mt-5
+            .card-body
+              .row 
+                .col-6.text-start
+                  %h3 Ongoing
+              .table-responsive
+                %table.homeworks-scrollX.display.nowrap
+                  %thead
+                    %tr
+                      %th id
+                      %th Task Code
+                      %th Client
+                      %th Tutor Category
+                      %th Tutor
+                      %th Sub Tutor
+                      %th TL
+                      %th TM
+                      %th Internal Deadline
+                      %th Updates
+                      %th Deadline
+                      %th Subject
+                      %th Subject 2
+                      %th Time Received
+                      %th Hours Late
+                      %th Action
+                  %tbody
+                    =render partial: 'quality_officers/homeworks/ongoing-table', collection: @ongoing, as: :home
+          .card.mt-5.mb-5
+            .card-body
+              .row 
+                .col-6.text-start
+                  %h3 History
+              .table-responsive
+                %table.homeworks-scrollX.display.nowrap
+                  %thead
+                    %tr
+                      %th Name
+                      %th Client
+                      -# %th Type
+                      %th Tutor Category
+                      %th Status
+                      %th Lead
+                      %th Manager
+                      %th Tutor
+                      %th Deadline
+                      %th Code
+                      %th Subject
+                      %th Tutor Category
+                      %th Word Count
+                      %th Action
+                  %tbody
+                    =render partial: 'quality_officers/homeworks/history-table', collection: @history, as: :home
+
+
+= javascript_pack_tag 'datatable_basic'

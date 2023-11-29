@@ -1,0 +1,19 @@
+.row 
+  .col-3.ms-auto.me-auto.mt-5
+    .card 
+      .card-body
+        %h2 Quality Officer Log in
+        = form_for(resource, as: resource_name, url: quality_officer_session_path) do |f|
+          .mb-3
+            .field
+              = f.label :email, class: "form-label"
+              %br/
+              = f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email"
+          .mb-3
+            .field
+              = f.label :password, class: "form-label"
+              %br/
+              = f.password_field :password, class: "form-control", autocomplete: "current-password"
+          .mb-3
+            .actions
+              = f.submit "Log in", class: "btn btn-primary"

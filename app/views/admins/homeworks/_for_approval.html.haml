@@ -1,0 +1,38 @@
+%tr
+  %td= home.id
+  //%td= home.name
+  %td= home.user.name
+  %td= home.tutor_category.titleize if home.tutor_category.present?
+  %td= home.tutor.name     if home.tutor_id.present?
+  %td= home.sub_tutor.name if home.sub_tutor_id.present?
+  %td= home.admin.name     if home.admin_id.present?
+  %td= home.manager.name   if home.manager_id.present?
+  %td= home.tutor_price
+  %td= home.price
+  %td= home.profit
+  %td= home.tutor_skills?
+  %td= home.tutor_samples?
+  %td= home.view_bidders?
+  %td= home.priority?
+  %td= home.login_school?
+  %td= home.order_type.titleize
+  %td= home.sub_type.titleize if home.sub_type.present?
+  %td= home.updates
+  %td= home.deadline.strftime("%b %d, %Y")
+  %td= home.deadline.strftime("%l:%M %p")
+  %td= home.internal_deadline.strftime("%b %d, %Y") if home.internal_deadline.present?
+  %td= home.internal_deadline.strftime("%l:%M %p") if home.internal_deadline.present?
+  %td= home.subject
+  %td= home.sub_subject
+  %td= home.file_received
+  %td= home.hours_late
+  %td= home.notes
+  %td= home.prof
+  %td= home.user.course
+  %td= home.grade
+  %td= home.status
+  %td 
+  %td 
+  %td= home.payment_received
+  %td
+    %a.fas.fa-eye.text-success.font-16.mr-3{href: admins_homework_path(home)}

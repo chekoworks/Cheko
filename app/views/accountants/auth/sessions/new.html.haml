@@ -1,0 +1,25 @@
+.row 
+  .col-3.ms-auto.me-auto.mt-5
+    .card 
+      .card-body
+        %h2 Accountants Log in
+        -if flash.any?
+          .row.text-center
+            -# %ul.alert.alert-danger
+            - flash.each do |type, msg|
+              .col-lg-12.col-md-12.col-sm-12.alert.mt-3.mb-3{class: type == "alert" ? "alert-danger" : "alert-success"}
+                = msg
+        = form_for(resource, as: resource_name, url: accountant_session_path) do |f|
+          .mb-3
+            .field
+              = f.label :email, class: "form-label"
+              %br/
+              = f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email"
+          .mb-3
+            .field
+              = f.label :password, class: "form-label"
+              %br/
+              = f.password_field :password, class: "form-control", autocomplete: "current-password"
+          .mb-3
+            .actions
+              = f.submit "Log in", class: "btn btn-primary"

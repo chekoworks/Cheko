@@ -1,0 +1,21 @@
+= render 'users/shared/header'
+.container
+  .row 
+    .col-6.ms-auto.me-auto.mt-5
+      .card 
+        .card-body
+          -if flash.any?
+            .row.text-center
+              -# %ul.alert.alert-danger
+              - flash.each do |type, msg|
+                .col-lg-12.col-md-12.col-sm-12.alert.mt-3.mb-3{class: type == "alert" ? "alert-danger" : "alert-success"}
+                  = msg
+          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+            = render "users/auth/shared/error_messages", resource: resource
+            .mb-3
+              .field
+                = f.label :email
+                = f.email_field :email, autofocus: true, class: "form-control"
+            .mb-3
+              .field
+                = f.submit "Send me reset password instructions", class: "btn btn-primary"

@@ -1,0 +1,188 @@
+= render 'admins/shared/header'
+.container-fluid
+  .row
+    .col-md-3.col-lg-2
+      = render 'admins/shared/sidebar'
+    .col-md-9.col-lg-10
+      .row 
+        .col-xl-8.col-lg-10.col-sm-12.ms-auto.me-auto 
+          .container.mt-5
+            .row
+              .col-xl-6.col-lg-6.col-sm-12
+                .card 
+                  .card-body
+                    .row 
+                      .col-6.text-start 
+                        %h5 Update Homeworks
+                      .col-12
+                        = form_for @homework, url: admins_homework_path, method: :put do |f|
+                          .mb-3
+                            .field
+                              =label_tag "client", "Client", class: "form-label"
+                              =text_field_tag "client", @homework.user.name, disabled: true, class: "form-control"
+                          .mb-3
+                            .field
+                              =label_tag "subject", "Subject", class: "form-label"
+                              =f.text_field :subject, value: @homework.subject, class: "form-control", required: true
+                          .mb-3 
+                            .field
+                              = f.label :internal_subject, "Subject 2", class: "form-label"
+                              = f.text_field :internal_subject, class: "form-control", value: @homework.internal_subject
+                          .mb-3
+                            .field
+                              = label_tag :deadline, "Deadline", class: "form-label"
+                              #datetimepicker1.input-group{"data-td-target-input" => "nearest", "data-td-target-toggle" => "nearest"}
+                                -# %input#datetimepicker1Input.form-control{"data-td-target" => "#datetimepicker1", type: "text"}/
+                                = f.text_field :deadline, value: @homework.deadline.strftime("%m/%d/%Y, %l:%M %p"), class: "form-control", "data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker", readonly: true, style: "background: white"
+                                %span.input-group-text{"data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker"}
+                                  %span.fas.fa-calendar
+                          .mb-3
+                            .field
+                              =label_tag "details", "Details", class: "form-label"
+                              =f.text_area :details, value: @homework.details, class: "form-control", rows: 4
+                          - if @homework.order_type == "essay" || @homework.order_type == "group_projects" || @homework.order_type == "law"
+                            
+                            .mb-3
+                              .field
+                                =label_tag "words", "Words", class: "form-label"
+                                =f.text_field :words, value: @homework.words, class: "form-control"
+                            .mb-3 
+                              .field 
+                                = label_tag :tutor_category, "Pick a type of writer"
+                                .form-check
+                                  = f.radio_button :tutor_category, "a_plus", class: "form-check-input", checked: @homework.tutor_category == "a_plus" ? true : false, "data-bal" => 2.5
+                                  = f.label :tutor_category, "Best Writers (₱2.50 per word)", :value => "a_plus", class: "form-check-label"
+                                .form-check
+                                  = f.radio_button :tutor_category, "cheko", class: "form-check-input", checked: @homework.tutor_category == "cheko" ? true : false, "data-bal" => 1.6
+                                  = f.label :tutor_category, "Great Writers (₱1.60 per word)", :value => "cheko", class: "form-check-label"
+                                .form-check
+                                  = f.radio_button :tutor_category, "standard", class: "form-check-input", checked: @homework.tutor_category == "standard" ? true : false, "data-bal" => 1
+                                  = f.label :tutor_category, "Standard Writers (₱1 per word)", :value => "standard", class: "form-check-label"
+                          .mb-3 
+                            .field
+                              = f.label :price, class: "form-label"
+                              = f.number_field :price, class: "form-control", min: 0, value: @homework.price
+                          .mb-3
+                            .field 
+                              = f.label :min_bid, "Budget", class: "form-label"
+                              = f.number_field :min_bid, class: "form-control", min: 0, value: @homework.min_bid
+                          .mb-3 
+                            .field
+                              %h5 Estimate Price
+                              %h4#testEstimate 
+                                = @homework.price.present? ? @homework.price : ""
+                          .row
+                            .col-4
+                              = label_tag :priority, "Priority? +30%"
+                              .form-check.form-switch
+                                = hidden_field_tag "homework[priority]", false
+                                = check_box_tag "homework[priority]", true, false, class: "form-check-input", id: "homework_priority2", checked: @homework.priority
+                            .col-4
+                              = label_tag :tutor_skills, "Tutor Skills? P100"
+                              .form-check.form-switch
+                                = hidden_field_tag "homework[tutor_skills]", false
+                                = check_box_tag "homework[tutor_skills]", true, false, class: "form-check-input", id: "homework_tutor_skills2", checked: @homework.tutor_skills
+                            .col-4
+                              = label_tag :tutor_samples, "Tutor Samples? P100"
+                              .form-check.form-switch
+                                = hidden_field_tag "homework[tutor_samples]", false
+                                = check_box_tag "homework[tutor_samples]", true, false, class: "form-check-input", id: "homework_tutor_samples2", checked: @homework.tutor_samples
+                            .col-4
+                              = label_tag :view_bidders, "View Bidders? P300"
+                              .form-check.form-switch
+                                = hidden_field_tag "homework[view_bidders]", false
+                                = check_box_tag "homework[view_bidders]", true, false, class: "form-check-input", id: "homework_view_bidders2", checked: @homework.view_bidders
+                            .col-4
+                              = label_tag :login_school, "Login School? P200"
+                              .form-check.form-switch
+                                = hidden_field_tag "homework[login_school]", false
+                                = check_box_tag "homework[login_school]", true, false, class: "form-check-input", id: "homework_login_school2", checked: @homework.login_school
+                            .mb-3
+                              .actions
+                                = f.submit "Update Homework", class: "btn btn-primary"
+              .col-xl-6.col-lg-6.col-sm-12
+                .card 
+                  .card-body
+                    .row
+                      .col-6.text-start 
+                        %h5 Assign Personnel
+                      .col-12
+                        = form_for @homework, url: admins_homework_path, method: :put do |f|
+                          - if current_admin.role == 'super_admin'
+                            -# = render 'admins/homeworks/super_edit'
+                            .mb-3
+                              .field
+                                = f.label "Team Lead", class: "form-label"
+                                = f.select(:admin_id, @leads.collect{|l| [l.name, l.id]}, {include_blank: true }, class: "form-select")
+                            .mb-3
+                              .field
+                                = f.label "Task Manager", class: "form-label"
+                                = f.select(:manager_id, @managers.collect{|l| [l.name, l.id]}, {include_blank: true }, class: "form-select")
+                            .mb-3
+                              .field
+                                = f.label "Tutor", class: "form-label"
+                                = f.select(:tutor_id, @tutors.collect{|l| [l.name, l.id]}, {include_blank: true }, class: "form-select")
+                            .mb-3
+                              .field
+                                = f.label "Sub Tutor", class: "form-label"
+                                = f.select(:sub_tutor_id, @tutors.collect{|l| [l.name, l.id]}, {include_blank: true }, class: "form-select")
+                            .mb-3 
+                              .field
+                                = f.label :tutor_price, class: "form-label"
+                                = f.number_field :tutor_price, class: "form-control", min: 0, value: @homework.tutor_price
+                            .mb-3
+                              .field
+                                = f.label :internal_deadline, class: "form-label"
+                                #datetimepicker2.input-group{"data-td-target-input" => "nearest", "data-td-target-toggle" => "nearest"}
+                                  -# %input#datetimepicker1Input.form-control{"data-td-target" => "#datetimepicker1", type: "text"}/
+                                  -# = text_field_tag "homework[deadline]", "", class: "form-control", id: "datetimepicker2Input", "data-td-target" => "#datetimepicker2", "data-td-toggle" => "datetimepicker", readonly: true, required: true, style: "background: white"
+                                  = f.text_field :internal_deadline, value: @homework.internal_deadline.present? ? @homework.internal_deadline.strftime("%m/%d/%Y, %l:%M %p") : "", class: "form-control", "data-td-target" => "#datetimepicker2", "data-td-toggle" => "datetimepicker", readonly: true, style: "background: white", required: true
+                                  %span.input-group-text{"data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker"}
+                                    %span.fas.fa-calendar
+                            .mb-3
+                              .field 
+                                //= f.label :task_code, class: "form-label"
+                                //= f.text_field :name, class: "form-control"
+                            .mb-3
+                              .actions
+                                = f.submit "Assign", class: "btn btn-primary"
+                          -else
+                            -# = render 'admins/homeworks/lead_edit'
+                            .mb-3
+                              .field
+                                = f.label "Task Manager", class: "form-label"
+                                = f.select(:manager_id, @managers.collect{|l| [l.name, l.id]}, {include_blank: true }, class: "form-select")
+                            .mb-3
+                              .field
+                                = f.label "Tutor", class: "form-label"
+                                = f.select(:tutor_id, @tutors.collect{|l| [l.name, l.id]}, {include_blank: true }, class: "form-select")
+                            .mb-3
+                              .field
+                                = f.label "Sub Tutor", class: "form-label"
+                                = f.select(:sub_tutor_id, @tutors.collect{|l| [l.name, l.id]}, {include_blank: true }, class: "form-select")
+                            - if @homework.tutor_id.present?
+                              .mb-3
+                                .field
+                                  = f.label "Tutor", class: "form-label"
+                                  = f.select(:tutor_id, @tutors.collect{|l| [l.name, l.id]}, {include_blank: true }, class: "form-select")
+                              .mb-3 
+                                .field
+                                  = f.label :tutor_price, class: "form-label"
+                                  = f.number_field :tutor_price, min: 0, class: "form-control"
+                            .mb-3
+                              .field
+                                = f.label :internal_deadline, class: "form-label"
+                                #datetimepicker2.input-group{"data-td-target-input" => "nearest", "data-td-target-toggle" => "nearest"}
+                                  -# %input#datetimepicker1Input.form-control{"data-td-target" => "#datetimepicker1", type: "text"}/
+                                  -# = text_field_tag "homework[deadline]", "", class: "form-control", id: "datetimepicker2Input", "data-td-target" => "#datetimepicker2", "data-td-toggle" => "datetimepicker", readonly: true, required: true, style: "background: white"
+                                  = f.text_field :internal_deadline, value: @homework.internal_deadline.present? ? @homework.internal_deadline.strftime("%m/%d/%Y, %l:%M %p") : "", class: "form-control", "data-td-target" => "#datetimepicker2", "data-td-toggle" => "datetimepicker", readonly: true, style: "background: white", required: true
+                                  %span.input-group-text{"data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker"}
+                                    %span.fas.fa-calendar
+                            .mb-3
+                              .field 
+                                //= f.label :task_code, class: "form-label"
+                                //= f.text_field :name, class: "form-control"
+                            .mb-3
+                              .actions
+                                = f.submit "Update Personnel", class: "btn btn-primary"
+= javascript_pack_tag 'homeworks/admin'

@@ -1,0 +1,133 @@
+= render 'managers/shared/header'
+= render 'managers/shared/sidebar'
+.row 
+  -# .col-xl-8.col-lg-10.col-sm-12.ms-auto.me-auto 
+  -#   .container.mt-5
+  -#     %h4= @homework.user.name
+  .col-6.ms-auto.me-auto.mt-5
+    .card
+      .card-body
+        .row.mt-3
+          .col-12.text-end
+            %button.btn.btn-primary{"data-bs-target" => "#exampleModal", "data-bs-toggle" => "modal", type: "button"}
+              Files
+            -if @homework.status == "finished_by_tutor"
+              %a.btn.btn-success.fload-end{href: managers_homework_approve_path(@homework.id), data: {method: :put}} Finish Order
+          .col-6
+            %h5= "Order ID: #{@homework.id}"
+            %h5= "User: #{@homework.user.name}"
+            %br
+          .col-12
+            %h5 Details:
+            %p= @homework.details
+          .col-6
+            %h5 Deadline:
+            %p= @homework.deadline
+          .col-6
+            %h5 Subject:
+            %p= @homework.subject_id.present? ? @homework.subject.name : "None Provided"
+          .col-6
+            %h5 Words:
+            %p= @homework.words
+          .col-6
+            %h5 Target Grade:
+            %p= @homework.grade
+
+-unless @homework.status == "done"
+  .row.mt-5
+    .col-6.ms-auto.me-auto
+      .card
+        .card-body
+          .row.mt-3
+            .col-6
+              %h5= "Tutors Interested: #{@bids.present? ? @bids.count : 0}"
+            .col-6-text-end
+              - if @homework.tutor_id.present?
+                %h5= "Assigned: #{@homework.tutor.name}"
+            .col-12
+              .table-responsive
+                %table.table
+                  %thead
+                    %tr
+                      %th.text-start Tutor
+                      %th.text-start Offer 
+                      %th.text-end
+                  %tbody
+                    - unless @bids.blank?
+                      - @bids.each do |bid|
+                        %tr
+                          %td.text-start= bid.tutor.name
+                          %td.text-start= bid.ammount 
+                          %td.text-end
+                            - if @homework.tutor_id == bid.tutor_id
+                              %a{href: managers_homework_assign_tutor_path(homework_id: @homework.id, bid_id: bid.id), data: {method: :put}, class: "btn btn-primary disabled", disabled: true} Assigned
+                            - else
+                              %a{href: managers_homework_assign_tutor_path(homework_id: @homework.id, bid_id: bid.id), data: {method: :put}, class: "btn btn-primary" } Assigned
+                    - else
+                      %td No Data found
+
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", tabindex: "-1", id: "exampleModal"}
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title= @homework.name
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", type: "button"}
+      .modal-body
+        .row.mt-3
+          %h5 Uploaded files
+          .container-flex.mt-2
+            %h6
+              %strong User Files: 
+            - @homework.hw_attachment.each do |att|
+              .row.d-flex.justify-content-between
+                .col-3
+                  = att.filename
+                .col-3.text-end
+                  = link_to "Download File", rails_blob_path(att, disposition: 'attachment'), class: "btn btn-success"
+              %hr  
+          .container-flex.mt-2
+            %h6 
+              %strong Tutor files:
+            - @tutor.each do |docu|
+              .row.d-flex.justify-content-between
+                .col-3
+                  = docu.file.filename
+                .col-3.text-end
+                  = link_to "Download File", rails_blob_path(docu.file, disposition: 'attachment'),class: "btn btn-success"
+              %hr
+          .container-flex.mt-2
+            .row-mt.3
+              %h5
+                %strong Manager Files:
+              =form_for @homework.documents.new, url: managers_homework_upload_path(homework_id: @homework.id) do |f|
+                .row.d-flex.justify-content-between
+                  .col-12
+                  .col-10
+                    = f.file_field "file", class: "form-control"
+                  .col-2.text-end
+                    = submit_tag "Upload", class: "btn btn-primary disabled", id: "uploadButton"
+                .row.mt-3
+                  %h5 Uploaded Files:
+                  .container-flex.mt-2
+                    - @manager.each do |docu|
+                      .row.d-flex.justify-content-between
+                        .col-3
+                          = docu.file.filename
+                        .col-3.text-end
+                          = link_to "Download File", rails_blob_path(docu.file, disposition: 'attachment'), class: "btn btn-success"
+                      %hr  
+
+          -# .container-flex.mt-2
+          -#   %h6 
+          -#     %strong Quality Control Officer files:
+          -#   - @qco.each do |docu|
+          -#     .row.d-flex.justify-content-between
+          -#       .col-3
+          -#         = docu.file.filename
+          -#       .col-3.text-end
+          -#         = link_to "Download File", rails_blob_path(docu.file, disposition: 'attachment'),class: "btn btn-success"
+          -#     %hr
+      .modal-footer
+        %button.btn.btn-secondary{"data-bs-dismiss" => "modal", type: "button"} Close
+= javascript_pack_tag 'managers/homework'
+    

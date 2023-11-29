@@ -1,0 +1,27 @@
+= render 'users/shared/header'
+.container
+  .row 
+    .col-6.ms-auto.me-auto.mt-5
+      .card 
+        .card-body
+          %h2 Change your password
+          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+            = render "users/auth/shared/error_messages", resource: resource
+            = f.hidden_field :reset_password_token
+            .mb-3
+              .field
+                = f.label :password, "New password"
+                %br/
+                - if @minimum_password_length
+                  %em
+                    (#{@minimum_password_length} characters minimum)
+                  %br/
+                = f.password_field :password, class: "form-control"
+            .mb-3
+              .field
+                = f.label :password_confirmation, "Confirm new password"
+                %br/
+                = f.password_field :password_confirmation, class: "form-control"
+            .mb-3
+              .actions
+                = f.submit "Change my password", class: "btn btn-primary"

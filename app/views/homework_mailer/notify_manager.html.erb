@@ -1,0 +1,3 @@
+<h3>Hi <%=@homework.manager.first_name%>,</h3>
+<p>Order <%=@homework.id%> has been submitted for approval. Click this <%= link_to "link", managers_homework_url(@homework.id)%>
+to access the task.</p>

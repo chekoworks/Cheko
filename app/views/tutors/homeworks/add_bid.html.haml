@@ -1,0 +1,43 @@
+= render 'tutors/shared/header'
+= render 'tutors/shared/chat-widget'
+.row 
+  .col-xl-6.col-lg-8.col-md-10.col-sm-12.ms-auto.me-auto 
+    .mt-5
+      %h4= @homework.order_type.titleize
+.row
+  .col-xl-6.col-lg-8.col-md-10.col-sm-12.ms-auto.me-auto 
+    .card
+      .card-body
+        .row.mt-3
+          .col-6
+            -# %h5= "Client: #{@homework.user.name}"
+        .row.mt-3
+          .col-6
+            %h5 Deadline:
+            %p= @homework.deadline.strftime("%b %d, %Y - %l:%M %p") if @homework.deadline.present?
+          .col-6
+            %h5 Subject:
+            %p=  @homework.subject.present? ? @homework.subject : "None Provided"
+          .col-6
+            %h5 Words:
+            %p= @homework.words
+          .col-6
+            %h5 Target Grade:
+            %p= @homework.grade
+
+
+        %hr
+        .row 
+          .col-xl-6.col-lg-8.col-md-10.col-sm-12.ms-auto.me-auto 
+            %h5= "Add Bid #{@homework.order_type.titleize}"
+            %h6= "Starting Bid: #{@homework.min_bid}"
+        .row
+          .col-xl-6.col-lg-8.col-md-10.col-sm-12.ms-auto.me-auto 
+            = form_tag(tutors_homework_bid_path) do
+              .mb-3
+                .field
+                  = label_tag "amount", 'Amount', class: "form-label"
+                  = number_field_tag 'ammount', nil, {class: "form-control", min: @homework.min_bid, required: true}
+              .mb-3
+                .actions
+                  = submit_tag "Create", class: "btn btn-primary"

@@ -1,0 +1,2 @@
+module Accountants::HomeworksHelper
+end

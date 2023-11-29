@@ -1,0 +1,74 @@
+= render 'accountants/shared/header'
+.row 
+  .col-xl-10.col-lg-10.col-sm-12.ms-auto.me-auto 
+    .container-flex.mt-5
+      %h3 Homeworks
+      .card.mt-5.mb-5
+        .card-body
+          .row 
+            .col-6.text-start
+              %h3 Pending
+          .table-responsive
+            %table.homeworks-scrollX.display.nowrap
+              %thead
+                %tr
+                  %th Order Created
+                  %th Order Type
+                  %th Client
+                  %th Tutor
+                  %th Sub Tutor
+                  %th TL
+                  %th TM
+                  %th Order Number
+                  %th Payment to Tutor
+                  %th Client's payment
+                  %th Profit
+                  %th Additional
+                  %th Updates
+                  %th Deadline
+                  %th Subject
+                  %th Time Received
+                  %th Hours Late
+                  %th Notes
+                  %th Prof
+                  %th Grade
+                  %th Status
+                  %th Action
+              %tbody
+                =render partial: 'accountants/homeworks/table', collection: @pending, as: :home
+
+      .card.mt-5.mb-5
+        .card-body
+          .row 
+            .col-6.text-start
+              %h3 History
+          .table-responsive
+            %table.homeworks-scrollX.display.nowrap
+              %thead
+                %tr
+                  %th Order Created
+                  %th Order Type
+                  %th Client
+                  %th Tutor
+                  %th Sub Tutor
+                  %th TL
+                  %th TM
+                  %th Order Number
+                  %th Payment to Tutor
+                  %th Client's payment
+                  %th Profit
+                  %th Additional
+                  %th Updates
+                  %th Deadline
+                  %th Subject
+                  %th Time Received
+                  %th Hours Late
+                  %th Notes
+                  %th Prof
+                  %th Grade
+                  %th Status
+              %tbody
+                =render partial: 'accountants/homeworks/table', collection: @history, as: :home
+
+
+= javascript_pack_tag 'datatable_basic'

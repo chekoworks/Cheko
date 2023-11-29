@@ -1,0 +1,32 @@
+%tr
+  %td= home.created_at.strftime("%b %d, %Y - %l:%M %p")
+  %td= home.order_type.titleize
+  %td= home.user.name
+  %td= home.tutor.name     if home.tutor_id.present?
+  %td= home.sub_tutor.name if home.sub_tutor_id.present?
+  %td= home.admin.name
+  %td= home.manager.name   if home.manager_id.present?
+  %td= home.id
+  %td= home.tutor_price
+  %td= home.price
+  %td 0
+  %td 0
+  %td= home.updates
+  %td= home.deadline.strftime("%b %d, %Y - %l:%M %p")
+  %td= home.subject
+  %td= home.file_received
+  %td= home.hours_late
+  %td= home.notes
+  %td= home.prof
+  %td= home.grade
+  %td= home.status
+  -if home.payment_status == "unpaid"
+    %td
+      %a.fa.fa-circle-check.text-success.font-16.mr-3{href: accountants_homework_path(id: home.id), data: {method: :put}}
+    -# = link_to :show, admins_homework_path(home)
+    -# - if home.admin_id == current_admin.id || current_admin.role == 'super_admin'
+    -#   = link_to :edit, edit_admins_homework_path(home)
+    -# - elsif home.admin_id.nil?
+    -#   = link_to :assign, admins_homework_assign_path(homework_id: home.id), method: :put
+    -# - if current_admin.role == 'super_admin'
+    -#   = link_to :delete, admins_homework_path(home), method: :delete

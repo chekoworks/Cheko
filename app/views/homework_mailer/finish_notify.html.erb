@@ -1,0 +1,4 @@
+<h5>Hi <%=@homework.user.name%>,</h5>
+<p>Your task for order <%=@homework.id%> is finished. Click this <%= link_to "link", users_homework_url(@homework.id)%>
+to access the file.</p>
+<p style="color: red;">Please review the task and ensure that everything is in order. If revisions are sent 24 hours upon submission, the tutor reserves the right to decide whether s/he will edit it or not.</p>

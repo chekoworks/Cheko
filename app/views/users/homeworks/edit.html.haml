@@ -1,0 +1,40 @@
+= render 'users/shared/header'
+.row 
+  .col-xl-8.col-lg-10.col-sm-12.ms-auto.me-auto 
+    .container.mt-5
+      .card{class: "card-#{cookies[:theme]}"}
+        .card-body
+          .row
+            .col-12.text-start 
+              %h5 Update Homework
+            .col-6.ms-auto.me-auto
+              = form_for @homework, url: users_homework_path, method: :put do |f|
+                .mb-3
+                  .field 
+                    = f.label :subject, class: "form-label"
+                    = f.text_field :subject, class: "form-control", value: @homework.subject
+                  .field
+                    = f.label :sub_type
+                    = f.text_field :sub_type, class: "form-control", value: @homework.sub_type
+                  .field
+                    = f.label :details, class: "form-label"
+                    = f.text_area :details, class: "form-control",  :rows => 10, required: true, value: @homework.details
+                .mb-3
+                  .field
+                    = f.label :payment_type, class: "form-label"
+                    = f.select :payment_type, options_for_select([["GCash" , "gcash" ], ["Bank Transfer" , "bank" ]], selected: @homework.payment_type), {include_blank: false} , class: "form-select"
+                .mb-3
+                  .field
+                    = f.label :deadline, class: "form-label"
+                    #datetimepicker1.input-group{"data-td-target-input" => "nearest", "data-td-target-toggle" => "nearest"}
+                      -# %input#datetimepicker1Input.form-control{"data-td-target" => "#datetimepicker1", type: "text"}/
+                      = text_field_tag "homework[deadline]", "", class: "form-control", id: "datetimepicker1Input", "data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker", readonly: true, required: true, style: "background: white", value: "#{@homework.deadline.strftime("%m/%d/%Y, %I:%M %p") if !@homework.deadline.nil?}"
+                      %span.input-group-text{"data-td-target" => "#datetimepicker1", "data-td-toggle" => "datetimepicker"}
+                        %span.fas.fa-calendar
+                .mb-3
+                  .actions
+                    = f.submit "Update", class: "btn btn-primary"
+                    %a.btn.btn-info{href: users_homework_submit_homework_path(@homework.id), style: "color:white;"} Submit Homework
+
+
+= javascript_pack_tag 'homeworks/edit'

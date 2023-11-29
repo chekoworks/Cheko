@@ -1,0 +1,125 @@
+= render 'users/shared/header'
+
+.container.mt-5.mb-5
+  .card
+    .card-body
+      .row.mb-3
+        .col-sm-12.col-md-6.text-start
+          %h4= "#{@professor.name}"
+          %h5= @professor.subject
+          %h4= @professor.school_id.present? ? @professor.school.name : @professor.school_name
+          %p= @professor.email
+        .col-sm-12.col-md-6
+          %h5 Overall Grading
+          .row.mt-3
+            .col-12
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-warning{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.easiness}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Easiness: #{@professor.easiness}%"
+            .col-12.mt-3
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-warning{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.effectiveness}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Effectiveness: #{@professor.effectiveness}%"
+            .col-12.mt-3
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-warning{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.life_changing}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Life Changing: #{@professor.life_changing}%"
+            .col-12.mt-3
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-warning{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.light_workload}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Light Workload: #{@professor.light_workload}%"
+            .col-12.mt-3.mb-3
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-warning{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.leniency}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Leniency: #{@professor.leniency}%"
+            .col-6.mb-3
+              %h3.text-end Average:
+            .col-6.mb-3
+              %h3.text-start= "#{@professor.average}%"
+      %hr
+      %h5 Additional Metrics
+      .row.mt-3.mb-3
+        .col-lg
+          %h5= additional_grade_to_letter(@professor)
+          %input.form-range{max:100, min:0, type: "range", value: "#{@professor.additional_metric_grade}", disabled: true, style: "width:100%" }
+          %div#a_metrics
+            %p D
+            %p C 
+            %p B
+            %p A 
+      -# .row.mt-3.mb-3
+      -#   .col-sm-12.col-md-6
+      -#     %h5.mt-2.ms-3.text-start= "A-able: #{@professor.a_able}%"
+      -#     .progress.mt-3.bg-cheko{style: "height: 30px;"}
+      -#       .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.a_able}%;"}
+      -#     %h5.mt-2.ms-3.text-start= "B+-able: #{@professor.b_pls_able}%"
+      -#     .progress.mt-3.bg-cheko{style: "height: 30px;"}
+      -#       .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.b_pls_able}%;"}
+      -#     %h5.mt-2.ms-3.text-start= "B-able: #{@professor.b_able}%"
+      -#     .progress.mt-3.bg-cheko{style: "height: 30px;"}
+      -#       .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.b_able}%;"}
+      -#     %h5.mt-2.ms-3.text-start= "C-able: #{@professor.c_able}%"
+      -#     .progress.mt-3.bg-cheko{style: "height: 30px;"}
+      -#       .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.c_able}%;"}
+      -#   .col-sm-12.col-md-6
+      -#     %h5.mt-2.ms-3.text-start= "Batch 1-able: #{@professor.batch1_able}%"
+      -#     .progress.mt-3.bg-cheko{style: "height: 30px;"}
+      -#       .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.batch1_able}%;"}
+      -#     %h5.mt-2.ms-3.text-start= "Batch 2-able: #{@professor.batch2_able}%"
+      -#     .progress.mt-3.bg-cheko{style: "height: 30px;"}
+      -#       .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.batch2_able}%;"}
+      -#     %h5.mt-2.ms-3.text-start= "Batch 3-able: #{@professor.batch3_able}%"
+      -#     .progress.mt-3.bg-cheko{style: "height: 30px;"}
+      -#       .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.batch3_able}%;"}
+      -#     %h5.mt-2.ms-3.text-start= "Batch 4-able: #{@professor.batch4_able}%"
+      -#     .progress.mt-3.bg-cheko{style: "height: 30px;"}
+      -#       .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{@professor.batch4_able}%;"}
+      %hr
+      %h5 Our Comments
+      %p= @professor.our_comments
+
+.container.mb-5
+  .card
+    .card-body
+      .row.mb-3
+        .col-sm-12.col-md-6.text-start
+          %h4 
+            Student Reviews
+            %i.fa-regular.fa-eye.btn-default.pointer{"aria-describedby" => "tooltip", "data-bs-content" => "Show All Individual Ratings", "data-bs-toggle" => "popover", :type => "button", "data-bs-trigger" => "hover", "data-bs-placement"=>"right"}
+            %i.fa-regular.fa-eye-slash.btn-default.pointer.hidden-rating{"aria-describedby" => "tooltip", "data-bs-content" => "Hide All Individual Ratings", "data-bs-toggle" => "popover", :type => "button", "data-bs-trigger" => "hover", "data-bs-placement"=>"right"}
+      - @reviews.each do |rev|
+        .row.mb-3
+          .col-6
+            %h6
+              = "#{rev.user.first_name.first}#{rev.user.last_name.first}"
+            %p.text-muted= rev.created_at 
+            %p= rev.content
+          .col-6.individual.hidden-rating
+            %h5 Individual Rating
+            .col-12.mt-3
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{rev.easiness}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Easiness: #{rev.easiness}%"
+            .col-12.mt-3
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{rev.effectiveness}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Effectiveness: #{rev.effectiveness}%"
+            .col-12.mt-3
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{rev.life_changing}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Life Changing: #{rev.life_changing}%"
+            .col-12.mt-3
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{rev.light_workload}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Light Workload: #{rev.light_workload}%"
+            .col-12.mt-3.mb-3
+              .progress.bg-cheko{style: "height: 30px"}
+                .progress-bar.bg-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "100", role: "progressbar", style: "width: #{rev.leniency}%;"}
+                  %h5.mt-2.ms-3.text-start.text-dark= "Leniency: #{rev.leniency}%"
+            .col-6.mb-3
+              %h6
+                Average:
+                ="#{rev.average}%"
+        %hr
+
+= javascript_pack_tag 'professors/new'
