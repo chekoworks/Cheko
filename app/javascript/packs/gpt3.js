@@ -159,7 +159,7 @@ document
   .addEventListener("click", (e) => {
     var w = localStorage.getItem('question')
     e.preventDefault();
-    const prompt = `citation for: \n\n${w}`;
+    const prompt = `give me a cite for: \n\n${w}`;
     generateText(prompt, false, true);
   }
   );
