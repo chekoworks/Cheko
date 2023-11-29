@@ -40,7 +40,7 @@
 yarn-debug.log*
 .yarn-integrity
 
-Gemfile.lock
 dump.rdb
 .env
 config/credentials.yml.enc
+.DS_Store

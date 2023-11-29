@@ -184,8 +184,8 @@
 = render "users/shared/footer"
 
 :javascript
-  (function(d,t) {
-    var BASE_URL="http://localhost:4000";
+   (function(d,t) {
+    var BASE_URL="https://chatwoot.chekohomeworkhelp.com";
     var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.src=BASE_URL+"/packs/js/sdk.js";
     g.defer = true;
@@ -193,8 +193,8 @@
     s.parentNode.insertBefore(g,s);
     g.onload=function(){
       window.chatwootSDK.run({
-        websiteToken: 'sTtmizUdXAPL7pXKFsPhn5xK',
+        websiteToken: '7RG6pzEtMjQ19aDaPze9vxnu',
         baseUrl: BASE_URL
-      })
+      });
     }
   })(document,"script");

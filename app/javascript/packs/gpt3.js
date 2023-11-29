@@ -15,6 +15,7 @@ function createChatBubble(content, sender) {
   chatBubble.innerHTML = content;
   return chatBubble;
 }
+let q = ''
 
 const generateText = async (prompt, humanizeOrNot, citationOrNot) => {
   promptsCount++; // Increase prompt count
@@ -31,7 +32,9 @@ const generateText = async (prompt, humanizeOrNot, citationOrNot) => {
 
   // 1. Start requesting: Clear Chatbox, Disable Button, Play Loading Animation
   document.querySelector("textarea#prompt").value = ""; // clear
-  document.getElementById("generate-btn").setAttribute("disabled", true); // disable
+  document.getElementById("generate-btn").setAttribute("disabled", true);
+  document.getElementById("humanize-text-button").setAttribute("disabled", true);
+  document.getElementById("add-citations-button").setAttribute("disabled", true); // disable
   setLoading(true); // loading animation
 
   // Scroll into view
@@ -43,7 +46,7 @@ const generateText = async (prompt, humanizeOrNot, citationOrNot) => {
   // 2. Add prompt as a chat bubble:
 
   const chatContainer = document.getElementById("gpt-chat-container");
-  const text = humanizeOrNot ? "Humanizing text.." : citationOrNot ? "Adding citation.." : prompt;
+  const text = humanizeOrNot ? "⚙️ Humanizing text..." : citationOrNot ? "📝 Adding citations..." : prompt;
   chatContainer.appendChild(createChatBubble(text, "user"));
 
   // 3. Send Prompt to Controller:
@@ -87,6 +90,8 @@ const generateText = async (prompt, humanizeOrNot, citationOrNot) => {
 
   // 6. Finished Requesting: Re-enable button, turn off loading animation
   document.getElementById("generate-btn").removeAttribute("disabled");
+  document.getElementById("humanize-text-button").removeAttribute("disabled");
+  document.getElementById("add-citations-button").removeAttribute("disabled");
   setLoading(false); // loading animation
 
   scrollContainer.scrollTop = scrollContainer.scrollHeight;
@@ -126,6 +131,7 @@ promptArea.addEventListener("keydown", function (e) {
 
     // Do something else such as send the message to back-end
     // ...
+    localStorage.setItem("question", promptArea.value);
     generateText(promptArea.value);
   }
 });
@@ -151,10 +157,9 @@ document
 document
   .querySelector("#add-citations-button")
   .addEventListener("click", (e) => {
+    var w = localStorage.getItem('question')
     e.preventDefault();
-    const prompt = `Search for citations: \n\n${document
-      .querySelector("#gpt-chat-container")
-      .lastChild.innerText}`;
+    const prompt = `give me a cite for: \n\n${w}`;
     generateText(prompt, false, true);
   }
   );
