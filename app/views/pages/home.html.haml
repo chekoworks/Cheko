@@ -185,16 +185,16 @@
 
 :javascript
   (function(d,t) {
-    var BASE_URL="https://cheko-app-beta-4cec566aed88.herokuapp.com";
+    var BASE_URL="http://localhost:3000";
     var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=BASE_URL+"/packs/js/sdk.js";
+    g.src=window.location.origin+"/packs/js/sdk.js";
     g.defer = true;
     g.async = true;
     s.parentNode.insertBefore(g,s);
     g.onload=function(){
       window.chatwootSDK.run({
         websiteToken: 'sTtmizUdXAPL7pXKFsPhn5xK',
-        baseUrl: BASE_URL
+        baseUrl: window.location.origin
       })
     }
   })(document,"script");
