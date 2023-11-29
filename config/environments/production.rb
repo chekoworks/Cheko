@@ -109,8 +109,8 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-
-  config.action_mailer.raise_delivery_errors = true 
+  config.secret_key_base = "71ad0f7c87c894898425ed74e6c8c9a14d8047268bf7cacddf70b1441ca8847baadea4bf793f2537814647d6a917c06352018d58ce56aad3c7c0f75ef590bcf5"
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { host: "https://beta.chekohomeworkhelp.com"}
   config.action_mailer.delivery_method   = :smtp
 
@@ -118,7 +118,8 @@ Rails.application.configure do
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :user_name            => "cheko.alert@gmail.com",
-    :password             => Rails.application.credentials.mailer[:password],
+    # :password             => Rails.application.credentials.mailer[:password],
+    :password             => 'test',
     :authentication       => :login,
     :enable_starttls_auto => true
   }
