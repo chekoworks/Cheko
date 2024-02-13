@@ -53,7 +53,7 @@ function createChatBubble(content, sender) {
     humanizeButton.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" style="color: #ffffff;"></i> Humanize';
 
     const copyButton = document.createElement("button");
-    copyButton.classList.add('chat-button', 'cheko-text-1', 'coooooopy-btn');
+    copyButton.classList.add('chat-button', 'cheko-text-1', 'copy-btn');
     copyButton.setAttribute('id','copy-btn');
     copyButton.setAttribute('data-tooltip-target', 'copy-btn-tooltip');
     copyButton.setAttribute('data-tooltip-trigger', 'click');
@@ -167,7 +167,6 @@ const humanizeText = async(prompt, element) => {
 }
 
 const generateText = async (prompt, index, is_rewrite, current_result) => {
-
   promptsCount++; // Increase prompt count
   autoScrollCount = 0;
   // Utils:
@@ -269,14 +268,11 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
 
 
 function checkForEmptyAndNotRelatedQuestion(response, prompt) {
-  console.log(response);
-  console.log(prompt);
   let related_questions = [];
   if (response.length >= 5) {
     response = response.slice(2);
   }
   response.forEach(function (related) {
-    console.log(!related.includes(prompt));
     if (!related.includes(prompt) && related != '') {
       related_questions.push(related);
     }
@@ -585,12 +581,14 @@ document.querySelector("form").addEventListener("submit", (e) => {
 // -- Sample Question Button --
 $('body').on('click', '.sample-question', function() {
   const divText = $(this).text();
+  userMessages.push(divText);
   generateText(divText);
 });
 
 // -- Related Question Button --
 $('body').on('click', '.related-question', function() {
   const divText = $(this).text();
+  userMessages.push(divText);
   generateText(divText);
 });
 
