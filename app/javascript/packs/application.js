@@ -10,6 +10,7 @@ require("channels");
 
 require("@popperjs/core/lib/popper.js");
 require('bootstrap-icons/font/bootstrap-icons.css');
+require("flowbite/dist/flowbite");
 
 import "bootstrap";
 import "datatables.net-dt/css/jquery.dataTables.css";
@@ -18,6 +19,7 @@ import "../stylesheets/custom_steps.css";
 import "@fortawesome/fontawesome-free/css/all";
 import "stylesheets/bootstrap-datepicker.css";
 import "stylesheets/tempus-dominus.css";
+import "flowbite"
 // import 'bootstrap-icons/font/bootstrap-icons.css'
 
 // Import the specific modules you may need (Modal, Alert, etc)
@@ -47,6 +49,23 @@ document.addEventListener("turbolinks:load", (event) => {
     return new Popover(popoverTriggerEl);
   });
 });
+document.addEventListener("DOMContentLoaded", (event) => {
+  // Both of these are from the Bootstrap 5 docs
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new Tooltip(tooltipTriggerEl);
+  });
+
+  var popoverTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="popover"]')
+  );
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new Popover(popoverTriggerEl);
+  });
+});
+
 
 // const wait = (delay = 0) =>
 //   new Promise(resolve => setTimeout(resolve, delay));

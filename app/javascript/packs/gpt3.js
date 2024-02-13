@@ -1,4 +1,5 @@
 import mixpanel from "mixpanel-browser";
+import { Tooltip } from 'flowbite';
 
 let currentDialogue = null; // Stores the current conversation. Messages[]
 let userMessages = [];
@@ -54,20 +55,24 @@ function createChatBubble(content, sender) {
 
     const copyButton = document.createElement("button");
     copyButton.classList.add('chat-button', 'cheko-text-1', 'copy-btn');
-    copyButton.setAttribute('id','copy-btn');
-    copyButton.setAttribute('data-tooltip-target', 'copy-btn-tooltip');
-    copyButton.setAttribute('data-tooltip-trigger', 'click');
+    copyButton.setAttribute('id', 'copy-btn');
+    copyButton.setAttribute('data-tooltip-target', 'tooltip-default');
+    copyButton.setAttribute('data-tooltip-trigger', 'hover');
     copyButton.innerHTML = '<i class="fa-solid fa-copy cheko-text-1" ></i>';
-
 
     const editButton = document.createElement("button");
     editButton.classList.add('chat-button', 'pl-2', 'cheko-text-1', 'edit-btn');
     editButton.innerHTML = '<i class="fa-solid fa-edit cheko-text-1" ></i>';
 
+    let tooltipCopyBtnContent = '<div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">\n' +
+      '    Content copied to clipboard!\n' +
+      '</div>'
+
     rewriteHumanizeDiv.appendChild(rewriteButton);
     rewriteHumanizeDiv.appendChild(humanizeButton);
 
     copyEditButton.appendChild(copyButton);
+    $(copyEditButton).append(tooltipCopyBtnContent);
     copyEditButton.appendChild(editButton);
 
     buttonsContainer.appendChild(rewriteHumanizeDiv);
@@ -75,6 +80,7 @@ function createChatBubble(content, sender) {
 
     bubbleContainer.appendChild(chatBubble);
     bubbleContainer.appendChild(buttonsContainer);
+
 
     return bubbleContainer;
   } else {
@@ -84,7 +90,7 @@ function createChatBubble(content, sender) {
 
 function autoScroll() {
   setTimeout(() => {
-    document.getElementById('auto-scroll-anchor').scrollIntoView({ behavior: "smooth" });
+    document.getElementById('auto-scroll-anchor').scrollIntoView({behavior: "smooth"});
   }, 2000);
 }
 
@@ -249,6 +255,11 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
   // 4. Maintain a string record of the current dialogue between the user and the chatbot.
   currentDialogue = content_data.new_dialogue;
   showAnswer(convoContainer, content_data.markdown_text)
+  // set the tooltip content element
+  const $targetEl = document.querySelector('.convo-container-' +userMessages.length + ' #tooltip-default');
+  // set the element that trigger the tooltip using hover or click
+  const $triggerEl = document.querySelector('.convo-container-' +userMessages.length+ ' #copy-btn');
+  enableCopyTooltip($targetEl, $triggerEl)
   autoScroll();
 
   showRelatedQuestions(convoContainer,related_question_data);
@@ -293,6 +304,30 @@ function showAnswer(container_element, generated_text) {
     .map((t) => `${t}`)
     .join("");
   container_element.append(createChatBubble(chekoResponse, "cheko"));
+}
+
+function enableCopyTooltip($targetEl, $triggerEl) {
+  const options = {
+    placement: 'bottom',
+    triggerType: 'click',
+    onHide: () => {
+      console.log('tooltip is shown');
+    },
+    onShow: (elem) => {
+      setTimeout(() => {
+        elem.hide();
+      }, 3000);
+    },
+    onToggle: () => {
+      console.log('tooltip is toggled');
+    },
+  };
+  const instanceOptions = {
+    id: 'tooltip-default',
+    override: true
+  };
+  const tooltip = new Tooltip($targetEl, $triggerEl, options, instanceOptions);
+  tooltip.init();
 }
 
 function showLoadingBubble(container_element) {
