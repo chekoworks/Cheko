@@ -25,6 +25,7 @@
             - else
               New convo
           %input#conversation_id{name: "conversation_id", type: "hidden", value: (@conversation && @conversation.id)}/
+          %input#user_id{name: "user_id", type: "hidden", value: (current_user.id if user_signed_in?)}/
           - if @conversation.present?
             %input#assistant_messages{name: "assistant_messages", type: "hidden", value: (raw @conversation.assistant_messages)}/
             %input#user_messages{name: "user_messages", type: "hidden", value: (raw @conversation.user_messages)}/

@@ -72,3 +72,4 @@ document.addEventListener("turbolinks:load", (event) => {
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+

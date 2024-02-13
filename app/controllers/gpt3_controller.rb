@@ -98,6 +98,9 @@ class Gpt3Controller < ApplicationController
     else
       render json: {error: "You need to sign in before saving a convo. Please sign in."}, status: 422
     end
+  rescue ActiveRecord::RecordNotFound
+    convo = save_convo(params.except(:id))
+    render json: convo
   end
 
   def render_better_answer_bubble
@@ -113,6 +116,23 @@ class Gpt3Controller < ApplicationController
   end
 
   private
+
+  def save_convo(params)
+    convo = Conversation.new
+
+    convo.title_name = params[:title]
+    convo.messages = params[:new_dialogue]
+    convo.user_messages = params[:user_messages]
+    convo.assistant_messages = params[:assistant_messages]
+    convo.user_id = current_user.id
+
+    convo.save
+
+    save_related_list(convo, params)
+    save_source_list(convo, params)
+
+    convo
+  end
 
   def save_source_list(convo, params)
     if params[:source_list].present?

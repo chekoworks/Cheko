@@ -1,3 +1,5 @@
+import mixpanel from "mixpanel-browser";
+
 let currentDialogue = null; // Stores the current conversation. Messages[]
 let userMessages = [];
 let assistantMessages = [];
@@ -6,6 +8,12 @@ let relatedList = [];
 let promptsCount = 0; // How many prompts have been sent so far?
 let autoScrollCount = 0;
 let autoScrollMaxCount = 30000;
+
+mixpanel.init("36da7c6fa99e6a22866f300e549fef43", {
+  loaded: function () {
+    console.log('mixpanel initialized...')
+  }
+});
 
 /**
  * Returns a Chat Bubble Element as a Div.
@@ -250,8 +258,13 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
 
   document.querySelector("textarea#prompt").disabled=false;
 
-  updateConversation();
+  mixpanel.track("ask a prompt", json);
+  if ($('#user_id').val() !== "" && $('#user_id').val() !== null) {
+    updateConversation();
+  }
   autoScroll();
+
+
 };
 
 
