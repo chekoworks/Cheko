@@ -17,6 +17,16 @@ class Conversation < ApplicationRecord
       lax_html_blocks: true,
       with_toc_data: true
     )
-    markdown.render(content).html_safe
+    markdown_content_text_html = markdown.render(content)
+
+    markdown_content_text_html.gsub!(/<\/p>\s*<p>/, "</p>\n<p><br></p>\n<p>")
+
+    # Similarly adjust other spacings using regex patterns
+    markdown_content_text_html.gsub!(/<\/p>\s*<ul>/, "</p>\n<p><br></p>\n<ul>")
+    markdown_content_text_html.gsub!(/<\/p>\s*<ol>/, "</p>\n<p><br></p>\n<ol>")
+    markdown_content_text_html.gsub!(/<\/ol>\s*<p>/, "</ol>\n<p><br></p>\n<p>")
+    markdown_content_text_html.gsub!(/<\/ul>\s*<p>/, "</ul>\n<p><br></p>\n<p>")
+
+    markdown_content_text_html.html_safe
   end
 end

@@ -36,9 +36,11 @@ class Llm
     model = opts[:model] || "pplx-7b-online"
     is_full_prompt = opts[:is_full_prompt] || false
     max_attempts = opts[:max_attempts] || 1
+    is_different_model = opts[:is_different_model] || false
     attempts = 0
     full_prompt = "#{model}#{prompts}#{prompt}"
     begin
+      opts[:model] = model
       r = Llm.client opts
       if r["error"].present?
         puts "problem running prompt: #{r['error']}"

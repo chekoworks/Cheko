@@ -41,6 +41,9 @@ class Gpt3Controller < ApplicationController
     @serp_results = nil
     threads << Thread.new do
       @content = generate_answer(params)
+      if @content.nil?
+        @content = generate_answer(params, false, true)
+      end
     end
     threads << Thread.new do
       @serp_results = Serp.search(params[:prompt])
@@ -171,12 +174,12 @@ class Gpt3Controller < ApplicationController
     end
   end
 
-  def generate_answer(params, rewrite=false)
+  def generate_answer(params, rewrite=false, retry_request=false)
 
     start_writing_prompt = "Generate a conversation with Perplexity AI where a student seeks advice on completing homework efficiently. The conversation should cover time management techniques, effective study habits, and tips for staying focused. Include prompts for practical solutions and actionable steps that the student can implement to finish their homework quickly while maintaining academic integrity and understanding of the material. Show complete results"
     generate_prompt = "Student: Hey Perplexity AI, I want to learn how to complete homework efficiently and avoid procrastination. Can you help me with time management techniques, effective study habits, and staying focused?\n\nPerplexity AI: Of course! I'm delighted to share actionable steps and practical advice to help you excel in your academics. To maximize efficiency and minimize stress, here are some tips I've gathered:\n\n1. Time Management Techniques:\n   - Break tasks into smaller chunks, following the Pomodoro Technique: Work in 25-minute intervals, with short breaks in between to prevent burnout.\n   - Prioritize tasks based on urgency and importance. Don't forget to integrate self-care and relaxation time into your schedule.\n\n2. Effective Study Habits:\n   - Active recall: Actively test your knowledge by summarizing or rephrasing content to ensure better retention.\n   - Interleaved practice: Mix different topics instead of sticking to one subject only. This helps in recognizing patterns that apply to various subjects.\n   - Elaborative encoding: Develop your understanding by relating new concepts to existing knowledge, generating your own examples, and analogies.\n\n3. Staying Focused:\n   - Reduce distractions: Minimize digital noise and eliminate external distractions. Set up 'focus hours' dedicated to study and reduce social media usage.\n   - Practice mindfulness and gratitude: Being grateful for the opportunity to learn and complete your homework can improve your focus and productivity.\n   - Set achievable goals for each study session. Create small wins and reward yourself after accomplishing milestones.\n\nI hope these tips are useful to you. Remember to approach your studies with an open"
     # 1. Default
-    max_count_of_retries = 3
+    max_count_of_retries = 1
     retry_count = 0
     begin
       initialDialogue = [
@@ -201,7 +204,11 @@ class Gpt3Controller < ApplicationController
       # currentDialogue = params[:currentDialogue].nil? ? initialDialogue.concat([prompt]) : params[:currentDialogue].concat([prompt])
 
       # 4. REQUEST via PERPLEXITY.AI API
-      response = Llm.go(prompts:initialDialogue,is_full_prompt: true)
+      if retry_request
+        response = Llm.go(prompts:initialDialogue,is_full_prompt: true, model: 'pplx-70b-chat')
+      else
+        response = Llm.go(prompts:initialDialogue,is_full_prompt: true)
+      end
 
       # 5. Process OpenAI RESPONSE / PERLEXITY.AI RESPONSE
       generated_text = response.dig("choices", 0, "message", "content")
