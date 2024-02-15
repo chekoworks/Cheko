@@ -36,9 +36,17 @@ class Gpt3Controller < ApplicationController
   end
 
   def generate
-    content = generate_answer(params)
-    serp_results = Serp.search(params[:prompt])
-    render json: {content: content, sources: serp_results[0], related_questions: serp_results[1]}
+    threads = []
+    @content = nil
+    @serp_results = nil
+    threads << Thread.new do
+      @content = generate_answer(params)
+    end
+    threads << Thread.new do
+      @serp_results = Serp.search(params[:prompt])
+    end
+    threads.each(&:join)
+    render json: {content: @content, sources: @serp_results[0], related_questions: @serp_results[1]}
   end
 
   def rewrite
