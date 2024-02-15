@@ -6,7 +6,9 @@ class Llm
   #warn us if out of credits
   #better error handling on timeout
   #better retry logic
-  def self.client opts={}
+
+  # old client
+  def self.old_client opts={}
     key = ENV["PERPLEXITY_AI_TOKEN"] || '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'
     url = URI("https://api.perplexity.ai/chat/completions")
     prompts = opts[:prompts]
@@ -58,6 +60,37 @@ class Llm
         puts "out of attempts for #{full_prompt} #{e} #{e.backtrace.join('\n')}"
       end
     end
+  end
+
+  def self.client opts={}
+    hydra = Typhoeus::Hydra.new
+
+    key = ENV["PERPLEXITY_AI_TOKEN"] || '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'
+    url = URI("https://api.perplexity.ai/chat/completions")
+    prompts = opts[:prompts]
+    prompt = opts[:prompt]
+    model = opts[:model] || "pplx-7b-online"
+
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+
+    # request = Net::HTTP::Post.new(url)
+    request_body = {:model => model, :messages => [{role: "user", content: prompt}]}.to_json
+    if prompts.kind_of?(Array)
+      request_body = {:model => model, :messages => prompts}.to_json
+    end
+
+    pplx_request = Typhoeus::Request.new(
+      "https://api.perplexity.ai/chat/completions",
+      method: :post,
+      body: request_body,
+      headers: { Accept: "application/json", "Content-Type": 'application/json', "Authorization": "Bearer #{key}" }
+    )
+
+    hydra.queue pplx_request
+    hydra.run
+
+    JSON.parse(pplx_request.response.body)
   end
 
 end

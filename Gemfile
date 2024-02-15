@@ -43,6 +43,8 @@ gem 'google_search_results'
 gem "sentry-ruby"
 gem "sentry-rails"
 
+gem 'typhoeus'
+
 
 
 group :development, :test do

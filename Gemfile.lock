@@ -94,6 +94,8 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
+    ethon (0.16.0)
+      ffi (>= 1.15.0)
     event_stream_parser (1.0.0)
     execjs (2.9.1)
     faraday (2.7.12)
@@ -294,6 +296,8 @@ GEM
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
+    typhoeus (1.4.1)
+      ethon (>= 0.9.0)
     tzinfo (1.2.11)
       thread_safe (~> 0.1)
     tzinfo-data (1.2023.4)
@@ -369,6 +373,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   tailwindcss-rails
   turbolinks (~> 5)
+  typhoeus
   tzinfo-data
   uglifier
   web-console (>= 3.3.0)
