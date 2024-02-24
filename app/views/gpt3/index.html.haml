@@ -125,7 +125,7 @@
                         - related_list.result.each_with_index do |related, index|
                           - if index >= 3
                             - break
-                          %a.related-question.cheko-border-color-1{href: related['link'], target: "_blank"}
+                          %span.related-question.cheko-border-color-1
                             = related['question'] || related['title'] || related
                             %i.fa-solid.fa-plus{style: "color: #ffffff;"}
 

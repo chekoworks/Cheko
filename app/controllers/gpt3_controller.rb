@@ -184,16 +184,10 @@ class Gpt3Controller < ApplicationController
     begin
       initialDialogue = [
         { role: "system", content: "The following is a conversation with an AI Writing Assistant called 'Cheko' that helps students do their homework, save time, and graduate. The assistant is helpful, creative, clever, informative, complete and very friendly. Cheko started in 2019 when a college student wanted to improve students’ lives." },
-        { role: "assistant", content: "Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!"},
-        { role:"user", content:start_writing_prompt }
+        { role:"user", content:start_writing_prompt },
+        { role:"assistant",content:generate_prompt },
+        { role: "user", content: params[:prompt] }
       ]
-
-      # section_content = Llm.go(prompts:initialDialogue)
-      initialDialogue.append({role:"assistant",content:generate_prompt})
-
-      # 2. Turn prompt into a message object
-      prompt = {role: "user", content: params[:prompt]}
-      initialDialogue.append(prompt)
 
       if rewrite
         initialDialogue.append({role:"assistant",content:params[:current_result]})
@@ -205,10 +199,12 @@ class Gpt3Controller < ApplicationController
 
       # 4. REQUEST via PERPLEXITY.AI API
       if retry_request
-        response = Llm.go(prompts:initialDialogue,is_full_prompt: true, model: 'pplx-70b-chat')
+        response = Llm.go(prompts:initialDialogue,is_full_prompt: true, model: 'sonar-medium-chat')
       else
         response = Llm.go(prompts:initialDialogue,is_full_prompt: true)
       end
+
+      puts response
 
       # 5. Process OpenAI RESPONSE / PERLEXITY.AI RESPONSE
       generated_text = response.dig("choices", 0, "message", "content")

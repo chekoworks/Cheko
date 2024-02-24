@@ -399,10 +399,10 @@ function showRelatedQuestions(container_element, related_questions) {
     if (index >= 3) {
       return;
     }
-    data_html += '<a href="' + related_question.link + '" class="related-question cheko-border-color-1">\n' +
+    data_html += '<span class="related-question cheko-border-color-1">\n' +
         related_question.question +
         '<i class="fa-solid fa-plus" style="color: #ffffff;"></i>\n' +
-      '</a>'
+      '</span>'
   });
   data_html += '</div>';
   container_element.append(data_html);
