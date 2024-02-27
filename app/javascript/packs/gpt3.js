@@ -686,6 +686,29 @@ $('body').on('keydown', '#edit-prompt', function(e) {
   }
 });
 
+
+$('body').on('mouseenter','.sidebar-conversation-item-list', function (event) {
+  $(this).find('.delete_conversation_btn').show();
+}).on('mouseleave','.sidebar-conversation-item-list',  function(){
+  $(this).find('.delete_conversation_btn').hide();
+});
+
+$('body').on('click', '.delete_conversation_btn', function() {
+  let delete_conversation_btn = $(this);
+  let conversation_id = delete_conversation_btn.data('conversation_id');
+  var data = {
+    conversation_id: conversation_id
+  }
+
+  $.ajax({
+    method: "post",
+    url: '/gpt3/delete_conversation',
+    data: data
+  }).done(function(response) {
+    delete_conversation_btn.parent().remove();
+  });
+});
+
 // -- Citation Button --
 // document
 //   .querySelector("#add-citations-button")

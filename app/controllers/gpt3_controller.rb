@@ -5,34 +5,13 @@ class Gpt3Controller < ApplicationController
 
   def humanize
     if params[:prompt]
-      start_writing_prompt = "Generate a conversation with ChatGPT where a student seeks advice on completing homework efficiently. The conversation should cover time management techniques, effective study habits, and tips for staying focused. Include prompts for practical solutions and actionable steps that the student can implement to finish their homework quickly while maintaining academic integrity and understanding of the material. Show complete results. Compose this reply adopting a writing style akin to that of a college student. Achieve a harmonious blend of relatability and sophistication to seamlessly integrate it into the tone of a college paper or assignment. Without introduction and conclusion, just give a exact and expected answer."
-
-      initialDialogue = [
-        { role: "system", content: "The following is a conversation with an AI Writing Assistant called 'Cheko' that helps students do their homework, save time, and graduate. The assistant is helpful, creative, clever, informative, and very friendly. Cheko started in 2019 when a college student wanted to improve students’ lives." },
-        { role: "assistant", content: "Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!"},
-        { role:"user", content:start_writing_prompt }
-      ]
-      section_content = Llm.go(prompts:initialDialogue)
-      initialDialogue.append({role:"assistant",content:"#{section_content}"})
-
-      # 2. Turn prompt into a message object
-      prompt = {role: "user", content: "Humanize this: #{params[:prompt]}"}
-      initialDialogue.append(prompt)
-
-      response = Llm.go(prompts:initialDialogue,is_full_prompt: true)
-
-      generated_text = response.dig("choices", 0, "message", "content")
-      newDialogue = initialDialogue.concat([response.dig("choices", 0, "message")])
-
-      usage = {
-        completion_tokens: response.dig("usage", "completion_tokens"),
-        prompt_tokens: response.dig("usage", "prompt_tokens"),
-        total_tokens: response.dig("usage", "total_tokens"),
-        model: response.dig("model")
-      }
-
-      render json: {markdown_text: Conversation.markdown_to_html(generated_text), generated_text: generated_text, new_dialogue: newDialogue, usage: usage}
+      @content = generate_answer(params, false, false, true)
+      if @content.nil?
+        @content = generate_answer(params, false, true, true)
+      end
     end
+
+    render json: @content
   end
 
   def generate
@@ -126,6 +105,20 @@ class Gpt3Controller < ApplicationController
     end
   end
 
+
+
+  def delete_conversation
+    if params[:conversation_id].present?
+      ActiveRecord::Base.transaction do
+        @conversation = Conversation.find(params[:conversation_id])
+        @conversation.conversation_sources.destroy_all
+        @conversation.conversation_relateds.destroy_all
+
+        @conversation.destroy
+      end
+    end
+  end
+
   private
 
   def save_convo(params)
@@ -174,7 +167,7 @@ class Gpt3Controller < ApplicationController
     end
   end
 
-  def generate_answer(params, rewrite=false, retry_request=false)
+  def generate_answer(params, rewrite=false, retry_request=false, humanize=false)
 
     start_writing_prompt = "Generate a conversation where a student seeks advice on completing homework efficiently. The conversation should cover time management techniques, effective study habits, and tips for staying focused. Include prompts for practical solutions and actionable steps that the student can implement to finish their homework quickly while maintaining academic integrity and understanding of the material. \n\n When it comes to writing content, two factors are crucial, “perplexity” and “burstiness.” Perplexity measures the complexity of text. Separately, burstiness compares the variations of sentences. Humans tend to write with greater burstiness, for example, with some longer or complex sentences alongside shorter ones. AI sentences tend to be more uniform. Therefore, when writing the following content I am going to ask you to create, I need it to have a good amount of perplexity and burstiness. Do you understand? Show complete results."
     generate_prompt = "I want to learn how to complete homework efficiently and avoid procrastination. Can you help me with time management techniques, effective study habits, and staying focused?\n\nPerplexity AI: Of course! I'm delighted to share actionable steps and practical advice to help you excel in your academics. To maximize efficiency and minimize stress, here are some tips I've gathered:\n\n1. Time Management Techniques:\n   - Break tasks into smaller chunks, following the Pomodoro Technique: Work in 25-minute intervals, with short breaks in between to prevent burnout.\n   - Prioritize tasks based on urgency and importance. Don't forget to integrate self-care and relaxation time into your schedule.\n\n2. Effective Study Habits:\n   - Active recall: Actively test your knowledge by summarizing or rephrasing content to ensure better retention.\n   - Interleaved practice: Mix different topics instead of sticking to one subject only. This helps in recognizing patterns that apply to various subjects.\n   - Elaborative encoding: Develop your understanding by relating new concepts to existing knowledge, generating your own examples, and analogies.\n\n3. Staying Focused:\n   - Reduce distractions: Minimize digital noise and eliminate external distractions. Set up 'focus hours' dedicated to study and reduce social media usage.\n   - Practice mindfulness and gratitude: Being grateful for the opportunity to learn and complete your homework can improve your focus and productivity.\n   - Set achievable goals for each study session. Create small wins and reward yourself after accomplishing milestones.\n\nI hope these tips are useful to you. Remember to approach your studies with an open. Add confidence score/percentage on the end of the answer/response with 2 next line spacing."
@@ -185,9 +178,14 @@ class Gpt3Controller < ApplicationController
       initialDialogue = [
         { role: "system", content: "The following is a conversation with an AI Writing Assistant called 'Cheko' that helps students do their homework, save time, and graduate. The assistant is helpful, creative, clever, informative, complete and very friendly. Cheko started in 2019 when a college student wanted to improve students’ lives. Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!" },
         { role:"user", content:start_writing_prompt },
-        { role:"assistant",content:generate_prompt },
-        { role: "user", content: params[:prompt] }
+        { role:"assistant",content:generate_prompt }
       ]
+
+      if humanize
+        initialDialogue.append({ role: "user", content: "Humanize this: #{params[:prompt]}" })
+      else
+        initialDialogue.append({ role: "user", content: params[:prompt] })
+      end
 
       if rewrite
         initialDialogue.append({role:"assistant",content:params[:current_result]})

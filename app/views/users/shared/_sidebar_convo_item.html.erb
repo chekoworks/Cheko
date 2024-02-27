@@ -5,7 +5,12 @@
   <div id="conversation-list" class="divide-x-[3px] divide-solid divide-neutral-700 text-neutral-500 text-sm font-semibold items-center py-1 pr-3 pl-8 no-underline ">
     <% if user_signed_in? %>
       <% current_user.conversations.order(created_at: :DESC).each do |conversation| %>
-        <a href="<%= cheko_ai_path(conversation_id: conversation.id) %>" id="conversation-list-<%= conversation.id %>" class="pl-2 hover:bg-neutral-700/30 max-w-[200px] w-full py-1 block my-2 truncate"><%= conversation.title_name %></a>
+        <div class="flex justify-between my-2 hover:bg-neutral-700/30 pr-2 sidebar-conversation-item-list">
+          <a href="<%= cheko_ai_path(conversation_id: conversation.id) %>" id="conversation-list-<%= conversation.id %>" class="pl-2 max-w-[200px] w-full py-1 block my-2 truncate"><%= conversation.title_name %></a>
+          <button style="display: none;" class="delete_conversation_btn" data-conversation_id="<%= conversation.id %>">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
       <% end %>
     <% end %>
     <a href="<%= cheko_ai_path %>" class="pl-2 hover:bg-neutral-700/30 w-full py-1 block my-2">New Convo</a>
