@@ -1,0 +1,34 @@
+<div class="flex flex-col h-screen sticky left-0 top-0 min-w-[280px] max-w-[280px] py-3 px-1 bg-sidebar-cheko">
+  <%= link_to root_path, class: "grid justify-items-center w-full mb-1 no-underline" do %>
+    <div class="flex flex-col">
+      <div class="flex">
+        <%= image_tag "logo-white.png", class: "h-7 mt-1" %>
+        <div class="text-zinc-500 font-semibold text-4xl italic">AI</div>
+      </div>
+    </div>
+  <% end %>
+  <div class="grid w-full mt-[1rem]">
+    <%= render "users/shared/sidebar_item", title: "Home", path: root_path, icon: "home" %>
+    <%= render "users/shared/sidebar_item", title: "HW Help", path: pick_type_path, icon: "pen" %>
+    <%= render "users/shared/sidebar_item", title: "Profs to Pick", path: professors_path, icon: "chalkboard-user" %>
+    <%= render "users/shared/sidebar_convo_item", title: "Convo", icon: "comments" %>
+  </div>
+  <div class="grid px-2.5 w-full my-3 flex h-full">
+      <a href="<%= cheko_ai_path %>" class="p-2 py-2 text-white bg-new-cheko-2 new-convo-btn rounded-md mt-auto text-base font-extrabold text-center">
+        <i class="fa-regular fa-comments text-md me-1"></i>
+        <span>New convo</span>
+      </a>
+  </div>
+  <div>
+    <a href="https://airtable.com/app0IcnuLWamJOjoO/pagglD74lTU003e8O/form" target="_blank" class="pl-2 pr-1 py-2 cheko-text-1 new-convo-btn rounded-md mt-auto text-xs">
+      <i class="fa-solid fa-download text-md me-1"></i>
+      <span>Cheko Mobile</span>
+    </a>
+    <div class="check-button-divider-1"></div>
+
+    <a href="https://airtable.com/app0IcnuLWamJOjoO/pagglD74lTU003e8O/form" target="_blank" class="p-2 py-2 cheko-text-1 new-convo-btn rounded-md mt-auto text-xs">
+      <i class="fa-brands fa-chrome text-md me-1"></i>
+      <span>Cheko for Chrome</span>
+    </a>
+  </div>
+</div>

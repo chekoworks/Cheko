@@ -12,6 +12,9 @@ default: &default
 development:
   <<: *default
   database: cheko_development
+  username: postgres
+  password: postgres
+  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -19,6 +22,11 @@ development:
 test:
   <<: *default
   database: cheko_test
+  # Uncomment this if using docker
+  username: cheko
+  password: password
+  host: localhost
+  port: 5432
 
 production:
   <<: *default

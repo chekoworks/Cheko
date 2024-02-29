@@ -9,6 +9,7 @@ require("@rails/activestorage").start();
 require("channels");
 
 require("@popperjs/core/lib/popper.js");
+require('bootstrap-icons/font/bootstrap-icons.css');
 
 import "bootstrap";
 import "datatables.net-dt/css/jquery.dataTables.css";
@@ -17,12 +18,14 @@ import "../stylesheets/custom_steps.css";
 import "@fortawesome/fontawesome-free/css/all";
 import "stylesheets/bootstrap-datepicker.css";
 import "stylesheets/tempus-dominus.css";
+// import 'bootstrap-icons/font/bootstrap-icons.css'
 
 // Import the specific modules you may need (Modal, Alert, etc)
 import { Tooltip, Popover } from "bootstrap";
 
 // For ANALYTICS
 import "../src/firebase";
+
 
 // The stylesheet location we created earlier
 require("../stylesheets/application.scss");

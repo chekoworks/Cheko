@@ -1,30 +1,31 @@
-= render 'users/shared/header'
-.container
-  .row 
-    .col-sm-12.col-md-6.ms-auto.me-auto.mt-5
-      .card 
+%section.d-flex.align-items-center.justify-content-center.rounded-3.parent
+  .container
+    .row.d-flex.justify-content-center.h-100
+      .card.my-4.bg-transparent.border-0.w-50
+        .card-img-top.text-center.mb-5
+          = image_tag "logo-white.png", id: 'logo-image'
         .card-body
-          %h2 Users Log in
-          -if flash.any?
+          - if flash.any?
             .row.text-center
-              -# %ul.alert.alert-danger
               - flash.each do |type, msg|
                 .col-lg-12.col-md-12.col-sm-12.alert.mt-3.mb-3{class: type == "alert" ? "alert-danger" : "alert-success"}
                   = msg
           = form_for(resource, as: resource_name, url: user_session_path) do |f|
-            .mb-3
-              .field
-                = f.label :email, class: "form-label"
-                %br/
-                = f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email"
-            .mb-3
-              .field
-                = f.label :password, class: "form-label"
-                %br/
-                = f.password_field :password, class: "form-control", autocomplete: "current-password"
-            .mb-3
-              .actions
-                = f.submit "Log in", class: "btn btn-primary"
-          = link_to "Register", new_user_registration_path
-          %br
-          = link_to "Forgot your password?", new_user_password_path(resource_name)
+            .row.mb-2
+              .form-outline
+                = f.email_field :email, class: "form-control form-control-sm text-input cheko-text-1", placeholder: "Email Address", autofocus: true, autocomplete: "email"
+            .row.mb-3
+              .form-outline 
+                = f.password_field :password, class: "form-control form-control-sm text-input cheko-text-1", placeholder: "Password", autocomplete: "current-password"
+                %i#togglePassword.bi.bi-eye
+            .row.submit.mb-3
+              = button_tag "Submit", class: "submit-btn rounded-2" do
+                %span
+                  %i.bi.bi-box-arrow-in-right
+                  Login
+            .d-flex.justify-content-evenly
+              = link_to "Create account", new_user_registration_path, class: "sign-in-link"
+              %span.sign-in-link
+                |
+              = link_to "Forgot Password", new_user_password_path(resource_name), class: "sign-in-link"
+= javascript_pack_tag 'user/sign_in'

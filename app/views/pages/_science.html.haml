@@ -1,4 +1,4 @@
-= form_for @homework, url: user_registration_path, method: :post do |f|
+= form_for @homework, url: user_registration_path, method: :post, html: { class: "text-white" } do |f|
   = f.hidden_field :order_type, :value => params[:type]
   %h3 Type
   %stuff
@@ -20,8 +20,8 @@
             %span.fas.fa-calendar
   %h3 Details
   %stuff
-    -# .mb-3 
-    -#   .field 
+    -# .mb-3
+    -#   .field
     -#     = f.label :tutor_category, "Pick a type of writer"
     -#     %br/
     -#     .form-check
@@ -56,7 +56,7 @@
         = label_tag :view_skill, "View tutor's skill profile for ₱100"
         .form-check.form-switch
           = check_box_tag "homework[tutor_skills]", true, false, class: "form-check-input"
-      
+
       .container.p-1
         = label_tag :view_sample, "View tutor's sample works for ₱100"
         .form-check.form-switch
@@ -66,9 +66,9 @@
         = label_tag :view_bidders, "View all bidders, their skill profiles and their sample works for ₱300"
         .form-check.form-switch
           = check_box_tag "homework[view_bidders]", true, false, class: "form-check-input"
-          
-      
-          
+
+
+
       .container.p-1
         = label_tag :priority, "Make it a priority? +30%"
         .form-check.form-switch
@@ -128,7 +128,7 @@
         %em
           (6 characters minimum)
         = password_field_tag "user[password]", "", class: "form-control", required: true
-    .mb-3  
+    .mb-3
       .field
         = label_tag :password, "Password Confirmation"
         = password_field_tag "user[password_confirmation]", "", class: "form-control", required: true

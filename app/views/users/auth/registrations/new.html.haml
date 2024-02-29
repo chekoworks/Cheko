@@ -1,59 +1,61 @@
-= render 'users/shared/header'
-.container
-  .row 
-    .col-10.ms-auto.me-auto.mt-5
-      .card 
+%section.d-flex.align-items-center.justify-content-center.rounded-3.parent
+  .container
+    .row.d-flex.justify-content-center.h-100
+      .card.my-4.bg-transparent.border-0.w-50
+        .card-img-top.text-center.mb-5
+          = image_tag "logo-white.png", id: 'logo-image'
         .card-body
-          %h2 User Sign up
           = form_for(resource, as: resource_name, url: user_registration_path) do |f|
-            .mb-3
-              .row.field
-                .col-sm-12.col-md-6
-                  = f.label :first_name
-                  = f.text_field :first_name, class: "form-control", required: true
-                .col-sm-12.col-md-6
-                  = f.label :last_name
-                  = f.text_field :last_name, class: "form-control", required: true
-            .mb-3
-              .field
-                = f.label :email
-                = f.email_field :email, class: "form-control", required: true
-            .mb-3
-              .field
-                = f.label :phone_number
-                = f.number_field :phone_number, class: "form-control", required: true
-            .mb-3
-              .field
-                = f.label :school
-                = f.text_field :school, class: "form-control", required: true
+            .row.mb-2
+              .col-sm-12.col-md-6
+                .form-outline
+                  = f.text_field :first_name, class: "form-control form-control-sm text-input", placeholder: "First Name"
+              .col-sm-12.col-md-6
+                .form-outline
+                  = f.text_field :last_name, class: "form-control form-control-sm text-input", placeholder: "Last Name"
+
+            .row.mb-2
+              .form-outline
+                = f.email_field :email, class: "form-control form-control-sm text-input", placeholder: "Email Address"
+            -# .mb-3
+            -#   .field
+            -#     = f.label :phone_number
+            -#     = f.number_field :phone_number, class: "form-control", required: true
+            -# .mb-3
+            -#   .field
+            -#     = f.label :school
+            -#     = f.text_field :school, class: "form-control", required: true
             -# .mb-3
             -#   .field
             -#     = f.label :college
             -#     = f.text_field :college, class: "form-control", required: true
-            .mb-3
-              .row.field
-                .col-6
-                  = f.label :course
-                  = f.text_field :course, class: "form-control", required: true
-                .col-6
-                  = f.label :year, "School Year"
-                  = f.text_field :year, class: "form-control", required: true
+            -# .mb-3
+            -#   .row.field
+            -#     .col-6
+            -#       = f.label :course
+            -#       = f.text_field :course, class: "form-control", required: true
+            -#     .col-6
+            -#       = f.label :year, "School Year"
+            -#       = f.text_field :year, class: "form-control", required: true
             -# .mb-3
             -#   .field
             -#     = f.label :address
             -#     = f.text_field :address, class: "form-control", required: true
-            .mb-3
-              .field
-                = f.label :password
-                - if @minimum_password_length
-                  %em
-                    (#{@minimum_password_length} characters minimum)
-                = f.password_field :password, class: "form-control", required: true
-            .mb-3  
-              .field
-                = f.label :password_confirmation
-                = f.password_field :password_confirmation, class: "form-control", required: true
-            .mb-3  
-              .actions
-                = f.submit "Sign up", class: "btn btn-primary"
+            .row.mb-2
+              .form-outline.align-items-center
+                -# = f.label :password
+                -# - if @minimum_password_length
+                -#   %em
+                -#     (#{@minimum_password_length} characters minimum)
+                = f.password_field :password, class: "form-control form-control-sm text-input", placeholder: "Password"
+                %i#togglePassword.bi.bi-eye
+            .row.mb-3
+              .form-outline
+                = f.password_field :password_confirmation, class: "form-control form-control-sm text-input", placeholder: "Confirm password"
+                %i#toggleConfirmPassword.bi.bi-eye
+            .row.submit
+              = button_tag "Submit", class: "submit-btn rounded-2" do
+                %span
+                  %i.bi.bi-person-plus
+                  Create account
 = javascript_pack_tag 'user/new'

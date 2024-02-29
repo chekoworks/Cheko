@@ -1,0 +1,17 @@
+version: "3"
+name: checko
+services:
+  db:
+    image: "postgres:15.3-bookworm"
+    container_name: checko_pg_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: cheko_development
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_USER: cheko
+      DATABASE_PASSWORD: password
+    volumes:
+      - pg_data:/var/lib/postgresql@15/data
+volumes:
+  pg_data:

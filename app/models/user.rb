@@ -11,6 +11,7 @@ class User < ApplicationRecord
   # has_many :chats, as: :chattable, dependent: :destroy
   has_many :qnas, dependent: :destroy
   # has_many :messages, as: :sendable, dependent: :destroy
+  has_many :conversations, dependent: :destroy
 
   after_create :create_identifier
 

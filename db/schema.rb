@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_02_074050) do
+ActiveRecord::Schema.define(version: 2024_01_27_222741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,32 @@ ActiveRecord::Schema.define(version: 2024_02_02_074050) do
     t.text "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "conversation_relateds", force: :cascade do |t|
+    t.integer "conversation_id"
+    t.string "prompt_title"
+    t.jsonb "result"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "conversation_sources", force: :cascade do |t|
+    t.integer "conversation_id"
+    t.string "prompt_title"
+    t.jsonb "result"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "title_name"
+    t.jsonb "messages"
+    t.jsonb "user_messages"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "assistant_messages"
   end
 
   create_table "documents", force: :cascade do |t|

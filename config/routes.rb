@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     registrations: 'admins/auth/registrations',
     passwords: 'admins/auth/passwords'
   }
-  
+
   devise_for :tutors, path: 'tutors', controllers: {
     sessions: 'tutors/auth/sessions',
     registrations: 'tutors/auth/registrations',
@@ -71,8 +71,8 @@ Rails.application.routes.draw do
       put :assign_tutor
       post :upload
     end
-    resources :professors 
-    resources :prof_reviews, only: [:show, :update] do 
+    resources :professors
+    resources :prof_reviews, only: [:show, :update] do
       post :approve
     end
     resources :documents, only: [:index], on: :collection
@@ -88,8 +88,8 @@ Rails.application.routes.draw do
     end
     get '/', to: 'dashboard#home'
   end
-  
-  namespace :quality_officers do 
+
+  namespace :quality_officers do
     resources :homeworks, only: [:index, :show] do
       post :upload
     end
@@ -107,7 +107,7 @@ Rails.application.routes.draw do
   end
 
   namespace :tutors do
-    resources :homeworks, only: [:index, :show], on: :collection do 
+    resources :homeworks, only: [:index, :show], on: :collection do
       get :add_bid
       get :edit_bid
       post :bid
@@ -128,14 +128,14 @@ Rails.application.routes.draw do
     get '/', to: 'homeworks#index'
   end
 
-  namespace :users do 
+  namespace :users do
     resources :homeworks, on: :collection do
       get :success
       get :pick_type, on: :collection
 
       patch '/edit', to: 'homeworks#update', as: 'update_homework'
       get '/submit_homework', to: 'homeworks#submit_homework', as: 'submit_homework'
-      
+
       get '/delete_draft', to: 'homeworks#delete_draft', as: 'delete_draft'
     end
     post 'homeworks/add_to_draft', to: 'homeworks#add_to_drafts', as: 'add_to_drafts'
@@ -144,7 +144,7 @@ Rails.application.routes.draw do
       get :search, on: :collection
     end
 
-    resources :qnas do 
+    resources :qnas do
       get :finish
       get :cancel
       resources :chats, only: [:show] do
@@ -157,11 +157,16 @@ Rails.application.routes.draw do
     get '/', to: 'dashboard#home'
   end
 
-  namespace :accountants do 
+  namespace :accountants do
     resources :homeworks, only: [:index, :show, :update], on: :collection
     get '/', to: 'dashboard#home'
   end
   get '/cheko-ai' => 'gpt3#index'
   post '/gpt3/generate' => 'gpt3#generate'
+  post '/gpt3/rewrite' => 'gpt3#rewrite'
+  post '/gpt3/humanize' => 'gpt3#humanize'
+  post '/gpt3/update_title' => 'gpt3#update_title'
+  post '/gpt3/update_conversation' => 'gpt3#update_conversation'
+  post '/gpt3/save_conversation' => 'gpt3#save_conversation'
   get '/gpt3/render_better_answer_bubble' => 'gpt3#render_better_answer_bubble'
 end

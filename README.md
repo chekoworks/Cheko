@@ -5,7 +5,7 @@ application up and running.
 
 Things you may want to cover:
 
-- Ruby version: `2.7.0`
+- Ruby version: `2.7.2`
 
 - System dependencies: `postgresql`
 
@@ -55,4 +55,9 @@ Things you may want to cover:
    ```sh
    ruby ./bin/webpack-dev-server # run the webpack-dev-server
    rails server
+   ```
+   Run with tailwind
+   > This will run the rails server along with the tailwind watcher
+   ```
+   ./bin/dev
    ```

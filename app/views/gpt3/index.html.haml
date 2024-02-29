@@ -1,31 +1,149 @@
-.ai-chat-container
-  = render "users/shared/header"
-  .container
-    .card
-      .card-header.d-flex.align-items-center.py-3
-        = image_tag("cheko_ai_profile.jpg", class:"rounded-circle", style: 'height: 4.25rem; width: 4.25rem;')
-        %div.d-flex.flex-column.justify-content-center.font-weight-bold(style='padding-left:10px;')
-          %h2.mb-0 Cheko AI
-          %p.mb-0.text-secondary Ask me anything!
-      .card-body
-        .card-body-top
+%main.h-screen.flex.relative.gpt-wrapper
+  = render "users/shared/sidebar"
+  .flex.flex-1.items-center.justify-content-center.my-3.mr-3.rounded-lg.p-0.ans-wrapper.bg-content-cheko
+    .rounded-lg.border-1.border-neutral-700.w-full.h-full.relative.bg-content-cheko
+      .card-header.d-flex.align-items-center.p-3.border-neutral-700.justify-content-between.border-bottom
+        %div.flex.justify-content-center.font-medium.gap-2.align-items-center
+          -if user_signed_in?
+            = image_tag("cheko_ai_profile.jpg", class:"rounded-full w-8 h-8")
+            %h6.text-white.m-0
+              = current_user.name
+            = link_to destroy_user_session_url, method: :delete, class: 'cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm' do
+              %i.fa-solid.fa-arrow-right-from-bracket
+              Log out
+          -else
+            %a.cheko-text-1.rounded-md.bg-new-cheko.border-0.px-2.py-1.text-sm{href: new_user_session_path}
+              %i.fa-solid.fa-arrow-right-to-bracket
+              Login
+            %a.cheko-text-1.rounded-md.bg-new-cheko.border-0.px-2.py-1.text-sm{href: new_user_registration_path}
+              %i.fa-regular.fa-user
+              Signup
+        %span
+          %h4.text-white.text-xl.font-extrabold#message_title{"contenteditable": true}
+            - if @conversation.present?
+              = @conversation.title_name
+            - else
+              New convo
+          %input#conversation_id{name: "conversation_id", type: "hidden", value: (@conversation && @conversation.id)}/
+          - if @conversation.present?
+            %input#assistant_messages{name: "assistant_messages", type: "hidden", value: (raw @conversation.assistant_messages)}/
+            %input#user_messages{name: "user_messages", type: "hidden", value: (raw @conversation.user_messages)}/
+
+        %button#save_conversation_btn.cheko-text-1.rounded-md.bg-new-cheko.border-0.px-2.py-1.text-sm
+          %i.fa-regular.fa-floppy-disk
+          Save
+        %span#saved_text.cheko-text-1.bg-new-cheko.border-0.px-2.py-1.text-sm.hidden
+          %i.fa-regular.fa-floppy-disk
+          Saved
+      .card-body.px-10.py-3.cheko-chat-container
+        .card-body-top#cheko-chat-sub-container
           #gpt-chat-container
-            .chat-bubble-cheko
+            .chat-bubble-cheko.bg-new-cheko.text-white.border-0.text-base.font-semibold
               Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!
+            %div
+              %span.cheko-text-1 Try Cheko AI ->
+              %button.cheko-text-1.rounded-full.bg-content-cheko.border-1.cheko-border-color-1.px-2.py-1.sample-question
+                %i.fa-solid.fa-apple-whole.text-red-600
+                Who invented gravity?
+              %button.cheko-text-1.rounded-full.bg-content-cheko.border-1.cheko-border-color-1.px-2.py-1.sample-question
+                %i.fa-solid.fa-franc-sign.text-gray-600
+                What is the meaning of "bonjour"?
+            %div.edit_prompt_container.my-2.hidden
+              .flex.items-center.pr-3.rounded-full.bg-new-cheko.border-1.cheko-border-color-1
+                %textarea#edit-prompt.block.mx-4.w-full.text-sm.bg-new-cheko.cheko-text-1.rounded-full.resize-none.border-0.focus:ring-transparent.focus:border-0{class: "p-2.5", placeholder: "Ask Cheko AI..", rows: "1"}
+                %input#edit_pr ompt_index_id{name: "edit_prompt_index_id", type: "hidden"}/
+              .flex.justify-end.mt-2.gap-x-2
+                %button#edit_cancel_btn.inline-flex.justify-center.px-4.py-1.bg-gray-300.cheko-text-color-2.rounded-full.cursor-pointer.hover:bg-blue-100
+                  Cancel
+                %button#edit_save_btn.inline-flex.justify-center.px-4.py-1.bg-blue-300.cheko-text-color-2.rounded-full.cursor-pointer.hover:bg-blue-100
+                  Save
+            - if @conversation.present?
+              - assistant_messages = @conversation.assistant_messages
+              - @conversation.user_messages.each_with_index do |user_message, index|
+                %div.chat-bubble-container{class: "convo-container-#{index}", 'data-index': index}
+                  .chat-bubble-user.bg-new-cheko.text-white.border-0.text-base
+                    = user_message
+                  - if assistant_messages && assistant_messages[index]
+                    - source_list = @sources.where(prompt_title: user_message).first
+                    - if source_list.present?
+                      .flex.flex-col.pb-4.chat-bubble-content{style: "max-width: 75%;"}
+                        .pt-4.pb-2
+                          %span.title-header.text-xl.font-extrabold
+                            %i.fa-solid.fa-list-ul{style: "color: #ffffff;"}
+                            Sources
+                        .flex.flex-row.justify-between.gap-x-2
+                          - source_list.result.each_with_index do |source, index|
+                            - position = index+1
+                            - if source['position'].present?
+                              - position = source['position']
+                            - if position >= 5
+                              - break
+                            %a.rounded-md.flex.w-full.ring-borderMain.bg-new-cheko.text-white.p-2{href: source['link'], target: "_blank"}
+                              .relative.z-10.flex.items.max-w-full.flex-col.justify-between.h-full.pointer-events-none.select-none.px-sm.pt-sm.pb-xs
+                                %div
+                                  .line-clamp-2.grow.default.font-sans.text-xs.font-medium.text-textMain.dark:text-textMainDark.selection:bg-superDuper.selection:text-textMain
+                                    = source['title']
+                                .flex.items-center.space-x-xs
+                                  .flex.items-center.gap-x-xs.ring-borderMain.dark:ring-borderMainDark.bg-transparent{class: "border-borderMain/60 dark:border-borderMainDark/80 divide-borderMain/60 dark:divide-borderMainDark/80"}
+                                    .relative.flex-none
+                                      .rounded-full.overflow-hidden
+                                        %img.block{alt: "#{source['title']} favicon", height: "16", src: source['favicon'] || source['faviconUrl'], width: "16"}/
+                                    .duration-300.transition-all.line-clamp-1.break-all.light.font-sans.text-xs.ml-1.font-medium.text-textOff.dark:text-textOffDark.selection:bg-superDuper.selection:text-textMain
+                                      = ConversationSource.site_name(source['link'])
+                                  %h2.text-gray-500.mx-1.light.font-display.text-lg.font-medium.text-textOff.dark:text-textOffDark.selection:bg-superDuper.selection:text-textMain ·
+                                  .light.font-sans.text-xs.font-medium.text-textOff.dark:text-textOffDark.selection:bg-superDuper.selection:text-textMain
+                                    = position
+                    .pb-2.chat-bubble-content
+                      %span.title-header.text-xl.font-extrabold
+                        %i.fa-solid.fa-align-left
+                        Answer
+                    .pb-4.chat-bubble-content{style: "max-width: 75%;"}
+                      .chat-bubble-cheko.bg-new-cheko.text-white.border-0.text-base.font-semibold
+                        = Conversation.markdown_to_html(assistant_messages[index])
+                      .flex.flex-row.justify-between
+                        %div
+                          %button.chat-button.rewrite-btn{'data-index': index}
+                            %i.fa-solid.fa-repeat{style: "color: #ffffff;"}
+                            Rewrite
+                          %button#humanize-btn.chat-button.pl-2.cheko-text-1.humanize-btn{'data-index': index}
+                            %i.fa-solid.fa-wand-magic-sparkles{style: "color: #ffffff;"}
+                            Humanize
+                        %dev
+                          %button.chat-button.cheko-text-1.copy-btn{'data-index': index}
+                            %i.fa-solid.fa-copy.cheko-text-1
+                          %button.chat-button.pl-2.cheko-text-1.edit-btn{'data-index': index}
+                            %i.fa-solid.fa-edit.cheko-text-1
+                              .flex.flex-col.pb-4{style: "max-width: 75%;"}
+                    - related_list = @relates.where(prompt_title: user_message).first
+                    - if related_list.present?
+                      %div.chat-bubble-content{style: "max-width: 75%; margin-bottom: 16px;"}
+                        .pt-4.pb-2
+                          %span.title-header.text-xl.font-extrabold
+                            %i.fa-solid.fa-layer-group{style: "color: #ffffff;"}
+                            Related
+                        - related_list.result.each_with_index do |related, index|
+                          - if index >= 3
+                            - break
+                          %a.related-question.cheko-border-color-1{href: related['link'], target: "_blank"}
+                            = related['question'] || related['title'] || related
+                            %i.fa-solid.fa-plus{style: "color: #ffffff;"}
+
           -# Loading animation (enabled/disabled when prompting)
-          #cheko-loading-bubble.d-none
+          #cheko-loading-bubble.d-none.bg-new-cheko.text-white.border-0.text-md.font-semibold
             .loading-icon
               %span
               %span
               %span
-        .prompt-container
-          = form_tag do
-            .form-group
-              -# %label{for: "prompt"} Prompt
-              %textarea.form-control#prompt{rows: "3"}(placeholder='Ask any question here. (Enter to send, Shift + Enter for new line)')
-            = submit_tag "Send", class: "btn btn-primary mt-2", id: "generate-btn"
-            %button.btn.btn-secondary.mt-2#humanize-text-button Humanize Text
-            %button.btn.btn-secondary.mt-2#add-citations-button Add Citations
-    
+          #auto-scroll-anchor
+        .prompt-container.absolute.bottom-5.w-full.left-0.px-10
+          %div.bg-new-cheko.p-2.rounded-full
+            = form_tag do
+              %label.sr-only{for: "chat"} Your message
+              .flex.items-center.pr-3.rounded-full.bg-new-cheko.border-1.cheko-border-color-1
+                %textarea#prompt.block.mx-4.w-full.text-sm.bg-new-cheko.cheko-text-1.rounded-full.resize-none.border-0.focus:ring-transparent.focus:border-0{class: "p-2.5", placeholder: "Ask Cheko AI..", rows: "1"}
+                %button.inline-flex.justify-center.p-2.cheko-text-color-2.rounded-full.cursor-pointer.hover:bg-blue-100{type: "submit"}
+                  %i.fa-solid.fa-circle-arrow-up.text-2xl
+                  %span.sr-only Send message
+
+
 = javascript_pack_tag 'gpt3', 'data-turbolinks-track': 'reload'
-= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
