@@ -11,30 +11,22 @@ class Gpt3Controller < ApplicationController
       end
     end
 
-    render json: @content
+    render json: @content[:content]
   end
 
   def generate
     threads = []
     @content = nil
-    @serp_results = nil
-    threads << Thread.new do
-      @content = generate_answer(params)
-      if @content.nil?
-        @content = generate_answer(params, false, true)
-      end
+    @content = generate_answer(params)
+    if @content.nil?
+      @content = generate_answer(params, false, true)
     end
-    threads << Thread.new do
-      @serp_results = Serp.search(params[:prompt])
-    end
-    threads.each(&:join)
-    render json: {content: @content, sources: @serp_results[0], related_questions: @serp_results[1]}
+    render json: @content
   end
 
   def rewrite
     content = generate_answer(params, true)
-    serp_results = Serp.search(params[:prompt])
-    render json: {content: content, sources: serp_results[0], related_questions: serp_results[1]}
+    render json: content
   end
 
   def save_conversation
@@ -175,12 +167,19 @@ class Gpt3Controller < ApplicationController
     max_count_of_retries = 1
     retry_count = 0
     begin
+      @serp_results = Serp.search(params[:prompt])
+      additional_prompt = "
+        Here are some source links to be use to generate an answer: #{@serp_results[0].pluck(:link).join(', ')}.
+        Get the direct answer and make it 1 paragraph short and 250 max words.
+        If there are formatting please add some markdown.
+        Make the answer humanize and easier to read.
+      "
+      generate_prompt += additional_prompt
       initialDialogue = [
         { role: "system", content: "The following is a conversation with an AI Writing Assistant called 'Cheko' that helps students do their homework, save time, and graduate. The assistant is helpful, creative, clever, informative, complete and very friendly. Cheko started in 2019 when a college student wanted to improve students’ lives. Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!" },
         { role:"user", content:start_writing_prompt },
         { role:"assistant",content:generate_prompt }
       ]
-
       if humanize
         initialDialogue.append({ role: "user", content: "Humanize this: #{params[:prompt]}" })
       else
@@ -218,7 +217,16 @@ class Gpt3Controller < ApplicationController
         model: response.dig("model")
       }
 
-      return { markdown_text: Conversation.markdown_to_html(generated_text), generated_text: generated_text, new_dialogue: newDialogue, usage: usage}
+      return {
+        content: {
+          markdown_text: Conversation.markdown_to_html(generated_text),
+          generated_text: generated_text,
+          new_dialogue: newDialogue,
+          usage: usage
+        },
+        sources: @serp_results[0],
+        related_questions: @serp_results[1]
+      }
     rescue => e
       puts e
       retry_count += 1
