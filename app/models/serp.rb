@@ -14,8 +14,20 @@ class Serp
       api_key: api_key
     }
 
-    search = GoogleSearch.new(params)
+    max_count_of_retries = 3
+    retry_count = 0
 
-    [search.get_hash[:organic_results], search.get_hash[:related_questions]]
+    begin
+      search = GoogleSearch.new(params)
+      raise StandardError if search.get_hash[:organic_results].length == 0 || search.get_hash[:related_questions].length == 0
+      return [search.get_hash[:organic_results], search.get_hash[:related_questions]]
+    rescue => e
+      puts e
+      retry_count += 1
+      if retry_count <= max_count_of_retries
+        retry
+      end
+    end
+
   end
 end
