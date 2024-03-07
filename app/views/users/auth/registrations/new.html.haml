@@ -9,14 +9,14 @@
             .row.mb-2
               .col-sm-12.col-md-6
                 .form-outline
-                  = f.text_field :first_name, class: "form-control form-control-sm text-input", placeholder: "First Name"
+                  = f.text_field :first_name, class: "form-control form-control-sm text-input cheko-text-1", placeholder: "First Name"
               .col-sm-12.col-md-6
                 .form-outline
-                  = f.text_field :last_name, class: "form-control form-control-sm text-input", placeholder: "Last Name"
+                  = f.text_field :last_name, class: "form-control form-control-sm text-input cheko-text-1", placeholder: "Last Name"
 
             .row.mb-2
               .form-outline
-                = f.email_field :email, class: "form-control form-control-sm text-input", placeholder: "Email Address"
+                = f.email_field :email, class: "form-control form-control-sm text-input cheko-text-1", placeholder: "Email Address"
             -# .mb-3
             -#   .field
             -#     = f.label :phone_number
@@ -47,15 +47,20 @@
                 -# - if @minimum_password_length
                 -#   %em
                 -#     (#{@minimum_password_length} characters minimum)
-                = f.password_field :password, class: "form-control form-control-sm text-input", placeholder: "Password"
+                = f.password_field :password, class: "form-control form-control-sm text-input cheko-text-1", placeholder: "Password"
                 %i#togglePassword.bi.bi-eye
             .row.mb-3
               .form-outline
-                = f.password_field :password_confirmation, class: "form-control form-control-sm text-input", placeholder: "Confirm password"
+                = f.password_field :password_confirmation, class: "form-control form-control-sm text-input cheko-text-1", placeholder: "Confirm password"
                 %i#toggleConfirmPassword.bi.bi-eye
-            .row.submit
+            .row.submit.mb-3
               = button_tag "Submit", class: "submit-btn rounded-2" do
                 %span
                   %i.bi.bi-person-plus
                   Create account
+            .d-flex.justify-content-evenly
+              = link_to "Already have an account? Sign in", new_user_session_path, class: "sign-in-link"
+              %span.sign-in-link
+                |
+              = link_to "Forgot Password", new_user_password_path(resource_name), class: "sign-in-link"
 = javascript_pack_tag 'user/new'

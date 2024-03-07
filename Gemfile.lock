@@ -126,6 +126,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    june-analytics-ruby (2.4.3)
     launchy (2.5.2)
       addressable (~> 2.8)
     letter_opener (1.8.1)
@@ -354,6 +355,7 @@ DEPENDENCIES
   haml
   httparty
   jbuilder (~> 2.7)
+  june-analytics-ruby
   letter_opener (~> 1.4, >= 1.4.1)
   listen (~> 3.2)
   net-http

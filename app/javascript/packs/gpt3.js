@@ -98,7 +98,7 @@ function typewriterEffect(element, content, i = 0) {
 
   new Typed(element, {
     strings: [content],
-    typeSpeed: 10
+    typeSpeed: 0
   });
   // element.innerHTML += content[i];
   // if (i === content.length - 1) {

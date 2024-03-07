@@ -11,6 +11,24 @@ class Gpt3Controller < ApplicationController
       end
     end
 
+    if user_signed_in?
+      Analytics.track(
+        user_id: current_user.id,
+        event: 'Humanize Cheko Answer',
+        properties: {
+          content: @content[:content]
+        }
+      )
+    else
+      Analytics.track(
+        anonymous_id: session[:anonymous_id],
+        event: 'Humanize Cheko Answer',
+        properties: {
+          content: @content[:content]
+        }
+      )
+    end
+
     render json: @content[:content]
   end
 
@@ -21,11 +39,48 @@ class Gpt3Controller < ApplicationController
     if @content.nil?
       @content = generate_answer(params, false, true)
     end
+
+    if user_signed_in?
+      Analytics.track(
+        user_id: current_user.id,
+        event: 'Ask Cheko AI',
+        properties: {
+          content: @content[:content]
+        }
+      )
+    else
+      Analytics.track(
+        anonymous_id: session[:anonymous_id],
+        event: 'Ask Cheko AI',
+        properties: {
+          content: @content[:content]
+        }
+      )
+    end
     render json: @content
   end
 
   def rewrite
     content = generate_answer(params, true)
+
+    if user_signed_in?
+      Analytics.track(
+        user_id: current_user.id,
+        event: 'Rewrite Cheko Answer',
+        properties: {
+          content: content
+        }
+      )
+    else
+      Analytics.track(
+        anonymous_id: session[:anonymous_id],
+        event: 'Rewrite Cheko Answer',
+        properties: {
+          content: content
+        }
+      )
+    end
+
     render json: content
   end
 
@@ -90,6 +145,11 @@ class Gpt3Controller < ApplicationController
   end
 
   def index
+    unless user_signed_in?
+      unless session[:anonymous_id].present?
+        session[:anonymous_id] = SecureRandom.random_number(1_000_000)
+      end
+    end
     if params[:conversation_id].present?
       @conversation = Conversation.find(params[:conversation_id])
       @sources = @conversation.conversation_sources

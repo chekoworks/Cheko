@@ -45,6 +45,7 @@ gem "sentry-rails"
 
 gem 'typhoeus'
 
+gem 'june-analytics-ruby'
 
 
 group :development, :test do

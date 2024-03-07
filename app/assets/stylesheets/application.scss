@@ -66,6 +66,14 @@
   color: #8f8f8f !important;
 }
 
+input.cheko-text-1:-webkit-autofill {
+  -webkit-text-fill-color: #8f8f8f;
+}
+
+input.cheko-text-1::placeholder {
+  -webkit-text-fill-color: #8f8f8f;
+}
+
 .cheko-text-color-2 {
   color: #3d3d3b !important;
 }
