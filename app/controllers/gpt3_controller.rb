@@ -5,10 +5,7 @@ class Gpt3Controller < ApplicationController
 
   def humanize
     if params[:prompt]
-      @content = generate_answer(params, false, false, true)
-      if @content.nil?
-        @content = generate_answer(params, false, true, true)
-      end
+      HumanizeAnswerJob.perform_now(params[:prompt], params[:conversation_id], params[:position])
     end
 
     if user_signed_in?
@@ -16,7 +13,7 @@ class Gpt3Controller < ApplicationController
         user_id: current_user.id,
         event: 'Humanize Cheko Answer',
         properties: {
-          content: @content[:content]
+          content: params[:prompt]
         }
       )
     else
@@ -24,12 +21,15 @@ class Gpt3Controller < ApplicationController
         anonymous_id: session[:anonymous_id],
         event: 'Humanize Cheko Answer',
         properties: {
-          content: @content[:content]
+          content: params[:prompt]
         }
       )
     end
 
-    render json: @content[:content]
+    render(
+      json: { message: 'Success' },
+      status: :ok
+    )
   end
 
   def generate

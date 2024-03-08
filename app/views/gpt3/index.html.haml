@@ -4,6 +4,8 @@
     .rounded-lg.border-1.border-neutral-700.w-full.h-full.relative.bg-content-cheko
       .card-header.d-flex.align-items-center.p-3.border-neutral-700.justify-content-between.border-bottom
         %div.flex.justify-content-center.font-medium.gap-2.align-items-center
+
+          %input#is_user_signed_in{name: "is_user_signed_in", type: "hidden", value: user_signed_in?}/
           -if user_signed_in?
             = image_tag("cheko_ai_profile.jpg", class:"rounded-full w-8 h-8")
             %h6.text-white.m-0
@@ -36,6 +38,10 @@
         %span#saved_text.cheko-text-1.bg-new-cheko.border-0.px-2.py-1.text-sm.hidden
           %i.fa-regular.fa-floppy-disk
           Saved
+
+      .alert.alert-success.alert-dismissible.fade.show.m-2.success_alert{role: "alert", style: "display: none;"}
+        %span
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", type: "button"}
       .card-body.px-10.py-3.cheko-chat-container
         .card-body-top#cheko-chat-sub-container
           #gpt-chat-container
@@ -52,7 +58,7 @@
             %div.edit_prompt_container.my-2.hidden
               .flex.items-center.pr-3.rounded-full.bg-new-cheko.border-1.cheko-border-color-1
                 %textarea#edit-prompt.block.mx-4.w-full.text-sm.bg-new-cheko.cheko-text-1.rounded-full.resize-none.border-0.focus:ring-transparent.focus:border-0{class: "p-2.5", placeholder: "Ask Cheko AI..", rows: "1"}
-                %input#edit_pr ompt_index_id{name: "edit_prompt_index_id", type: "hidden"}/
+                %input#edit_prompt_index_id{name: "edit_prompt_index_id", type: "hidden"}/
               .flex.justify-end.mt-2.gap-x-2
                 %button#edit_cancel_btn.inline-flex.justify-center.px-4.py-1.bg-gray-300.cheko-text-color-2.rounded-full.cursor-pointer.hover:bg-blue-100
                   Cancel

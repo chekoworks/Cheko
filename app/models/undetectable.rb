@@ -51,8 +51,8 @@ class Undetectable
 
     if response_params
       puts response_params
-      retrieved_response = retrieve(response_params['id'])
-      return retrieved_response
+      # retrieved_response = retrieve(response_params['id'])
+      return response_params['id']
     end
 
     return nil

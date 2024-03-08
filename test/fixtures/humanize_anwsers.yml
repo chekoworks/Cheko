@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  position: 1
+  answer: MyText
+  humanized_output: MyText
+  undetectable_ai_id: MyString
+  conversation_id: 1
+
+two:
+  position: 1
+  answer: MyText
+  humanized_output: MyText
+  undetectable_ai_id: MyString
+  conversation_id: 1

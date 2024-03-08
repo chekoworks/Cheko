@@ -25,7 +25,7 @@ mixpanel.init("36da7c6fa99e6a22866f300e549fef43", {
  */
 import Typed from 'typed.js';
 
-function createChatBubble(content, sender) {
+function createChatBubble(content, sender, showEditBtn) {
   const chatBubble = document.createElement("div");
   chatBubble.className =
     sender === "user" ? "chat-bubble-user" : "chat-bubble-cheko";
@@ -60,20 +60,20 @@ function createChatBubble(content, sender) {
     copyButton.setAttribute('data-tooltip-trigger', 'hover');
     copyButton.innerHTML = '<i class="fa-solid fa-copy cheko-text-1" ></i>';
 
-    const editButton = document.createElement("button");
-    editButton.classList.add('chat-button', 'pl-2', 'cheko-text-1', 'edit-btn');
-    editButton.innerHTML = '<i class="fa-solid fa-edit cheko-text-1" ></i>';
 
     let tooltipCopyBtnContent = '<div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">\n' +
       '    Content copied to clipboard!\n' +
       '</div>'
 
-    rewriteHumanizeDiv.appendChild(rewriteButton);
-    rewriteHumanizeDiv.appendChild(humanizeButton);
+    let is_user_signed_in = $('#is_user_signed_in').val();
+
+    if (is_user_signed_in == 'true') {
+      rewriteHumanizeDiv.appendChild(rewriteButton);
+      rewriteHumanizeDiv.appendChild(humanizeButton);
+    }
 
     copyEditButton.appendChild(copyButton);
     $(copyEditButton).append(tooltipCopyBtnContent);
-    copyEditButton.appendChild(editButton);
 
     buttonsContainer.appendChild(rewriteHumanizeDiv);
     buttonsContainer.appendChild(copyEditButton);
@@ -84,7 +84,22 @@ function createChatBubble(content, sender) {
 
     return bubbleContainer;
   } else {
-    return chatBubble;
+    chatBubble.classList.add("max-w-full");
+
+    const bubbleContainer = document.createElement("div");
+    bubbleContainer.classList.add('self-end', 'my-2');
+    bubbleContainer.append(chatBubble);
+
+    if (showEditBtn) {
+      const actionDiv = document.createElement("div");
+      actionDiv.classList.add('text-right');
+      const editButton = document.createElement("button");
+      editButton.classList.add('chat-button', 'pl-2', 'cheko-text-1', 'edit-btn');
+      editButton.innerHTML = '<i class="fa-solid fa-edit cheko-text-1" ></i>';
+      actionDiv.appendChild(editButton);
+      bubbleContainer.append(actionDiv);
+    }
+    return bubbleContainer;
   }
 }
 
@@ -107,20 +122,12 @@ function typewriterEffect(element, content, i = 0) {
   // setTimeout(() => typewriterEffect(element, content, i + 1), 10);
 }
 
-const humanizeText = async(prompt, element) => {
-  // Utils:
-  const chekoLoadingBubble = document.getElementById("cheko-loading-bubble");
-  function setLoading(bool) {
-    if (bool) {
-      chekoLoadingBubble.classList.remove("d-none"); // loading animation
-    } else {
-      chekoLoadingBubble.classList.add("d-none"); // loading animation
-    }
-  }
+const humanizeText = async(prompt, position) => {
   const chatContainer = document.getElementById("gpt-chat-container");
-  const text = "Humanizing text.."
+  const text = "Humanizing answer... Please wait for 1-3 minutes..."
   chatContainer.appendChild(createChatBubble(text, "user"));
-  setLoading(true);
+
+  let conversation_id = document.getElementById('conversation_id').value;
 
   let response;
 
@@ -130,7 +137,7 @@ const humanizeText = async(prompt, element) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ prompt, currentDialogue }),
+      body: JSON.stringify({ prompt, position, conversation_id, currentDialogue }),
     });
 
   } catch (e) {
@@ -202,7 +209,7 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
 
   // 2. Add prompt as a chat bubble:
 
-  convoContainer.append(createChatBubble(prompt, "user"));
+  convoContainer.append(createChatBubble(prompt, "user", true));
   showLoadingBubble(convoContainer);
 
   // 3. Send Prompt to Controller:
@@ -631,7 +638,9 @@ $('body').on('click', '.related-question', function() {
 // -- Humanize Button --
 $('body').on('click', '.humanize-btn', function() {
   let prompt = $(this).parent().parent().parent().find('.chat-bubble-cheko').text();
-  humanizeText(prompt, null);
+  let position = $(this).parent().parent().parent().parent().data('index');
+  console.log(position);
+  humanizeText(prompt, position);
 });
 
 // -- Copy Button --
@@ -656,8 +665,8 @@ $('body').on('click', '.rewrite-btn', function() {
 
 // -- Edit Button --
 $('body').on('click', '.edit-btn', function() {
-  let index = $(this).parent().parent().parent().parent().data('index');
-  let prompt = $(this).parent().parent().parent().parent().find('.chat-bubble-user').text();
+  let index = $(this).parent().parent().parent().data('index');
+  let prompt = $(this).parent().parent().parent().parent().find('.chat-bubble-user').text().trim();
   let edit_prompt_container = $('.edit_prompt_container');
   edit_prompt_container.find('#edit-prompt').val(prompt);
   $('#edit_prompt_index_id').val(index);

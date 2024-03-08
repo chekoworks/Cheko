@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_02_074050) do
+ActiveRecord::Schema.define(version: 2024_03_07_152411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,6 +182,16 @@ ActiveRecord::Schema.define(version: 2024_02_02_074050) do
     t.boolean "soft_deleted", default: false
     t.datetime "deleted_at"
     t.integer "min_bid"
+  end
+
+  create_table "humanize_answers", force: :cascade do |t|
+    t.integer "position"
+    t.text "answer"
+    t.text "humanized_output"
+    t.string "undetectable_ai_id"
+    t.integer "conversation_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "managers", force: :cascade do |t|
