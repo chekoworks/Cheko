@@ -1,4 +1,3 @@
-queue_ahead: 360 # Number of minutes to queue jobs into the future
 queue_name: "simple_scheduler" # The Sidekiq queue name used by SimpleScheduler::FutureJob
 
 simple_task:
