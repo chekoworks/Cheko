@@ -584,6 +584,7 @@ titleContainer.addEventListener("blur", function (e) {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+  $('html').addClass('overflow-hidden max-h-screen');
   if (document.getElementById('user_messages')) {
     let currentUserMessages = document.getElementById('user_messages').value;
     if (!(currentUserMessages == null || currentUserMessages == undefined || currentUserMessages == '')) {
