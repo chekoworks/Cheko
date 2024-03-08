@@ -1,4 +1,3 @@
 simple_task:
   class: "CheckAndSaveHumanizedAnswerJob"
   every: "15.seconds"
-  at: "*:00"
