@@ -61,9 +61,9 @@ function createChatBubble(content, sender, showEditBtn) {
     copyButton.innerHTML = '<i class="fa-solid fa-copy cheko-text-1" ></i>';
 
 
-    let tooltipCopyBtnContent = '<div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">\n' +
-      '    Content copied to clipboard!\n' +
-      '</div>'
+    // let tooltipCopyBtnContent = '<div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">\n' +
+    //   '    Content copied to clipboard!\n' +
+    //   '</div>'
 
     let is_user_signed_in = $('#is_user_signed_in').val();
 
@@ -73,7 +73,7 @@ function createChatBubble(content, sender, showEditBtn) {
     }
 
     copyEditButton.appendChild(copyButton);
-    $(copyEditButton).append(tooltipCopyBtnContent);
+    // $(copyEditButton).append(tooltipCopyBtnContent);
 
     buttonsContainer.appendChild(rewriteHumanizeDiv);
     buttonsContainer.appendChild(copyEditButton);
@@ -648,6 +648,11 @@ $('body').on('click', '.copy-btn', function() {
   let prompt = $(this).parent().parent().parent().find('.chat-bubble-cheko').text();
   navigator.clipboard.writeText(prompt).then(() => {
     console.log('Content copied to clipboard');
+    $('.copy-alert-container').fadeIn("fast");
+
+    setTimeout(() => {
+      $('.copy-alert-container').fadeOut("slow");
+    }, 2000);
     /* Resolved - text copied to clipboard successfully */
   },() => {
     console.error('Failed to copy');

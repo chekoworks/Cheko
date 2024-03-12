@@ -39,6 +39,12 @@
           %i.fa-regular.fa-floppy-disk
           Saved
 
+      .alert.alert-primary.align-items-center.m-2.copy-alert-container{role: "alert", style: "display: none;"}
+        %div.d-flex
+          %i.fa-solid.fa-circle-info.me-2
+          %div
+            Content copied to clipboard
+            %i.fa-solid.fa-clipboard.flex-shrink-0.me-2.mb-1
       .alert.alert-success.alert-dismissible.fade.show.m-2.success_alert{role: "alert", style: "display: none;"}
         %span
         %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", type: "button"}
@@ -68,8 +74,12 @@
               - assistant_messages = @conversation.assistant_messages
               - @conversation.user_messages.each_with_index do |user_message, index|
                 %div.chat-bubble-container{class: "convo-container-#{index}", 'data-index': index}
-                  .chat-bubble-user.bg-new-cheko.text-white.border-0.text-base
+                  .self-end.my-2
+                    .chat-bubble-user.bg-new-cheko.text-white.border-0.text-base.max-w-full
                     = user_message
+                    .text-right
+                      %button.chat-button.pl-2.cheko-text-1.edit-btn{'data-index': index}
+                        %i.fa-solid.fa-edit.cheko-text-1
                   - if assistant_messages && assistant_messages[index]
                     - source_list = @sources.where(prompt_title: user_message).first
                     - if source_list.present?
@@ -118,8 +128,6 @@
                         %dev
                           %button.chat-button.cheko-text-1.copy-btn{'data-index': index}
                             %i.fa-solid.fa-copy.cheko-text-1
-                          %button.chat-button.pl-2.cheko-text-1.edit-btn{'data-index': index}
-                            %i.fa-solid.fa-edit.cheko-text-1
                               .flex.flex-col.pb-4{style: "max-width: 75%;"}
                     - related_list = @relates.where(prompt_title: user_message).first
                     - if related_list.present?
