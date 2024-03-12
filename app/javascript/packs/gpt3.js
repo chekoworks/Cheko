@@ -362,7 +362,7 @@ function showSource(container_element, sources) {
       return;
     }
     data_html += '<a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2" href="' + source.link + '" target="_blank">\n' +
-        '<div class="relative z-10 flex items max-w-full flex-col justify-between h-full pointer-events-none select-none px-sm pt-sm pb-xs">\n' +
+        '<div class="relative flex items max-w-full flex-col justify-between h-full pointer-events-none select-none px-sm pt-sm pb-xs">\n' +
           '<div>\n' +
             '<div class="line-clamp-2 grow default font-sans text-xs font-medium text-textMain dark:text-textMainDark selection:bg-superDuper selection:text-textMain">\n' +
               source.title +

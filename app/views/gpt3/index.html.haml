@@ -76,7 +76,7 @@
                 %div.chat-bubble-container{class: "convo-container-#{index}", 'data-index': index}
                   .self-end.my-2
                     .chat-bubble-user.bg-new-cheko.text-white.border-0.text-base.max-w-full
-                    = user_message
+                      = user_message
                     .text-right
                       %button.chat-button.pl-2.cheko-text-1.edit-btn{'data-index': index}
                         %i.fa-solid.fa-edit.cheko-text-1
@@ -96,7 +96,7 @@
                             - if position >= 5
                               - break
                             %a.rounded-md.flex.w-full.ring-borderMain.bg-new-cheko.text-white.p-2{href: source['link'], target: "_blank"}
-                              .relative.z-10.flex.items.max-w-full.flex-col.justify-between.h-full.pointer-events-none.select-none.px-sm.pt-sm.pb-xs
+                              .relative.flex.items.max-w-full.flex-col.justify-between.h-full.pointer-events-none.select-none.px-sm.pt-sm.pb-xs
                                 %div
                                   .line-clamp-2.grow.default.font-sans.text-xs.font-medium.text-textMain.dark:text-textMainDark.selection:bg-superDuper.selection:text-textMain
                                     = source['title']
@@ -149,7 +149,7 @@
               %span
               %span
               %span
-          #auto-scroll-anchor
+          #auto-scroll-anchor.mb-12
         .prompt-container.absolute.bottom-5.w-full.left-0.px-10
           %div.bg-new-cheko.p-2.rounded-full
             = form_tag do
