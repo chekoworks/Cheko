@@ -20,7 +20,11 @@ class CheckAndSaveHumanizedAnswerJob < ApplicationJob
 
         conversation.save
 
-        ActionCable.server.broadcast("humanize_answer_channel", {conversation: conversation})
+        # HumanizeAnswerChannel.broadcast_to(
+        #   conversation.user,
+        #   {conversation: conversation}
+        # )
+        ActionCable.server.broadcast("humanize_answer_channel_#{conversation.user.id}", {conversation: conversation})
       end
     end
 
