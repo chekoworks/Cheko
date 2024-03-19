@@ -111,10 +111,19 @@ function autoScroll() {
 
 function typewriterEffect(element, content, i = 0) {
 
-  new Typed(element, {
+  const typed = new Typed(element, {
     strings: [content],
-    typeSpeed: 0
+    typeSpeed: 0,
   });
+
+  function checkVisibilityAndTyped() {
+    if (document.hidden && !typed.complete) {
+      typed.start(); // Start Typed.js if tab is visible and typing is not complete
+    }
+  }
+
+// Check visibility and typed status every 500 milliseconds
+  setInterval(checkVisibilityAndTyped, 500);
   // element.innerHTML += content[i];
   // if (i === content.length - 1) {
   //   return;
@@ -723,6 +732,8 @@ $('body').on('click', '.delete_conversation_btn', function() {
     delete_conversation_btn.parent().remove();
   });
 });
+
+
 
 // -- Citation Button --
 // document

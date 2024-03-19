@@ -220,7 +220,7 @@ class Gpt3Controller < ApplicationController
   end
 
   def generate_answer(params, rewrite=false, retry_request=false, humanize=false)
-
+    puts params[:currentDialogue]
     start_writing_prompt = "Generate a conversation where a student seeks advice on completing homework efficiently. The conversation should cover time management techniques, effective study habits, and tips for staying focused. Include prompts for practical solutions and actionable steps that the student can implement to finish their homework quickly while maintaining academic integrity and understanding of the material. \n\n When it comes to writing content, two factors are crucial, “perplexity” and “burstiness.” Perplexity measures the complexity of text. Separately, burstiness compares the variations of sentences. Humans tend to write with greater burstiness, for example, with some longer or complex sentences alongside shorter ones. AI sentences tend to be more uniform. Therefore, when writing the following content I am going to ask you to create, I need it to have a good amount of perplexity and burstiness. Do you understand? Show complete results."
     generate_prompt = "I want to learn how to complete homework efficiently and avoid procrastination. Can you help me with time management techniques, effective study habits, and staying focused?\n\nPerplexity AI: Of course! I'm delighted to share actionable steps and practical advice to help you excel in your academics. To maximize efficiency and minimize stress, here are some tips I've gathered:\n\n1. Time Management Techniques:\n   - Break tasks into smaller chunks, following the Pomodoro Technique: Work in 25-minute intervals, with short breaks in between to prevent burnout.\n   - Prioritize tasks based on urgency and importance. Don't forget to integrate self-care and relaxation time into your schedule.\n\n2. Effective Study Habits:\n   - Active recall: Actively test your knowledge by summarizing or rephrasing content to ensure better retention.\n   - Interleaved practice: Mix different topics instead of sticking to one subject only. This helps in recognizing patterns that apply to various subjects.\n   - Elaborative encoding: Develop your understanding by relating new concepts to existing knowledge, generating your own examples, and analogies.\n\n3. Staying Focused:\n   - Reduce distractions: Minimize digital noise and eliminate external distractions. Set up 'focus hours' dedicated to study and reduce social media usage.\n   - Practice mindfulness and gratitude: Being grateful for the opportunity to learn and complete your homework can improve your focus and productivity.\n   - Set achievable goals for each study session. Create small wins and reward yourself after accomplishing milestones.\n\nI hope these tips are useful to you. Remember to approach your studies with an open. Add confidence score/percentage on the end of the answer/response with 2 next line spacing."
     # 1. Default
@@ -240,28 +240,25 @@ class Gpt3Controller < ApplicationController
         { role:"user", content:start_writing_prompt },
         { role:"assistant",content:generate_prompt }
       ]
+      if params[:currentDialogue]
+        initialDialogue = params[:currentDialogue]
+      end
+
       if humanize
         initialDialogue.append({ role: "user", content: "Humanize this: #{params[:prompt]}" })
       else
         initialDialogue.append({ role: "user", content: params[:prompt] })
       end
-
       if rewrite
         initialDialogue.append({role:"assistant",content:params[:current_result]})
         initialDialogue.append({role:"user",content:"please show different result for this prompt: #{params[:prompt]}"})
       end
 
-      # 3. Initialize/Extend currentDialogue
-      # currentDialogue = params[:currentDialogue].nil? ? initialDialogue.concat([prompt]) : params[:currentDialogue].concat([prompt])
-
-      # 4. REQUEST via PERPLEXITY.AI API
       if retry_request
         response = Llm.go(prompts:initialDialogue,is_full_prompt: true, model: 'sonar-medium-chat')
       else
         response = Llm.go(prompts:initialDialogue,is_full_prompt: true)
       end
-
-      puts response
 
       # 5. Process OpenAI RESPONSE / PERLEXITY.AI RESPONSE
       generated_text = response.dig("choices", 0, "message", "content").gsub("Perplexity AI: ", "")

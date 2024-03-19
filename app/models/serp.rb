@@ -19,8 +19,8 @@ class Serp
 
     begin
       search = GoogleSearch.new(params)
-      raise StandardError if search.get_hash[:organic_results].length == 0 || search.get_hash[:related_questions].length == 0
-      return [search.get_hash[:organic_results], search.get_hash[:related_questions]]
+      raise StandardError if search.get_hash[:organic_results].length == 0
+      return [search.get_hash[:organic_results], (search.get_hash[:related_questions] || [])]
     rescue => e
       puts e
       retry_count += 1
