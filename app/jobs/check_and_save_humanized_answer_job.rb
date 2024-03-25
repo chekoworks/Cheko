@@ -2,6 +2,7 @@ class CheckAndSaveHumanizedAnswerJob < ApplicationJob
   queue_as :default
 
   def perform
+    puts "Start checking for humanized answer...."
     Rails.logger.info("Start checking for humanized answer....")
     undetectable_request_limit = 3
     undone_humanize_answers = HumanizeAnswer.where(humanized_output: nil).limit(undetectable_request_limit)
@@ -28,6 +29,7 @@ class CheckAndSaveHumanizedAnswerJob < ApplicationJob
       end
     end
 
+    puts "Done processing humanized answers: #{undone_humanize_answers.length}"
     Rails.logger.info("Done processing humanized answers: #{undone_humanize_answers.length}")
   end
 end
