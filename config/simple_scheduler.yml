@@ -1,7 +1,0 @@
-queue_ahead: 10 # Number of minutes to queue jobs into the future
-queue_name: "simple_scheduler" # The Sidekiq queue name used by SimpleScheduler::FutureJob
-
-simple_task:
-  class: "CheckAndSaveHumanizedAnswerJob"
-  every: "15.seconds"
-  at: "*:00"
