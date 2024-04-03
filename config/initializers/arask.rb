@@ -1,7 +1,7 @@
 Arask.setup do |arask|
   ## Examples
   # arask.create script: 'CheckAndSaveHumanizedAnswerJob.perform_now', interval: 1.minute, run_first_time: true
-  arask.create script: 'Undetectable.check_and_save_humanized_answer', interval: 1.minute
+  # arask.create script: 'Undetectable.check_and_save_humanized_answer', interval: 1.minute
   # Rake tasks with cron syntax
   #arask.create task: 'send:logs', cron: '0 2 * * *' # At 02:00 every day
   #arask.create task: 'update:cache', cron: '*/5 * * * *' # Every 5 minutes
