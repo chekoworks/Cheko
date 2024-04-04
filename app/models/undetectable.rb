@@ -62,9 +62,8 @@ class Undetectable
     puts "Start checking for humanized answer...."
     Rails.logger.info("Start checking for humanized answer....")
     undetectable_request_limit = 3
-    undone_humanize_answers = HumanizeAnswer.where(humanized_output: nil).limit(undetectable_request_limit)
+    undone_humanize_answers = HumanizeAnswer.where(humanized_output: nil).where.not(undetectable_ai_id: nil).limit(undetectable_request_limit)
 
-    threads = []
     undone_humanize_answers.each do |humanize_answer|
       document = Undetectable.retrieve(humanize_answer.undetectable_ai_id)
       if document['output'].present?

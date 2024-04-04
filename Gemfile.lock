@@ -62,9 +62,6 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
-    arask (1.2.6)
-      fugit (~> 1.1)
-      rails (>= 5.0)
     awesome_print (1.9.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
@@ -99,8 +96,6 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
-    et-orbi (1.2.7)
-      tzinfo
     ethon (0.16.0)
       ffi (>= 1.15.0)
     event_stream_parser (1.0.0)
@@ -115,9 +110,6 @@ GEM
     ffi (1.16.3)
     font-awesome-sass (6.4.2)
       sassc (~> 2.0)
-    fugit (1.10.1)
-      et-orbi (~> 1, >= 1.2.7)
-      raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google_search_results (2.2.0)
@@ -176,7 +168,6 @@ GEM
     public_suffix (5.0.4)
     puma (4.3.12)
       nio4r (~> 2.0)
-    raabro (1.4.0)
     racc (1.7.3)
     rack (2.2.8.1)
     rack-proxy (0.7.7)
@@ -255,9 +246,6 @@ GEM
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    simple_scheduler (1.2.0)
-      rails (>= 5.0)
-      sidekiq (>= 5.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -313,7 +301,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  arask (~> 1.2, >= 1.2.6)
   awesome_print
   bootsnap (>= 1.4.2)
   byebug
@@ -343,7 +330,6 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   sidekiq (~> 6.5.8)
-  simple_scheduler
   spring
   spring-watcher-listen (~> 2.0.0)
   tailwindcss-rails

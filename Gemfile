@@ -47,9 +47,9 @@ gem 'typhoeus'
 
 gem 'june-analytics-ruby'
 
-gem "simple_scheduler"
-
-gem 'arask', '~> 1.2', '>= 1.2.6'
+# gem "simple_scheduler"
+#
+# gem 'arask', '~> 1.2', '>= 1.2.6'
 
 
 group :development, :test do
