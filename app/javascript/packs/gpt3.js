@@ -31,7 +31,19 @@ function createChatBubble(content, sender, showEditBtn) {
     sender === "user" ? "chat-bubble-user" : "chat-bubble-cheko";
   chatBubble.classList.add("bg-new-cheko", "text-white", "border-0", "text-base");
 
-  sender === "user" ? chatBubble.innerHTML = content : typewriterEffect(chatBubble, content);
+  if (sender === "user") {
+    chatBubble.innerHTML = content;
+  } else {
+    typewriterEffect(chatBubble, content, () => {
+      rewriteButton.disabled = false;
+      humanizeButton.disabled = false;
+      copyButton.disabled = false;
+      // Enable source links and related question links similarly
+      document.querySelectorAll('.source-link.disabled-link').forEach(link => {
+        link.classList.remove('disabled-link');
+      });
+    });
+  }
 
   if (sender != "user") {
     const bubbleContainer = document.createElement("div");
@@ -47,11 +59,13 @@ function createChatBubble(content, sender, showEditBtn) {
     const rewriteButton = document.createElement("button");
     rewriteButton.classList.add('chat-button', 'rewrite-btn');
     rewriteButton.innerHTML = '<i class="fa-solid fa-repeat" style="color: #ffffff;"></i> Rewrite';
+    rewriteButton.disabled = true;
 
     const humanizeButton = document.createElement("button");
     humanizeButton.classList.add('chat-button', 'pl-2', 'cheko-text-1', 'humanize-btn');
     humanizeButton.setAttribute("id", "humanize-btn");
     humanizeButton.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" style="color: #ffffff;"></i> Humanize';
+    humanizeButton.disabled = true;
 
     const copyButton = document.createElement("button");
     copyButton.classList.add('chat-button', 'cheko-text-1', 'copy-btn');
@@ -64,6 +78,7 @@ function createChatBubble(content, sender, showEditBtn) {
     // let tooltipCopyBtnContent = '<div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">\n' +
     //   '    Content copied to clipboard!\n' +
     //   '</div>'
+    copyButton.disabled = true;
 
     let is_user_signed_in = $('#is_user_signed_in').val();
 
@@ -109,11 +124,11 @@ function autoScroll() {
   }, 2000);
 }
 
-function typewriterEffect(element, content, i = 0) {
-
+function typewriterEffect(element, content, onComplete) {
   const typed = new Typed(element, {
     strings: [content],
     typeSpeed: 0,
+    onComplete: onComplete // Call the callback function when typing is complete
   });
 
   function checkVisibilityAndTyped() {
