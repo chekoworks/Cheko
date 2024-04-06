@@ -42,6 +42,9 @@ function createChatBubble(content, sender, showEditBtn) {
       document.querySelectorAll('.source-link.disabled-link').forEach(link => {
         link.classList.remove('disabled-link');
       });
+      document.querySelectorAll('.related-question.disabled-link').forEach(link => {
+        link.classList.remove('disabled-link');
+      });
     });
   }
 
@@ -73,11 +76,6 @@ function createChatBubble(content, sender, showEditBtn) {
     copyButton.setAttribute('data-tooltip-target', 'tooltip-default');
     copyButton.setAttribute('data-tooltip-trigger', 'hover');
     copyButton.innerHTML = '<i class="fa-solid fa-copy cheko-text-1" ></i>';
-
-
-    // let tooltipCopyBtnContent = '<div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">\n' +
-    //   '    Content copied to clipboard!\n' +
-    //   '</div>'
     copyButton.disabled = true;
 
     let is_user_signed_in = $('#is_user_signed_in').val();
@@ -88,7 +86,6 @@ function createChatBubble(content, sender, showEditBtn) {
     }
 
     copyEditButton.appendChild(copyButton);
-    // $(copyEditButton).append(tooltipCopyBtnContent);
 
     buttonsContainer.appendChild(rewriteHumanizeDiv);
     buttonsContainer.appendChild(copyEditButton);
@@ -384,7 +381,7 @@ function showSource(container_element, sources) {
     if (source.position >= 5) {
       return;
     }
-    data_html += '<a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2" href="' + source.link + '" target="_blank">\n' +
+    data_html += '<a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2 source-link disabled-link" href="' + source.link + '" target="_blank">\n' +
         '<div class="relative flex items max-w-full flex-col justify-between h-full pointer-events-none select-none px-sm pt-sm pb-xs">\n' +
           '<div>\n' +
             '<div class="line-clamp-2 grow default font-sans text-xs font-medium text-textMain dark:text-textMainDark selection:bg-superDuper selection:text-textMain">\n' +
@@ -429,7 +426,7 @@ function showRelatedQuestions(container_element, related_questions) {
     if (index >= 3) {
       return;
     }
-    data_html += '<span class="related-question cheko-border-color-1">\n' +
+    data_html += '<span class="related-question cheko-border-color-1 disabled-link">\n' +
         related_question.question +
         '<i class="fa-solid fa-plus" style="color: #ffffff;"></i>\n' +
       '</span>'
