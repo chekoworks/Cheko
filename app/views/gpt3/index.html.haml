@@ -159,6 +159,9 @@
                 %button.inline-flex.justify-center.p-2.cheko-text-color-2.rounded-full.cursor-pointer.hover:bg-blue-100{type: "submit"}
                   %i.fa-solid.fa-circle-arrow-up.text-2xl
                   %span.sr-only Send message
+                %button#stop_button.inline-flex.justify-center.p-2.cheko-text-color-2.rounded-full.cursor-pointer.hover:bg-red-100{type: "button", style: "display: none;"}
+                  %i.fa-solid.fa-circle-stop.text-2xl
+                  %span.sr-only Stop Generating
 
 
 = javascript_pack_tag 'gpt3', 'data-turbolinks-track': 'reload'
