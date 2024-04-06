@@ -205,6 +205,9 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
     convoContainer.data('index', userMessages.length);
   }
 
+  // Disable buttons and text area
+  document.querySelector("#prompt").disabled = true;
+  document.querySelectorAll("button").forEach(button => button.disabled = true);
 
   // 1. Start requesting: Clear Chatbox, Disable Button, Play Loading Animation
   document.querySelector("textarea#prompt").value = ""; // clear
@@ -283,6 +286,10 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
   autoScroll();
 
   document.querySelector("textarea#prompt").disabled=false;
+
+  // Re-enable buttons and text area
+  document.querySelector("#prompt").disabled = false;
+  document.querySelectorAll("button").forEach(button => button.disabled = false);
 
   mixpanel.track("ask a prompt", json);
   if ($('#user_id').val() !== "" && $('#user_id').val() !== null) {
