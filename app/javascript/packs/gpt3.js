@@ -35,9 +35,16 @@ function createChatBubble(content, sender, showEditBtn) {
     chatBubble.innerHTML = content;
   } else {
     typewriterEffect(chatBubble, content, () => {
-      rewriteButton.disabled = false;
-      humanizeButton.disabled = false;
-      copyButton.disabled = false;
+
+						if(typeof rewriteButton !== 'undefined' && rewriteButton !== null)
+							rewriteButton.disabled = false;
+
+						if(typeof humanizeButton !== 'undefined' && humanizeButton !== null)
+							humanizeButton.disabled = false;
+
+						if(typeof copyButton !== 'undefined' && copyButton !== null)
+							copyButton.disabled = false;
+
       // Enable source links and related question links similarly
       document.querySelectorAll('.source-link.disabled-link').forEach(link => {
         link.classList.remove('disabled-link');
@@ -651,8 +658,19 @@ $('body').on('click', '.sample-question', function() {
 // -- Related Question Button --
 $('body').on('click', '.related-question', function() {
   const divText = $(this).text();
-  userMessages.push(divText);
-  generateText(divText);
+
+		// find if has class disabled-link and return if true
+		if ($(this).hasClass('disabled-link')) {
+			return;
+		} else {
+			// find all related questions and add disabled-link class
+			$('.related-question').each(function() {
+				$(this).addClass('disabled-link');
+			});
+
+			userMessages.push(divText);
+			generateText(divText);
+		}
 });
 
 // -- Humanize Button --
