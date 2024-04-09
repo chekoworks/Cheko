@@ -159,9 +159,20 @@ function typewriterEffect(element, content, onComplete) {
 
 function stopTyping() {
 	if (typed !== null) {
-		typed.stop(); // Stop Typed.js
+
+		// stop	the typing effect
+		typed.stop();
+
 		isTypedStopped = true;
+
+		// remove disabled-link class from all .source-link
 		document.querySelector("textarea#prompt").disabled = false;
+
+		// scan all .related-question and remove disabled-link class
+		$('.related-question').each(function() {
+			$(this).removeClass('disabled-link');
+		});
+
 	}
 }
 
@@ -383,13 +394,22 @@ function enableCopyTooltip($targetEl, $triggerEl) {
 }
 
 function showLoadingBubble(container_element) {
+
+		// check if cheko-loading-bubble	already exists and remove it
+		if ($('#cheko-loading-bubble').length > 0) {
+			$('#cheko-loading-bubble').remove();
+		}
+
   container_element.append('<div class="bg-new-cheko text-white border-0 text-md font-semibold" id="cheko-loading-bubble">\n' +
     '      <div class="loading-text inline"></div>' +
     '    </div>');
 
-		if(typed !==	null){
-			$('#cheko-loading-bubble').remove();
-		}
+			// try {
+			// 		if(typed !==	null)
+			// 			$('#cheko-loading-bubble').remove();
+			// } catch (e) {
+			// 		console.log(e);
+			// }
 
   typed = new Typed('.loading-text', {
     strings: ["Searching web...", "Checking for sources...", "Looking for related questions...", "Summarizing answers..."],
