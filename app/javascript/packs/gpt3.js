@@ -9,6 +9,8 @@ let relatedList = [];
 let promptsCount = 0; // How many prompts have been sent so far?
 let autoScrollCount = 0;
 let autoScrollMaxCount = 30000;
+let typed = null;
+let isTypedStopped = false;
 
 mixpanel.init("36da7c6fa99e6a22866f300e549fef43", {
   loaded: function () {
@@ -129,11 +131,16 @@ function autoScroll() {
 }
 
 function typewriterEffect(element, content, onComplete) {
-  const typed = new Typed(element, {
+		if(typed !==	null){
+			$('#cheko-loading-bubble').remove();
+		}
+
+   typed = new Typed(element, {
     strings: [content],
     typeSpeed: 0,
     onComplete: onComplete // Call the callback function when typing is complete
   });
+		isTypedStopped	= false;
 
   function checkVisibilityAndTyped() {
     if (document.hidden && !typed.complete) {
@@ -148,6 +155,14 @@ function typewriterEffect(element, content, onComplete) {
   //   return;
   // }
   // setTimeout(() => typewriterEffect(element, content, i + 1), 10);
+}
+
+function stopTyping() {
+	if (typed !== null) {
+		typed.stop(); // Stop Typed.js
+		isTypedStopped = true;
+		document.querySelector("textarea#prompt").disabled = false;
+	}
 }
 
 const humanizeText = async(prompt, position) => {
@@ -263,6 +278,9 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
     return;
   }
 
+		if	(isTypedStopped)
+			return;
+
   const json = await response.json();
   let content_data = json.content;
   let source_data = json.sources;
@@ -368,11 +386,17 @@ function showLoadingBubble(container_element) {
   container_element.append('<div class="bg-new-cheko text-white border-0 text-md font-semibold" id="cheko-loading-bubble">\n' +
     '      <div class="loading-text inline"></div>' +
     '    </div>');
-  new Typed('.loading-text', {
+
+		if(typed !==	null){
+			$('#cheko-loading-bubble').remove();
+		}
+
+  typed = new Typed('.loading-text', {
     strings: ["Searching web...", "Checking for sources...", "Looking for related questions...", "Summarizing answers..."],
     typeSpeed: 50,
     loop: true
   });
+		isTypedStopped = false;
 }
 
 function showSource(container_element, sources) {
@@ -646,6 +670,10 @@ saveConversationBtn.addEventListener("click", function (e) {
 document.querySelector("form").addEventListener("submit", (e) => {
   e.preventDefault();
   generateText(document.querySelector("textarea#prompt").value);
+});
+
+document.querySelector("#stop_button").addEventListener("click", (e) => {
+	stopTyping();
 });
 
 // -- Sample Question Button --
