@@ -330,6 +330,7 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
   autoScroll();
 
   document.querySelector("textarea#prompt").disabled=false;
+		$('.rewrite-btn, .humanize-btn').prop('disabled', false);
 
   mixpanel.track("ask a prompt", json);
   if ($('#user_id').val() !== "" && $('#user_id').val() !== null) {
