@@ -16,6 +16,8 @@ class Gpt3Controller < ApplicationController
           content: params[:prompt]
         }
       )
+      current_user.last_humanize_used_date = Time.current
+      current_user.save
     else
       Analytics.track(
         anonymous_id: session[:anonymous_id],
@@ -27,7 +29,7 @@ class Gpt3Controller < ApplicationController
     end
 
     render(
-      json: { message: 'Success' },
+      json: { message: 'Success', next_humanize_available_date:  current_user.next_humanize_available_date, datetime_now: Time.current},
       status: :ok
     )
   end
