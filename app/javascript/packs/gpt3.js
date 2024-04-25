@@ -202,6 +202,9 @@ const humanizeText = async(prompt, position) => {
   }
   const json = await response.json();
   assistantMessages.push(json.generated_text);
+  next_humanize_available_date_str = json.next_humanize_available_date;
+  datetime_now_str = json.datetime_now;
+  showCountdown();
   autoScroll();
   // -- Event Log --
   window.LOG_EVENTS.logSubmitPrompt(

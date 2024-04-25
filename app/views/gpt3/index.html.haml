@@ -31,13 +31,20 @@
           - if @conversation.present?
             %input#assistant_messages{name: "assistant_messages", type: "hidden", value: (raw @conversation.assistant_messages)}/
             %input#user_messages{name: "user_messages", type: "hidden", value: (raw @conversation.user_messages)}/
-
-        %button#save_conversation_btn.cheko-text-1.rounded-md.bg-new-cheko.border-0.px-2.py-1.text-sm
-          %i.fa-regular.fa-floppy-disk
-          Save
-        %span#saved_text.cheko-text-1.bg-new-cheko.border-0.px-2.py-1.text-sm.hidden
-          %i.fa-regular.fa-floppy-disk
-          Saved
+        %div
+          - if current_user
+            %span.humanize_available_container.text-white.bg-success.border-0.px-2.py-1.text-sm.rounded.mx-3.i{style: "#{'display: none;' unless current_user.is_humanize_available}"}
+              %i.fa-solid.fa-wand-magic-sparkles{style: "color: #ffffff;"}
+              Humanize available
+            %span.humanize_countdown_container.text-white.bg-secondary.border-0.px-2.py-1.text-sm.rounded.mx-3{style: "#{'display: none;' if current_user.is_humanize_available}"}
+              Humanize available in
+              %span#humanize_countdown
+          %button#save_conversation_btn.cheko-text-1.rounded-md.bg-new-cheko.border-0.px-2.py-1.text-sm
+            %i.fa-regular.fa-floppy-disk
+            Save
+          %span#saved_text.cheko-text-1.bg-new-cheko.border-0.px-2.py-4.text-sm.hidden
+            %i.fa-regular.fa-floppy-disk
+            Saved
 
       .alert.alert-primary.align-items-center.m-2.copy-alert-container{role: "alert", style: "display: none;"}
         %div.d-flex
@@ -163,5 +170,41 @@
                   %i.fa-solid.fa-circle-stop.text-2xl
                   %span.sr-only Stop Generating
 
+
+
+- if current_user
+  :javascript
+    var next_humanize_available_date_str = '#{current_user.next_humanize_available_date.strftime("%FT%T%:z")}';
+    var datetime_now_str = '#{Time.current.strftime("%FT%T%:z")}';
+    showCountdown();
+
+    function showCountdown() {
+      toggleHumanizeBtn();
+      $('.humanize_available_container').hide();
+      $('.humanize_countdown_container').fadeIn();
+
+      let next_humanize_available_date = new Date(next_humanize_available_date_str);
+      let datetime_now_date = new Date(datetime_now_str);
+
+      $('#humanize_countdown').countdown(next_humanize_available_date, function(event) {
+        $(this).html(event.strftime('%H:%M:%S'));
+      }).on('finish.countdown', function(event) {
+        $('.humanize_countdown_container').hide();
+        $('.humanize_available_container').fadeIn();
+
+        toggleHumanizeBtn();
+      });
+
+    }
+
+    function toggleHumanizeBtn() {
+      let next_humanize_available_date = new Date(next_humanize_available_date_str);
+      let datetime_now_date = new Date(datetime_now_str);
+      if (datetime_now_date >= next_humanize_available_date) {
+        $('.humanize-btn').prop( "disabled", false );
+      } else {
+        $('.humanize-btn').prop( "disabled", true );
+      }
+    }
 
 = javascript_pack_tag 'gpt3', 'data-turbolinks-track': 'reload'

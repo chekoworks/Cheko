@@ -28,6 +28,18 @@ class User < ApplicationRecord
     self.update(identifier_string: idd)
   end
 
+  def next_humanize_available_date
+    if self.last_humanize_used_date.nil?
+      return Time.current
+    end
+
+    self.last_humanize_used_date  + 1.hour
+  end
+
+  def is_humanize_available
+    Time.current >= self.next_humanize_available_date
+  end
+
   # def create_contact
   #   uri = URI('http://localhost:4000/public/api/v1/inboxes/FEKYxKAmz9wq1jU35a8dNv3M/contacts')
   #   params = {
