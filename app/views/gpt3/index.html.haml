@@ -170,7 +170,20 @@
                   %i.fa-solid.fa-circle-stop.text-2xl
                   %span.sr-only Stop Generating
 
-
+#promptLogin.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "promptLogin", role: "dialog", tabindex: "-1"}
+  .modal-dialog.modal-dialog-centered{role: "document"}
+    .modal-content
+      .modal-header
+        %h5#exampleModalLongTitle.modal-title
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        %strong.mt-4
+          You have to log in to use this feature.
+          %a.border-0.px-2.py-1.text-sm{href: new_user_session_path}
+            Login Here
+      .modal-footer
+        %button.btn.btn-secondary.cheko-text-1.close{"data-dismiss" => "modal", type: "button"} Close
 
 - if current_user
   :javascript
@@ -206,5 +219,15 @@
         $('.humanize-btn').prop( "disabled", true );
       }
     }
+- else
+  :javascript
+    $('body').on('click', '.humanize-btn', function() {
+      $('#promptLogin').modal('show');
+    });
+
+    $('body').on('click', '#promptLogin .close', function() {
+      $('#promptLogin').modal('hide');
+    });
+
 
 = javascript_pack_tag 'gpt3', 'data-turbolinks-track': 'reload'
