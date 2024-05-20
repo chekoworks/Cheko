@@ -1,25 +1,25 @@
 %main.h-screen.flex.relative.gpt-wrapper
-  = render "users/shared/sidebar"
-  .flex.flex-1.items-center.justify-content-center.my-3.mr-3.rounded-lg.p-0.ans-wrapper.bg-content-cheko
-    .rounded-lg.border-1.border-neutral-700.w-full.h-full.relative.bg-content-cheko
+  = render "users/shared/sidebar_responsive"
+  .flex.flex-1.items-center.justify-content-center.my-3.rounded-lg.p-0.ans-wrapper.bg-overall-cheko.ml-auto.sm:ml-64.mt-16
+    .w-full.h-full.relative.bg-overall-cheko
       .card-header.d-flex.align-items-center.p-3.border-neutral-700.justify-content-between.border-bottom
         %div.flex.justify-content-center.font-medium.gap-2.align-items-center
 
-          %input#is_user_signed_in{name: "is_user_signed_in", type: "hidden", value: user_signed_in?}/
-          -if user_signed_in?
-            = image_tag("cheko_ai_profile.jpg", class:"rounded-full w-8 h-8")
-            %h6.text-white.m-0
-              = current_user.name
-            = link_to destroy_user_session_url, method: :delete, class: 'cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm' do
-              %i.fa-solid.fa-arrow-right-from-bracket
-              Log out
-          -else
-            %a.cheko-text-1.rounded-md.bg-new-cheko.border-0.px-2.py-1.text-sm{href: new_user_session_path}
-              %i.fa-solid.fa-arrow-right-to-bracket
-              Login
-            %a.cheko-text-1.rounded-md.bg-new-cheko.border-0.px-2.py-1.text-sm{href: new_user_registration_path}
-              %i.fa-regular.fa-user
-              Signup
+          -# %input#is_user_signed_in{name: "is_user_signed_in", type: "hidden", value: user_signed_in?}/
+          -# -if user_signed_in?
+          -#   = image_tag("cheko_ai_profile.jpg", class:"rounded-full w-8 h-8")
+          -#   %h6.text-white.m-0
+          -#     = current_user.name
+          -#   = link_to destroy_user_session_url, method: :delete, class: 'cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm' do
+          -#     %i.fa-solid.fa-arrow-right-from-bracket
+          -#     Log out
+          -# -else
+          -#   %a.cheko-text-1.rounded-md.bg-new-cheko.border-0.px-2.py-1.text-sm{href: new_user_session_path}
+          -#     %i.fa-solid.fa-arrow-right-to-bracket
+          -#     Login
+          -#   %a.cheko-text-1.rounded-md.bg-new-cheko.border-0.px-2.py-1.text-sm{href: new_user_registration_path}
+          -#     %i.fa-regular.fa-user
+          -#     Signup
         %span
           %h4.text-white.text-xl.font-extrabold#message_title{"contenteditable": true}
             - if @conversation.present?
@@ -174,7 +174,7 @@
 
 - if current_user
   :javascript
-    var next_humanize_available_date_str = '#{current_user.next_humanize_avail able_date.strftime("%FT%T%:z")}';
+    var next_humanize_available_date_str = '#{current_user.next_humanize_available_date.strftime("%FT%T%:z")}';
     var datetime_now_str = '#{Time.current.strftime("%FT%T%:z")}';
     showCountdown();
 

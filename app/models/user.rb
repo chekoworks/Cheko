@@ -37,6 +37,10 @@ class User < ApplicationRecord
   end
 
   def is_humanize_available
+    if self.last_humanize_used_date.nil?
+      true
+    end
+
     Time.current >= self.next_humanize_available_date
   end
 
