@@ -1,0 +1,149 @@
+
+
+<nav class="fixed top-0 z-40 w-full bg-overall-cheko dark:bg-gray-800 dark:border-gray-700 h-14 pl-auto sm:pl-64">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+
+
+      <div class="flex items-center justify-start rtl:justify-end w-100 sm:w-auto">
+        <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+          <span class="sr-only">Open sidebar</span>
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+          </svg>
+        </button>
+        <a href="<%= root_path %>" class="flex md:me-24 mx-auto sm:ms-2 sm:hidden">
+          <%= image_tag "logo-white.png", class: "h-7" %>
+          <div class="text-zinc-500 font-semibold text-4xl italic">AI</div>
+        </a>
+      </div>
+      <div class="flex items-center">
+        <% if user_signed_in? %>
+          <div class="flex items-center ms-3">
+            <div>
+              <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                <span class="sr-only">Open user menu</span>
+                <%= image_tag("cheko_ai_profile.jpg", class:"rounded-full w-8 h-8") %>
+              </button>
+            </div>
+            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+              <div class="px-4 py-3" role="none">
+                <p class="text-sm text-gray-900 dark:text-white" role="none">
+                  <%= current_user.name %>
+                </p>
+                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                  <%= current_user.email %>
+                </p>
+              </div>
+              <ul class="py-1" role="none">
+                <li>
+                  <a href="<%= destroy_user_session_url %>" data-method="delete"  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<aside id="default-sidebar" class="fixed top-0 left-0 z-50 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+  <div class="h-full px-3 py-4 overflow-y-auto bg-sidebar-cheko text-white dark:bg-gray-800">
+    <%= link_to root_path, class: "grid justify-items-center w-full mb-1 no-underline" do %>
+      <div class="flex flex-col">
+        <div class="flex">
+          <%= image_tag "logo-white.png", class: "h-7 mt-1" %>
+          <div class="text-zinc-500 font-semibold text-4xl italic">AI</div>
+        </div>
+      </div>
+    <% end %>
+    <ul class="mt-4 space-y-2 font-medium">
+      <li>
+        <%= link_to root_path, class: "flex items-center p-2 text-neutral-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+          <%= icon('fa-solid', "home", class: "w-5 h-5 text-neutral-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white")%>
+          <span class="ms-3">Home</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to pick_type_path, class: "flex items-center p-2 text-neutral-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+          <%= icon('fa-solid', "pen", class: "w-5 h-5 text-neutral-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white")%>
+          <span class="ms-3">HW Help</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to professors_path, class: "flex items-center p-2 text-neutral-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+          <%= icon('fa-solid', "chalkboard-user", class: "w-5 h-5 text-neutral-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white")%>
+          <span class="ms-3">Profs to Pick</span>
+        <% end %>
+      </li>
+      <% if user_signed_in? %>
+        <li>
+          <%= link_to destroy_user_session_url, method: :delete, class: "flex items-center p-2 text-neutral-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+            <%= icon('fa-solid', "right-from-bracket", class: "w-5 h-5 text-neutral-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white")%>
+            <span class="ms-3">Logout</span>
+          <% end %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to new_user_session_path, class: "flex items-center p-2 text-neutral-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" do %>
+            <%= icon('fa-solid', "users", class: "w-5 h-5 text-neutral-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white")%>
+            <span class="ms-3">Login/Signup</span>
+          <% end %>
+        </li>
+      <% end %>
+      <li>
+        <button type="button" class="flex items-center w-full p-2 text-neutral-500 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+          <%= icon('fa-solid', "comments", class: "w-5 h-5 text-neutral-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white")%>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Convo</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+          </svg>
+        </button>
+        <ul id="dropdown-example" class="hidden py-2 space-y-2">
+          <li>
+            <a href="<%= cheko_ai_path %>" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">New Convo</a>
+          </li>
+          <% if user_signed_in? %>
+            <% current_user.conversations.order(created_at: :DESC).each do |conversation| %>
+              <li class="flex justify-between my-2 hover:bg-neutral-700/30 pr-2 text-neutral-500 sidebar-conversation-item-list">
+                <a href="<%= cheko_ai_path(conversation_id: conversation.id) %>" id="conversation-list-<%= conversation.id %>" class="text-white flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group hover:text-neutral-500 dark:text-white dark:hover:bg-gray-700 truncate text-sm w-52"><%= conversation.title_name %></a>
+                <button style="display: none;" class="delete_conversation_btn" data-conversation_id="<%= conversation.id %>">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </li>
+    </ul>
+    <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+      <li>
+        <a href="<%= cheko_ai_path %>" class="block p-2 py-2 text-white bg-new-cheko-2 new-convo-btn rounded-md mt-auto text-base font-extrabold text-center w-100">
+          <i class="fa-regular fa-comments text-md me-1"></i>
+          <span>New convo</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://airtable.com/app0IcnuLWamJOjoO/pagglD74lTU003e8O/form" target="_blank" class="pr-1 py-2 cheko-text-1 new-convo-btn rounded-md mt-auto text-xs">
+          <i class="fa-solid fa-download text-md me-1"></i>
+          <span>Cheko Mobile</span>
+        </a>
+        <div class="check-button-divider-1"></div>
+
+        <a href="https://airtable.com/app0IcnuLWamJOjoO/pagglD74lTU003e8O/form" target="_blank" class="pl-2 py-2 cheko-text-1 new-convo-btn rounded-md mt-auto text-xs">
+          <i class="fa-brands fa-chrome text-md me-1"></i>
+          <span>Cheko Chrome</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://airtable.com/app0IcnuLWamJOjoO/pag8RT8pHaKYv2OJ2/form" class=" py-2 cheko-text-1 new-convo-btn rounded-md mt-auto text-xs">
+          <i class="fa-solid fa-comment-dots text-md me-1"></i>
+          <span>Send a Feedback</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+
