@@ -186,14 +186,20 @@
       let next_humanize_available_date = new Date(next_humanize_available_date_str);
       let datetime_now_date = new Date(datetime_now_str);
 
-      $('#humanize_countdown').countdown(next_humanize_available_date, function(event) {
-        $(this).html(event.strftime('%H:%M:%S'));
-      }).on('finish.countdown', function(event) {
+      if (datetime_now_date >= next_humanize_available_date) {
         $('.humanize_countdown_container').hide();
         $('.humanize_available_container').fadeIn();
+      } else {
 
-        toggleHumanizeBtn();
-      });
+        $('#humanize_countdown').countdown(next_humanize_available_date, function(event) {
+          $(this).html(event.strftime('%H:%M:%S'));
+        }).on('finish.countdown', function(event) {
+          $('.humanize_countdown_container').hide();
+          $('.humanize_available_container').fadeIn();
+          toggleHumanizeBtn();
+        });
+      }
+
 
     }
 
@@ -206,5 +212,14 @@
         $('.humanize-btn').prop( "disabled", true );
       }
     }
+- else
+  :javascript
+    $('body').on('click', '.humanize-btn', function() {
+      $('#promptLogin').modal('show');
+    });
+
+    $('body').on('click', '#promptLogin .close', function() {
+      $('#promptLogin').modal('hide');
+    });
 
 = javascript_pack_tag 'gpt3', 'data-turbolinks-track': 'reload'
