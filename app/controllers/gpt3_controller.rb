@@ -62,6 +62,16 @@ class Gpt3Controller < ApplicationController
     render json: @content
   end
 
+  def generate_v2
+    @content = nil
+    @content = generate_answer_v2(params)
+    if @content.nil?
+      @content = generate_answer_v2(params, false, true)
+    end
+
+    render json: @content
+  end
+
   def rewrite
     content = generate_answer(params, true)
 
@@ -82,6 +92,12 @@ class Gpt3Controller < ApplicationController
         }
       )
     end
+
+    render json: content
+  end
+
+  def rewrite_v2
+    content = generate_answer_v2(params, true)
 
     render json: content
   end
@@ -147,6 +163,19 @@ class Gpt3Controller < ApplicationController
   end
 
   def index
+    unless user_signed_in?
+      unless session[:anonymous_id].present?
+        session[:anonymous_id] = SecureRandom.random_number(1_000_000)
+      end
+    end
+    if params[:conversation_id].present?
+      @conversation = Conversation.find(params[:conversation_id])
+      @sources = @conversation.conversation_sources
+      @relates = @conversation.conversation_relateds
+    end
+  end
+
+  def v2
     unless user_signed_in?
       unless session[:anonymous_id].present?
         session[:anonymous_id] = SecureRandom.random_number(1_000_000)
@@ -293,5 +322,43 @@ class Gpt3Controller < ApplicationController
         retry
       end
     end
+  end
+
+  def generate_answer_v2(params, rewrite=false, retry_request=false, humanize=false)
+    python_api_url = "https://cheko-ai-backend.onrender.com/"
+    user_id = "random_user_#{rand(200)}"
+    if current_user.present?
+      user_id = "signed_user_#{current_user.id}"
+    end
+
+    url = python_api_url + 'api/v1/agent/chat/' +  user_id
+    conn = Faraday.new(
+      url: url,
+      headers: {
+        'Content-Type' => 'application/json'
+      }
+    )
+    response = conn.post() do |req|
+      req.body = {
+        "role": "user",
+        "content": params[:prompt]
+      }.to_json
+    end
+    response_json = JSON.parse(response.body)
+    generated_text = response_json['response']
+    newDialogue = [generated_text]
+
+    @serp_results = Serp.search(params[:prompt])
+
+    return {
+      content: {
+        markdown_text: Conversation.markdown_to_html(generated_text),
+        generated_text: generated_text,
+        new_dialogue: newDialogue,
+        usage: {}
+      },
+      sources: @serp_results[0],
+      related_questions: @serp_results[1]
+    }
   end
 end

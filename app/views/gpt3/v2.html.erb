@@ -1,0 +1,301 @@
+<main class="h-screen flex relative gpt-wrapper">
+  <%= render "users/shared/sidebar_responsive" %>
+  <div class="flex flex-1 items-center justify-content-center my-3 rounded-lg p-0 ans-wrapper bg-overall-cheko ml-auto sm:ml-64 mt-16">
+    <div class="w-full h-full relative bg-overall-cheko">
+      <div class="card-header d-flex align-items-center p-3 border-neutral-700 justify-content-between border-bottom">
+        <div class="flex justify-content-center font-medium gap-2 align-items-center">
+          <!-- Uncomment the following block if user_signed_in condition is needed -->
+          <!--
+          <input id="is_user_signed_in" name="is_user_signed_in" type="hidden" value="<%= user_signed_in? %>"/>
+          <% if user_signed_in? %>
+            <%= image_tag("cheko_ai_profile.jpg", class:"rounded-full w-8 h-8") %>
+            <h6 class="text-white m-0"><%= current_user.name %></h6>
+            <%= link_to destroy_user_session_url, method: :delete, class: 'cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm' do %>
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              Log out
+            <% end %>
+          <% else %>
+            <a class="cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm" href="<%= new_user_session_path %>">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i>
+              Login
+            </a>
+            <a class="cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm" href="<%= new_user_registration_path %>">
+              <i class="fa-regular fa-user"></i>
+              Signup
+            </a>
+          <% end %>
+          -->
+        </div>
+        <span>
+          <h4 class="text-white text-xl font-extrabold" id="message_title" contenteditable="true">
+            <% if @conversation.present? %>
+              <%= @conversation.title_name %>
+            <% else %>
+              New convo
+            <% end %>
+          </h4>
+          <input id="conversation_id" name="conversation_id" type="hidden" value="<%= @conversation && @conversation.id %>"/>
+          <input id="user_id" name="user_id" type="hidden" value="<%= current_user.id if user_signed_in? %>"/>
+          <% if @conversation.present? %>
+            <input id="assistant_messages" name="assistant_messages" type="hidden" value="<%= raw @conversation.assistant_messages %>"/>
+            <input id="user_messages" name="user_messages" type="hidden" value="<%= raw @conversation.user_messages %>"/>
+          <% end %>
+        </span>
+        <div>
+          <% if current_user %>
+            <span class="humanize_available_container text-white bg-success border-0 px-2 py-1 text-sm rounded mx-3 i" style="<%= 'display: none;' unless current_user.is_humanize_available %>">
+              <i class="fa-solid fa-wand-magic-sparkles" style="color: #ffffff;"></i>
+              Humanize available
+            </span>
+            <span class="humanize_countdown_container text-white bg-secondary border-0 px-2 py-1 text-sm rounded mx-3" style="<%= 'display: none;' if current_user.is_humanize_available %>">
+              Humanize available in
+              <span id="humanize_countdown"></span>
+            </span>
+          <% end %>
+          <button id="save_conversation_btn" class="cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm">
+            <i class="fa-regular fa-floppy-disk"></i>
+            Save
+          </button>
+          <span id="saved_text" class="cheko-text-1 bg-new-cheko border-0 px-2 py-4 text-sm hidden">
+            <i class="fa-regular fa-floppy-disk"></i>
+            Saved
+          </span>
+        </div>
+      </div>
+      <div class="alert alert-primary align-items-center m-2 copy-alert-container" role="alert" style="display: none;">
+        <div class="d-flex">
+          <i class="fa-solid fa-circle-info me-2"></i>
+          <div>
+            Content copied to clipboard
+            <i class="fa-solid fa-clipboard flex-shrink-0 me-2 mb-1"></i>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-success alert-dismissible fade show m-2 success_alert" role="alert" style="display: none;">
+        <span></span>
+        <button class="btn-close" aria-label="Close" data-bs-dismiss="alert" type="button"></button>
+      </div>
+      <div class="card-body px-10 py-3 cheko-chat-container">
+        <div class="card-body-top" id="cheko-chat-sub-container">
+          <div id="gpt-chat-container">
+            <div class="chat-bubble-cheko bg-new-cheko text-white border-0 text-base font-semibold">
+              Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!
+            </div>
+            <div>
+              <span class="cheko-text-1">Try Cheko AI -&gt;</span>
+              <button class="cheko-text-1 rounded-full bg-content-cheko border-1 cheko-border-color-1 px-2 py-1 sample-question">
+                <i class="fa-solid fa-apple-whole text-red-600"></i>
+                Who invented gravity?
+              </button>
+              <button class="cheko-text-1 rounded-full bg-content-cheko border-1 cheko-border-color-1 px-2 py-1 sample-question">
+                <i class="fa-solid fa-franc-sign text-gray-600"></i>
+                What is the meaning of "bonjour"?
+              </button>
+            </div>
+            <div class="edit_prompt_container my-2 hidden">
+              <div class="flex items-center pr-3 rounded-full bg-new-cheko border-1 cheko-border-color-1">
+                <textarea id="edit-prompt" class="block mx-4 w-full text-sm bg-new-cheko cheko-text-1 rounded-full resize-none border-0 focus:ring-transparent focus:border-0 p-2.5" placeholder="Ask Cheko AI.." rows="1"></textarea>
+                <input id="edit_prompt_index_id" name="edit_prompt_index_id" type="hidden"/>
+              </div>
+              <div class="flex justify-end mt-2 gap-x-2">
+                <button id="edit_cancel_btn" class="inline-flex justify-center px-4 py-1 bg-gray-300 cheko-text-color-2 rounded-full cursor-pointer hover:bg-blue-100">
+                  Cancel
+                </button>
+                <button id="edit_save_btn" class="inline-flex justify-center px-4 py-1 bg-blue-300 cheko-text-color-2 rounded-full cursor-pointer hover:bg-blue-100">
+                  Save
+                </button>
+              </div>
+            </div>
+            <% if @conversation.present? %>
+              <% assistant_messages = @conversation.assistant_messages %>
+              <% @conversation.user_messages.each_with_index do |user_message, index| %>
+                <div class="chat-bubble-container convo-container-<%= index %>" data-index="<%= index %>">
+                  <div class="self-end my-2">
+                    <div class="chat-bubble-user bg-new-cheko text-white border-0 text-base max-w-full">
+                      <%= user_message %>
+                    </div>
+                    <div class="text-right">
+                      <button class="chat-button pl-2 cheko-text-1 edit-btn" data-index="<%= index %>">
+                        <i class="fa-solid fa-edit cheko-text-1"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <% if assistant_messages && assistant_messages[index] %>
+                    <% source_list = @sources.where(prompt_title: user_message).first %>
+                    <% if source_list.present? %>
+                      <div class="flex flex-col pb-4 chat-bubble-content" style="max-width: 75%;">
+                        <div class="pt-4 pb-2">
+                          <span class="title-header text-xl font-extrabold">
+                            <i class="fa-solid fa-list-ul" style="color: #ffffff;"></i>
+                            Sources
+                          </span>
+                        </div>
+                        <div class="flex flex-row justify-between gap-x-2">
+                          <% source_list.result.each_with_index do |source, index| %>
+                            <% position = index + 1 %>
+                            <% if source['position'].present? %>
+                              <% position = source['position'] %>
+                            <% end %>
+                            <% break if position >= 5 %>
+                            <a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2" href="<%= source['link'] %>" target="_blank">
+                              <div class="relative flex items max-w-full flex-col justify-between h-full pointer-events-none select-none px-sm pt-sm pb-xs">
+                                <div>
+                                  <div class="line-clamp-2 grow default font-sans text-xs font-medium text-textMain dark:text-textMainDark selection:bg-superDuper selection:text-textMain">
+                                    <%= source['title'] %>
+                                  </div>
+                                  <div class="flex items-center space-x-xs">
+                                    <div class="flex items-center gap-x-xs ring-borderMain dark:ring-borderMainDark bg-transparent border-borderMain/60 dark:border-borderMainDark/80 divide-borderMain/60 dark:divide-borderMainDark/80">
+                                      <div class="relative flex-none rounded-full overflow-hidden">
+                                        <img class="block" alt="<%= source['title'] %> favicon" height="16" src="<%= source['favicon'] || source['faviconUrl'] %>" width="16"/>
+                                      </div>
+                                      <div class="duration-300 transition-all line-clamp-1 break-all light font-sans text-xs ml-1 font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">
+                                        <%= ConversationSource.site_name(source['link']) %>
+                                      </div>
+                                      <h2 class="text-gray-500 mx-1 light font-display text-lg font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">·</h2>
+                                      <div class="light font-sans text-xs font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">
+                                        <%= position %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </a>
+                          <% end %>
+                        </div>
+                      </div>
+                    <% end %>
+                    <div class="pb-2 chat-bubble-content">
+                      <span class="title-header text-xl font-extrabold">
+                        <i class="fa-solid fa-align-left"></i>
+                        Answer
+                      </span>
+                    </div>
+                    <div class="pb-4 chat-bubble-content" style="max-width: 75%;">
+                      <div class="chat-bubble-cheko bg-new-cheko text-white border-0 text-base font-semibold">
+                        <%= Conversation.markdown_to_html(assistant_messages[index]) %>
+                      </div>
+                      <div class="flex flex-row justify-between">
+                        <div>
+                          <button class="chat-button rewrite-btn" data-index="<%= index %>">
+                            <i class="fa-solid fa-repeat" style="color: #ffffff;"></i>
+                            Rewrite
+                          </button>
+                          <button id="humanize-btn" class="chat-button pl-2 cheko-text-1 humanize-btn" data-index="<%= index %>">
+                            <i class="fa-solid fa-wand-magic-sparkles" style="color: #ffffff;"></i>
+                            Humanize
+                          </button>
+                        </div>
+                        <div>
+                          <button class="chat-button cheko-text-1 copy-btn" data-index="<%= index %>">
+                            <i class="fa-solid fa-copy cheko-text-1"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <% related_list = @relates.where(prompt_title: user_message).first %>
+                    <% if related_list.present? %>
+                      <div class="chat-bubble-content" style="max-width: 75%; margin-bottom: 16px;">
+                        <div class="pt-4 pb-2">
+                          <span class="title-header text-xl font-extrabold">
+                            <i class="fa-solid fa-layer-group" style="color: #ffffff;"></i>
+                            Related
+                          </span>
+                        </div>
+                        <% related_list.result.each_with_index do |related, index| %>
+                          <% break if index >= 3 %>
+                          <span class="related-question cheko-border-color-1">
+                            <%= related['question'] || related['title'] || related %>
+                            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                          </span>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+          <!-- Loading animation (enabled/disabled when prompting) -->
+          <div id="cheko-loading-bubble" class="d-none bg-new-cheko text-white border-0 text-md font-semibold">
+            <div class="loading-icon">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <div id="auto-scroll-anchor" class="mb-12"></div>
+        </div>
+        <div class="prompt-container absolute bottom-5 w-full left-0 px-10">
+          <div class="bg-new-cheko p-2 rounded-full">
+            <%= form_tag do %>
+              <label class="sr-only" for="chat">Your message</label>
+              <div class="flex items-center pr-3 rounded-full bg-new-cheko border-1 cheko-border-color-1">
+                <textarea id="prompt" class="block mx-4 w-full text-sm bg-new-cheko cheko-text-1 rounded-full resize-none border-0 focus:ring-transparent focus:border-0 p-2.5" placeholder="Ask Cheko AI.." rows="1"></textarea>
+                <button class="inline-flex justify-center p-2 cheko-text-color-2 rounded-full cursor-pointer hover:bg-blue-100" type="submit">
+                  <i class="fa-solid fa-circle-arrow-up text-2xl"></i>
+                  <span class="sr-only">Send message</span>
+                </button>
+                <button id="stop_button" class="inline-flex justify-center p-2 cheko-text-color-2 rounded-full cursor-pointer hover:bg-red-100" type="button" style="display: none;">
+                  <i class="fa-solid fa-circle-stop text-2xl"></i>
+                  <span class="sr-only">Stop Generating</span>
+                </button>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<% if current_user %>
+  <script>
+    var next_humanize_available_date_str = '<%= current_user.next_humanize_available_date.strftime("%FT%T%:z") %>';
+    var datetime_now_str = '<%= Time.current.strftime("%FT%T%:z") %>';
+    showCountdown();
+
+    function showCountdown() {
+      toggleHumanizeBtn();
+      $('.humanize_available_container').hide();
+      $('.humanize_countdown_container').fadeIn();
+
+      let next_humanize_available_date = new Date(next_humanize_available_date_str);
+      let datetime_now_date = new Date(datetime_now_str);
+
+      if (datetime_now_date >= next_humanize_available_date) {
+        $('.humanize_countdown_container').hide();
+        $('.humanize_available_container').fadeIn();
+      } else {
+        $('#humanize_countdown').countdown(next_humanize_available_date, function(event) {
+          $(this).html(event.strftime('%H:%M:%S'));
+        }).on('finish.countdown', function(event) {
+          $('.humanize_countdown_container').hide();
+          $('.humanize_available_container').fadeIn();
+          toggleHumanizeBtn();
+        });
+      }
+    }
+
+    function toggleHumanizeBtn() {
+      let next_humanize_available_date = new Date(next_humanize_available_date_str);
+      let datetime_now_date = new Date(datetime_now_str);
+      if (datetime_now_date >= next_humanize_available_date) {
+        $('.humanize-btn').prop("disabled", false);
+      } else {
+        $('.humanize-btn').prop("disabled", true);
+      }
+    }
+  </script>
+<% else %>
+  <script>
+    $('body').on('click', '.humanize-btn', function() {
+      $('#promptLogin').modal('show');
+    });
+
+    $('body').on('click', '#promptLogin .close', function() {
+      $('#promptLogin').modal('hide');
+    });
+  </script>
+<% end %>
+
+<%= javascript_pack_tag 'cheko_ai_v2', 'data-turbolinks-track': 'reload' %>
