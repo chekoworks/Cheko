@@ -36,25 +36,25 @@ function createChatBubble(content, sender, showEditBtn) {
   if (sender === "user") {
     chatBubble.innerHTML = content;
   } else {
-    typewriterEffect(chatBubble, content, () => {
-
-						if(typeof rewriteButton !== 'undefined' && rewriteButton !== null)
-							rewriteButton.disabled = false;
-
-						if(typeof humanizeButton !== 'undefined' && humanizeButton !== null)
-							humanizeButton.disabled = false;
-
-						if(typeof copyButton !== 'undefined' && copyButton !== null)
-							copyButton.disabled = false;
-
-      // Enable source links and related question links similarly
-      document.querySelectorAll('.source-link.disabled-link').forEach(link => {
-        link.classList.remove('disabled-link');
-      });
-      document.querySelectorAll('.related-question.disabled-link').forEach(link => {
-        link.classList.remove('disabled-link');
-      });
-    });
+    // typewriterEffect(chatBubble, content, () => {
+    //
+		// 				if(typeof rewriteButton !== 'undefined' && rewriteButton !== null)
+		// 					rewriteButton.disabled = false;
+    //
+		// 				if(typeof humanizeButton !== 'undefined' && humanizeButton !== null)
+		// 					humanizeButton.disabled = false;
+    //
+		// 				if(typeof copyButton !== 'undefined' && copyButton !== null)
+		// 					copyButton.disabled = false;
+    //
+    //   // Enable source links and related question links similarly
+    //   document.querySelectorAll('.source-link.disabled-link').forEach(link => {
+    //     link.classList.remove('disabled-link');
+    //   });
+    //   document.querySelectorAll('.related-question.disabled-link').forEach(link => {
+    //     link.classList.remove('disabled-link');
+    //   });
+    // });
   }
 
   if (sender != "user") {
