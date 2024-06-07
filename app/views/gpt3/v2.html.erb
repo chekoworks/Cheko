@@ -4,9 +4,9 @@
     <div class="w-full h-full relative bg-overall-cheko">
       <div class="card-header d-flex align-items-center p-3 border-neutral-700 justify-content-between border-bottom">
         <div class="flex justify-content-center font-medium gap-2 align-items-center">
+          <input id="is_user_signed_in" name="is_user_signed_in" type="hidden" value="<%= user_signed_in? %>"/>
           <!-- Uncomment the following block if user_signed_in condition is needed -->
           <!--
-          <input id="is_user_signed_in" name="is_user_signed_in" type="hidden" value="<%= user_signed_in? %>"/>
           <% if user_signed_in? %>
             <%= image_tag("cheko_ai_profile.jpg", class:"rounded-full w-8 h-8") %>
             <h6 class="text-white m-0"><%= current_user.name %></h6>
@@ -247,6 +247,27 @@
     </div>
   </div>
 </main>
+
+<div class="modal fade" id="promptLogin" aria-hidden="true" aria-labelledby="promptLogin" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <strong class="mt-4">You have to log in to use this feature.</strong>
+        <a href="<%= new_user_session_path %>" class="border-0 px-2 py-1 text-sm">Login Here</a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary cheko-text-1 close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <% if current_user %>
   <script>

@@ -89,9 +89,9 @@ function createChatBubble(content, sender, showEditBtn) {
 
     let is_user_signed_in = $('#is_user_signed_in').val();
 
+    rewriteHumanizeDiv.appendChild(humanizeButton);
     if (is_user_signed_in == 'true') {
       rewriteHumanizeDiv.appendChild(rewriteButton);
-      rewriteHumanizeDiv.appendChild(humanizeButton);
     }
 
     copyEditButton.appendChild(copyButton);
@@ -727,10 +727,12 @@ $('body').on('click', '.related-question', function() {
 
 // -- Humanize Button --
 $('body').on('click', '.humanize-btn', function() {
-  let prompt = $(this).parent().parent().parent().find('.chat-bubble-cheko').text();
-  let position = $(this).parent().parent().parent().parent().data('index');
-  console.log(position);
-  humanizeText(prompt, position);
+  let is_user_signed_in = $('#is_user_signed_in').val();
+  if (is_user_signed_in == 'true') {
+    let prompt = $(this).parent().parent().parent().find('.chat-bubble-cheko').text();
+    let position = $(this).parent().parent().parent().parent().data('index');
+    humanizeText(prompt, position);
+  }
 });
 
 // -- Copy Button --
