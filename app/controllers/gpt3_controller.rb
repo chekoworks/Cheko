@@ -331,7 +331,7 @@ class Gpt3Controller < ApplicationController
       user_id = "signed_user_#{current_user.id}"
     end
 
-    url = python_api_url + 'api/v1/agent/chat/' +  user_id
+    url = python_api_url + 'api/v1.0.1/agent/chat/' +  user_id
     conn = Faraday.new(
       url: url,
       headers: {
@@ -345,7 +345,7 @@ class Gpt3Controller < ApplicationController
       }.to_json
     end
     response_json = JSON.parse(response.body)
-    generated_text = response_json['response']
+    generated_text = response_json['answer']
     newDialogue = [generated_text]
 
     @serp_results = Serp.search(params[:prompt])
