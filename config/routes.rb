@@ -162,8 +162,8 @@ Rails.application.routes.draw do
     resources :homeworks, only: [:index, :show, :update], on: :collection
     get '/', to: 'dashboard#home'
   end
-  get '/cheko-ai' => 'gpt3#index'
-  get '/cheko-ai/v2' => 'gpt3#v2'
+  # get '/cheko-ai' => 'gpt3#index'
+  get '/cheko-ai' => 'gpt3#v2'
   post '/gpt3/generate' => 'gpt3#generate'
   post '/gpt3/generate_v2' => 'gpt3#generate_v2'
   post '/gpt3/rewrite' => 'gpt3#rewrite'
