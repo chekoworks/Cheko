@@ -9,8 +9,8 @@
         -if user_signed_in?
           %li.nav-item
             %a.nav-link{href: users_homeworks_path} HW-Help
-          %li.nav-item
-            %a.nav-link{href: users_qnas_path} Q&A
+          -# %li.nav-item
+          -#   %a.nav-link{href: users_qnas_path} Q&A
           %li.nav-item.dropdown
             %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", href: "#", role: "button"} Profs to Pick
             %ul.dropdown-menu{"aria-labelledby" => "navbarDropdown"}
@@ -19,8 +19,8 @@
               %li
                 %a.dropdown-item{href: new_users_professor_path} Add a prof review
           %li.nav-item
-            %a.nav-link{href: cheko_ai_path} Cheko AI
-        -else
+            %a.nav-link{href: "https://cheko-app-beta-4cec566aed88.herokuapp.com/cheko-ai"} Cheko AI
+        -else 
           %li.nav-item
             %a.nav-link{href: pick_type_path} HW-Help
           %li.nav-item
@@ -28,7 +28,7 @@
           %li.nav-item
             %a.nav-link{href: pick_type_qnas_path} Q&A
           %li.nav-item
-            %a.nav-link{href: cheko_ai_path} Cheko AI
+            %a.nav-link{href: "https://cheko-app-beta-4cec566aed88.herokuapp.com/cheko-ai"} Cheko AI
           -# %li.nav-item
           -#   %a.nav-link{href: about_us_path} About us
           -# %li.nav-item

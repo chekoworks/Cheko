@@ -97,7 +97,7 @@
         .row.mb-3
           .col-6
             %h6
-              = "#{rev.user.first_name.first}#{rev.user.last_name.first}"
+              = rev.user_id.present? ? "#{rev.user.first_name.first}#{rev.user.last_name.first}" : rev.user_initials
             %p.text-muted= rev.created_at 
             %p= rev.content
           .col-6.individual.hidden-rating
