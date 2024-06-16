@@ -1,32 +1,31 @@
 <main class="h-screen flex relative gpt-wrapper">
   <%= render "users/shared/sidebar_responsive" %>
-  <div class="flex flex-1 items-center justify-content-center my-3 rounded-lg p-0 ans-wrapper bg-overall-cheko ml-auto sm:ml-64 <%= user_signed_in? ? 'mt-16' : 'mt-0' %>">
+  <div class="flex flex-1 items-center justify-content-center my-3 rounded-lg p-0 ans-wrapper bg-overall-cheko ml-auto sm:ml-64 mt-16 sm:mt-0">
     <div class="w-full h-full relative bg-overall-cheko">
-      <div class="card-header d-flex align-items-center p-3 border-neutral-700 justify-content-between border-bottom">
+      <div class="card-header block sm:inline-flex align-items-center p-3 border-neutral-700 justify-content-between border-bottom w-100">
         <div class="flex justify-content-center font-medium gap-2 align-items-center">
           <input id="is_user_signed_in" name="is_user_signed_in" type="hidden" value="<%= user_signed_in? %>"/>
-          <!-- Uncomment the following block if user_signed_in condition is needed -->
-          <!--
-          <% if user_signed_in? %>
-            <%= image_tag("cheko_ai_profile.jpg", class:"rounded-full w-8 h-8") %>
-            <h6 class="text-white m-0"><%= current_user.name %></h6>
-            <%= link_to destroy_user_session_url, method: :delete, class: 'cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm' do %>
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>
-              Log out
+          <div class="hidden sm:flex gap-2">
+            <% if user_signed_in? %>
+              <%= image_tag("cheko_ai_profile.jpg", class:"rounded-full w-8 h-8") %>
+              <h6 class="text-white mx-0 my-auto"><%= current_user.name %></h6>
+              <%= link_to destroy_user_session_url, method: :delete, class: 'cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm' do %>
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                Log out
+              <% end %>
+            <% else %>
+              <a class="cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm" href="<%= new_user_session_path %>">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                Login
+              </a>
+              <a class="cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm" href="<%= new_user_registration_path %>">
+                <i class="fa-regular fa-user"></i>
+                Signup
+              </a>
             <% end %>
-          <% else %>
-            <a class="cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm" href="<%= new_user_session_path %>">
-              <i class="fa-solid fa-arrow-right-to-bracket"></i>
-              Login
-            </a>
-            <a class="cheko-text-1 rounded-md bg-new-cheko border-0 px-2 py-1 text-sm" href="<%= new_user_registration_path %>">
-              <i class="fa-regular fa-user"></i>
-              Signup
-            </a>
-          <% end %>
-          -->
+          </div>
         </div>
-        <span>
+        <span class="text-center">
           <h4 class="text-white text-xl font-extrabold" id="message_title" contenteditable="true">
             <% if @conversation.present? %>
               <%= @conversation.title_name %>
@@ -41,7 +40,8 @@
             <input id="user_messages" name="user_messages" type="hidden" value="<%= raw @conversation.user_messages %>"/>
           <% end %>
         </span>
-        <div>
+        <br/>
+        <div class="inline-flex justify-center w-100 sm:w-auto">
           <% if current_user %>
             <span class="humanize_available_container text-white bg-success border-0 px-2 py-1 text-sm rounded mx-3 i" style="<%= 'display: none;' unless current_user.is_humanize_available %>">
               <i class="fa-solid fa-wand-magic-sparkles" style="color: #ffffff;"></i>
