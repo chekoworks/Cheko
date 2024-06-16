@@ -1,6 +1,6 @@
 <main class="h-screen flex relative gpt-wrapper">
   <%= render "users/shared/sidebar_responsive" %>
-  <div class="flex flex-1 items-center justify-content-center my-3 rounded-lg p-0 ans-wrapper bg-overall-cheko ml-auto sm:ml-64 mt-16">
+  <div class="flex flex-1 items-center justify-content-center my-3 rounded-lg p-0 ans-wrapper bg-overall-cheko ml-auto sm:ml-64 <%= user_signed_in? ? 'mt-16' : 'mt-0' %>">
     <div class="w-full h-full relative bg-overall-cheko">
       <div class="card-header d-flex align-items-center p-3 border-neutral-700 justify-content-between border-bottom">
         <div class="flex justify-content-center font-medium gap-2 align-items-center">
