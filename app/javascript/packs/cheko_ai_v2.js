@@ -239,6 +239,9 @@ const humanizeText = async(prompt, position) => {
 const generateText = async (prompt, index, is_rewrite, current_result) => {
   promptsCount++; // Increase prompt count
   autoScrollCount = 0;
+
+  $('.getting_started_container').hide();
+
   // Utils:
   let convoContainer = null;
   if (index != null) {
@@ -265,7 +268,6 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
 
   // 2. Add prompt as a chat bubble:
 
-  convoContainer.append(createChatBubble(prompt, "user", true));
   showLoadingBubble(convoContainer);
 
   // 3. Send Prompt to Controller:
@@ -313,6 +315,8 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
     content_data.usage.total_tokens,
     content_data.usage.model
   );
+
+  convoContainer.append('<h1 class="text-3xl text-white my-4">' + prompt + '</h1>');
 
   showSource(convoContainer,source_data);
   sourceList.push({prompt: prompt, results: source_data});
@@ -432,11 +436,11 @@ function showSource(container_element, sources) {
     '</span>\n' +
     '</div>\n' +
     '<div class="flex flex-row justify-between gap-x-2">';
-  sources.forEach(source => {
-    if (source.position >= 5) {
+  sources.forEach((source, index) => {
+    if (index >= 4) {
       return;
     }
-    data_html += '<a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2 source-link disabled-link" href="' + source.link + '" target="_blank">\n' +
+    data_html += '<a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2 source-link disabled-link" href="' + (source.url || source.link) + '" target="_blank">\n' +
       '<div class="relative flex items max-w-full flex-col justify-between h-full pointer-events-none select-none px-sm pt-sm pb-xs">\n' +
       '<div>\n' +
       '<div class="line-clamp-2 grow default font-sans text-xs font-medium text-textMain dark:text-textMainDark selection:bg-superDuper selection:text-textMain">\n' +
@@ -447,16 +451,16 @@ function showSource(container_element, sources) {
       '<div class="flex items-center gap-x-xs ring-borderMain dark:ring-borderMainDark bg-transparent border-borderMain/60 dark:border-borderMainDark/80 divide-borderMain/60 dark:divide-borderMainDark/80">\n' +
       '<div class="relative flex-none">\n' +
       '<div class="rounded-full overflow-hidden">\n' +
-      '<img alt="'+ source.source +' favicon" class="block" src="' + source.favicon + '" width="16" height="16">\n' +
+      '<img alt="'+ (source.domain_name || source.source) +' favicon" class="block" src="https://www.google.com/s2/favicons?domain=' + (source.url || source.link) + '&sz=16" width="16" height="16">\n' +
       '</div>\n' +
       '</div>\n' +
       '<div class="duration-300 transition-all line-clamp-1 break-all light text-gray-500 font-sans text-xs ml-1 font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">\n' +
-      source.source +
+      (source.domain_name || source.source) +
       '</div>\n' +
       '</div>\n' +
       '<h2 class="text-gray-500 mx-1 light font-display text-lg font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">·</h2>\n' +
       '<div class="light font-sans text-xs font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">\n' +
-      source.position +
+      (index+1) +
       '</div>\n' +
       '</div>\n' +
       '</div>\n' +

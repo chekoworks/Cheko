@@ -69,6 +69,27 @@ class Gpt3Controller < ApplicationController
       @content = generate_answer_v2(params, false, true)
     end
 
+
+    puts @content
+
+    if user_signed_in?
+      Analytics.track(
+        user_id: current_user.id,
+        event: 'Ask Cheko AI',
+        properties: {
+          content: @content[:content]
+        }
+      )
+    else
+      Analytics.track(
+        anonymous_id: session[:anonymous_id],
+        event: 'Ask Cheko AI',
+        properties: {
+          content: @content[:content]
+        }
+      )
+    end
+
     render json: @content
   end
 
@@ -357,8 +378,9 @@ class Gpt3Controller < ApplicationController
         new_dialogue: newDialogue,
         usage: {}
       },
-      sources: @serp_results[0],
-      related_questions: @serp_results[1]
+      sources: response_json['sources'] || @serp_results[0],
+      related_questions: response_json['related_questions'] || @serp_results[1],
+      images: response_json['images'] || []
     }
   end
 end

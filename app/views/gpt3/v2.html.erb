@@ -78,19 +78,21 @@
       <div class="card-body px-10 py-3 cheko-chat-container">
         <div class="card-body-top" id="cheko-chat-sub-container">
           <div id="gpt-chat-container">
-            <div class="chat-bubble-cheko bg-new-cheko text-white border-0 text-base font-semibold">
-              Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!
-            </div>
-            <div>
-              <span class="cheko-text-1">Try Cheko AI -&gt;</span>
-              <button class="cheko-text-1 rounded-full bg-content-cheko border-1 cheko-border-color-1 px-2 py-1 sample-question">
-                <i class="fa-solid fa-apple-whole text-red-600"></i>
-                Who invented gravity?
-              </button>
-              <button class="cheko-text-1 rounded-full bg-content-cheko border-1 cheko-border-color-1 px-2 py-1 sample-question">
-                <i class="fa-solid fa-franc-sign text-gray-600"></i>
-                What is the meaning of "bonjour"?
-              </button>
+            <div class="getting_started_container <%= 'hidden' if @conversation.present? %>" style="max-width: 75%;">
+              <div class="chat-bubble-cheko bg-new-cheko text-white border-0 text-base font-semibold">
+                Hello! I'm Cheko, an AI-powered writing assistant to help you finish your homework fast!
+              </div>
+              <div>
+                <span class="cheko-text-1">Try Cheko AI -&gt;</span>
+                <button class="cheko-text-1 rounded-full bg-content-cheko border-1 cheko-border-color-1 px-2 py-1 sample-question">
+                  <i class="fa-solid fa-apple-whole text-red-600"></i>
+                  Who invented gravity?
+                </button>
+                <button class="cheko-text-1 rounded-full bg-content-cheko border-1 cheko-border-color-1 px-2 py-1 sample-question">
+                  <i class="fa-solid fa-franc-sign text-gray-600"></i>
+                  What is the meaning of "bonjour"?
+                </button>
+              </div>
             </div>
             <div class="edit_prompt_container my-2 hidden">
               <div class="flex items-center pr-3 rounded-full bg-new-cheko border-1 cheko-border-color-1">
@@ -109,21 +111,24 @@
             <% if @conversation.present? %>
               <% assistant_messages = @conversation.assistant_messages %>
               <% @conversation.user_messages.each_with_index do |user_message, index| %>
-                <div class="chat-bubble-container convo-container-<%= index %>" data-index="<%= index %>">
-                  <div class="self-end my-2">
-                    <div class="chat-bubble-user bg-new-cheko text-white border-0 text-base max-w-full">
-                      <%= user_message %>
-                    </div>
-                    <div class="text-right">
-                      <button class="chat-button pl-2 cheko-text-1 edit-btn" data-index="<%= index %>">
-                        <i class="fa-solid fa-edit cheko-text-1"></i>
-                      </button>
-                    </div>
-                  </div>
+<!--                <div class="chat-bubble-container convo-container-<%#= index %>" data-index="<%#= index %>">-->
+<!--                  <div class="self-end my-2">-->
+<!--                    <div class="chat-bubble-user bg-new-cheko text-white border-0 text-base max-w-full">-->
+                      <%#= user_message %>
+<!--                    </div>-->
+<!--                    <div class="text-right">-->
+<!--                      <button class="chat-button pl-2 cheko-text-1 edit-btn" data-index="<%#= index %>">-->
+<!--                        <i class="fa-solid fa-edit cheko-text-1"></i>-->
+<!--                      </button>-->
+<!--                    </div>-->
+<!--                  </div>-->
                   <% if assistant_messages && assistant_messages[index] %>
                     <% source_list = @sources.where(prompt_title: user_message).first %>
                     <% if source_list.present? %>
                       <div class="flex flex-col pb-4 chat-bubble-content" style="max-width: 75%;">
+                        <h1 class="text-3xl text-white my-4">
+                          <%= user_message %>
+                        </h1>
                         <div class="pt-4 pb-2">
                           <span class="title-header text-xl font-extrabold">
                             <i class="fa-solid fa-list-ul" style="color: #ffffff;"></i>
@@ -136,8 +141,8 @@
                             <% if source['position'].present? %>
                               <% position = source['position'] %>
                             <% end %>
-                            <% break if position >= 5 %>
-                            <a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2" href="<%= source['link'] %>" target="_blank">
+                            <% break if index >= 4 %>
+                            <a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2" href="<%= source['url'] || source['link'] %>" target="_blank">
                               <div class="relative flex items max-w-full flex-col justify-between h-full pointer-events-none select-none px-sm pt-sm pb-xs">
                                 <div>
                                   <div class="line-clamp-2 grow default font-sans text-xs font-medium text-textMain dark:text-textMainDark selection:bg-superDuper selection:text-textMain">
@@ -146,14 +151,14 @@
                                   <div class="flex items-center space-x-xs">
                                     <div class="flex items-center gap-x-xs ring-borderMain dark:ring-borderMainDark bg-transparent border-borderMain/60 dark:border-borderMainDark/80 divide-borderMain/60 dark:divide-borderMainDark/80">
                                       <div class="relative flex-none rounded-full overflow-hidden">
-                                        <img class="block" alt="<%= source['title'] %> favicon" height="16" src="<%= source['favicon'] || source['faviconUrl'] %>" width="16"/>
+                                        <img class="block" alt="<%= source['title'] %> favicon" height="16" src="https://www.google.com/s2/favicons?domain=<%= source['url'] || source['link'] %>&size=16" width="16"/>
                                       </div>
                                       <div class="duration-300 transition-all line-clamp-1 break-all light font-sans text-xs ml-1 font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">
-                                        <%= ConversationSource.site_name(source['link']) %>
+                                        <%= source['domain_name'] || ConversationSource.site_name(source['url'] || source['link']) %>
                                       </div>
                                       <h2 class="text-gray-500 mx-1 light font-display text-lg font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">·</h2>
                                       <div class="light font-sans text-xs font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">
-                                        <%= position %>
+                                        <%= index+1 %>
                                       </div>
                                     </div>
                                   </div>
