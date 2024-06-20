@@ -111,111 +111,119 @@
             <% if @conversation.present? %>
               <% assistant_messages = @conversation.assistant_messages %>
               <% @conversation.user_messages.each_with_index do |user_message, index| %>
-<!--                <div class="chat-bubble-container convo-container-<%#= index %>" data-index="<%#= index %>">-->
-<!--                  <div class="self-end my-2">-->
-<!--                    <div class="chat-bubble-user bg-new-cheko text-white border-0 text-base max-w-full">-->
-                      <%#= user_message %>
-<!--                    </div>-->
-<!--                    <div class="text-right">-->
-<!--                      <button class="chat-button pl-2 cheko-text-1 edit-btn" data-index="<%#= index %>">-->
-<!--                        <i class="fa-solid fa-edit cheko-text-1"></i>-->
-<!--                      </button>-->
-<!--                    </div>-->
-<!--                  </div>-->
-                  <% if assistant_messages && assistant_messages[index] %>
-                    <% source_list = @sources.where(prompt_title: user_message).first %>
-                    <% if source_list.present? %>
-                      <div class="flex flex-col pb-4 chat-bubble-content" style="max-width: 75%;">
-                        <h1 class="text-3xl text-white my-4">
-                          <%= user_message %>
-                        </h1>
-                        <div class="pt-4 pb-2">
-                          <span class="title-header text-xl font-extrabold">
-                            <i class="fa-solid fa-list-ul" style="color: #ffffff;"></i>
-                            Sources
-                          </span>
-                        </div>
-                        <div class="flex flex-row justify-between gap-x-2">
-                          <% source_list.result.each_with_index do |source, index| %>
-                            <% position = index + 1 %>
-                            <% if source['position'].present? %>
-                              <% position = source['position'] %>
-                            <% end %>
-                            <% break if index >= 4 %>
-                            <a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2" href="<%= source['url'] || source['link'] %>" target="_blank">
-                              <div class="relative flex items max-w-full flex-col justify-between h-full pointer-events-none select-none px-sm pt-sm pb-xs">
-                                <div>
-                                  <div class="line-clamp-2 grow default font-sans text-xs font-medium text-textMain dark:text-textMainDark selection:bg-superDuper selection:text-textMain">
-                                    <%= source['title'] %>
-                                  </div>
-                                  <div class="flex items-center space-x-xs">
-                                    <div class="flex items-center gap-x-xs ring-borderMain dark:ring-borderMainDark bg-transparent border-borderMain/60 dark:border-borderMainDark/80 divide-borderMain/60 dark:divide-borderMainDark/80">
-                                      <div class="relative flex-none rounded-full overflow-hidden">
-                                        <img class="block" alt="<%= source['title'] %> favicon" height="16" src="https://www.google.com/s2/favicons?domain=<%= source['url'] || source['link'] %>&size=16" width="16"/>
-                                      </div>
-                                      <div class="duration-300 transition-all line-clamp-1 break-all light font-sans text-xs ml-1 font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">
-                                        <%= source['domain_name'] || ConversationSource.site_name(source['url'] || source['link']) %>
-                                      </div>
-                                      <h2 class="text-gray-500 mx-1 light font-display text-lg font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">·</h2>
-                                      <div class="light font-sans text-xs font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">
-                                        <%= index+1 %>
+
+                <div class="w-100 flex py-8 border-bottom border-gray-600 group-convo-container-<%= index %>">
+                  <div class="w-75 chat-content">
+                    <% if assistant_messages && assistant_messages[index] %>
+                      <% source_list = @sources.where(prompt_title: user_message).first %>
+                      <% if source_list.present? %>
+                        <div class="flex flex-col pb-4 chat-bubble-content convo-container-<%= index %>">
+                          <h1 class="text-3xl text-white my-4">
+                            <%= user_message %>
+                          </h1>
+                          <div class="pt-4 pb-2">
+                            <span class="title-header text-xl font-extrabold">
+                              <i class="fa-solid fa-list-ul" style="color: #ffffff;"></i>
+                              Sources
+                            </span>
+                          </div>
+                          <div class="flex flex-row justify-between gap-x-2">
+                            <% source_list.result.each_with_index do |source, index| %>
+                              <% position = index + 1 %>
+                              <% if source['position'].present? %>
+                                <% position = source['position'] %>
+                              <% end %>
+                              <% break if index >= 4 %>
+                              <a class="rounded-md flex w-full ring-borderMain bg-new-cheko text-white p-2" href="<%= source['url'] || source['link'] %>" target="_blank">
+                                <div class="relative flex items max-w-full flex-col justify-between h-full pointer-events-none select-none px-sm pt-sm pb-xs">
+                                  <div>
+                                    <div class="line-clamp-2 grow default font-sans text-xs font-medium text-textMain dark:text-textMainDark selection:bg-superDuper selection:text-textMain">
+                                      <%= source['title'] %>
+                                    </div>
+                                    <div class="flex items-center space-x-xs">
+                                      <div class="flex items-center gap-x-xs ring-borderMain dark:ring-borderMainDark bg-transparent border-borderMain/60 dark:border-borderMainDark/80 divide-borderMain/60 dark:divide-borderMainDark/80">
+                                        <div class="relative flex-none rounded-full overflow-hidden">
+                                          <img class="block" alt="<%= source['title'] %> favicon" height="16" src="https://www.google.com/s2/favicons?domain=<%= source['url'] || source['link'] %>&size=16" width="16"/>
+                                        </div>
+                                        <div class="duration-300 transition-all line-clamp-1 break-all light font-sans text-xs ml-1 font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">
+                                          <%= source['domain_name'] || ConversationSource.site_name(source['url'] || source['link']) %>
+                                        </div>
+                                        <h2 class="text-gray-500 mx-1 light font-display text-lg font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">·</h2>
+                                        <div class="light font-sans text-xs font-medium text-textOff dark:text-textOffDark selection:bg-superDuper selection:text-textMain">
+                                          <%= index+1 %>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            </a>
+                              </a>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                      <div class="pb-2 chat-bubble-content">
+                        <span class="title-header text-xl font-extrabold">
+                          <i class="fa-solid fa-align-left"></i>
+                          Answer
+                        </span>
+                      </div>
+                      <div class="pb-4 chat-bubble-content">
+                        <div class="chat-bubble-cheko bg-new-cheko text-white border-0 text-base font-semibold">
+                          <%= Conversation.markdown_to_html(assistant_messages[index]) %>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                          <div>
+                            <button class="chat-button rewrite-btn" data-index="<%= index %>">
+                              <i class="fa-solid fa-repeat" style="color: #ffffff;"></i>
+                              Rewrite
+                            </button>
+                            <button id="humanize-btn" class="chat-button pl-2 cheko-text-1 humanize-btn" data-index="<%= index %>">
+                              <i class="fa-solid fa-wand-magic-sparkles" style="color: #ffffff;"></i>
+                              Humanize
+                            </button>
+                          </div>
+                          <div>
+                            <button class="chat-button cheko-text-1 copy-btn" data-index="<%= index %>">
+                              <i class="fa-solid fa-copy cheko-text-1"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <% related_list = @relates.where(prompt_title: user_message).first %>
+                      <% if related_list.present? %>
+                        <div class="chat-bubble-content" style="margin-bottom: 16px;">
+                          <div class="pt-4 pb-2">
+                            <span class="title-header text-xl font-extrabold">
+                              <i class="fa-solid fa-layer-group" style="color: #ffffff;"></i>
+                              Related
+                            </span>
+                          </div>
+                          <% related_list.result.each_with_index do |related, index| %>
+                            <% break if index >= 3 %>
+                            <span class="related-question cheko-border-color-1">
+                              <%= related['question'] || related['title'] || related %>
+                              <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                            </span>
                           <% end %>
                         </div>
-                      </div>
+                      <% end %>
                     <% end %>
-                    <div class="pb-2 chat-bubble-content">
-                      <span class="title-header text-xl font-extrabold">
-                        <i class="fa-solid fa-align-left"></i>
-                        Answer
-                      </span>
+                  </div>
+
+                  <div class="pt-8 pl-8 w-25 chat-image">
+                    <div class="grid grid-cols-2 gap-4 justify-between">
+                      <!-- Row 1 -->
+                      <% @conversation.images[0].each_with_index do |convo_image, index| %>
+                        <% break if index >= 5 %>
+                        <div class="<%= index == 0 ? 'col-span-2' : 'col-span-1' %>">
+                          <a href="<%= convo_image['original'] %>" target="_blank">
+                            <img src="<%= convo_image['thumbnail'] %>" class="w-full h-auto"/>
+                          </a>
+
+                        </div>
+                      <% end %>
                     </div>
-                    <div class="pb-4 chat-bubble-content" style="max-width: 75%;">
-                      <div class="chat-bubble-cheko bg-new-cheko text-white border-0 text-base font-semibold">
-                        <%= Conversation.markdown_to_html(assistant_messages[index]) %>
-                      </div>
-                      <div class="flex flex-row justify-between">
-                        <div>
-                          <button class="chat-button rewrite-btn" data-index="<%= index %>">
-                            <i class="fa-solid fa-repeat" style="color: #ffffff;"></i>
-                            Rewrite
-                          </button>
-                          <button id="humanize-btn" class="chat-button pl-2 cheko-text-1 humanize-btn" data-index="<%= index %>">
-                            <i class="fa-solid fa-wand-magic-sparkles" style="color: #ffffff;"></i>
-                            Humanize
-                          </button>
-                        </div>
-                        <div>
-                          <button class="chat-button cheko-text-1 copy-btn" data-index="<%= index %>">
-                            <i class="fa-solid fa-copy cheko-text-1"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <% related_list = @relates.where(prompt_title: user_message).first %>
-                    <% if related_list.present? %>
-                      <div class="chat-bubble-content" style="max-width: 75%; margin-bottom: 16px;">
-                        <div class="pt-4 pb-2">
-                          <span class="title-header text-xl font-extrabold">
-                            <i class="fa-solid fa-layer-group" style="color: #ffffff;"></i>
-                            Related
-                          </span>
-                        </div>
-                        <% related_list.result.each_with_index do |related, index| %>
-                          <% break if index >= 3 %>
-                          <span class="related-question cheko-border-color-1">
-                            <%= related['question'] || related['title'] || related %>
-                            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
-                          </span>
-                        <% end %>
-                      </div>
-                    <% end %>
-                  <% end %>
+                  </div>
                 </div>
               <% end %>
             <% end %>

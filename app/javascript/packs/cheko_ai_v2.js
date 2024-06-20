@@ -6,6 +6,7 @@ let userMessages = [];
 let assistantMessages = [];
 let sourceList = [];
 let relatedList = [];
+let imageList = [];
 let promptsCount = 0; // How many prompts have been sent so far?
 let autoScrollCount = 0;
 let autoScrollMaxCount = 30000;
@@ -60,7 +61,6 @@ function createChatBubble(content, sender, showEditBtn) {
   if (sender != "user") {
     const bubbleContainer = document.createElement("div");
     bubbleContainer.classList.add('pb-4');
-    bubbleContainer.style.maxWidth = '75%';
 
     const buttonsContainer = document.createElement("div");
     buttonsContainer.classList.add('flex', 'flex-row', 'justify-between');
@@ -244,16 +244,36 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
 
   // Utils:
   let convoContainer = null;
+  let groupConvoContainer = null;
   if (index != null) {
+    groupConvoContainer = $('.group-convo-container-' + index);
+    groupConvoContainer.addClass('w-100 flex py-8 border-bottom border-gray-600');
+    groupConvoContainer.html('');
     convoContainer = $('.convo-container-' + index);
+    groupConvoContainer.addClass('w-75');
     convoContainer.html('');
   } else {
     const chatContainer = document.getElementById("gpt-chat-container");
+    const groupBubbleContainer = document.createElement("div");
+    groupBubbleContainer.classList.add('group-convo-container-' +userMessages.length, 'w-100', 'flex', 'py-8', 'border-bottom', 'border-gray-600');
+    chatContainer.appendChild(groupBubbleContainer);
+
+    const chatContent = document.createElement("div");
+    chatContent.classList.add('chat-content', 'w-75');
+    groupBubbleContainer.appendChild(chatContent);
+
+    const imageContent = document.createElement("div");
+    imageContent.classList.add('chat-image', 'w-25', 'pt-8', 'pl-8');
+    groupBubbleContainer.appendChild(imageContent);
+
     const bubbleContainer = document.createElement("div");
-    bubbleContainer.classList.add('chat-bubble-container', 'convo-container-' +userMessages.length);
-    chatContainer.appendChild(bubbleContainer);
+    chatContent.classList.add('chat-bubble-container', 'convo-container-' +userMessages.length);
+    groupBubbleContainer.appendChild(bubbleContainer);
+
     convoContainer = $('.convo-container-' +userMessages.length);
     convoContainer.data('index', userMessages.length);
+    groupConvoContainer = $('.group-convo-container-' +userMessages.length);
+    groupConvoContainer.data('index', userMessages.length);
   }
 
   // 1. Start requesting: Clear Chatbox, Disable Button, Play Loading Animation
@@ -300,6 +320,7 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
   const json = await response.json();
   let content_data = json.content;
   let source_data = json.sources;
+  let image_data = json.images;
   let related_question_data = json.related_questions;
   $('#cheko-loading-bubble').remove();
   if (index != null) {
@@ -336,6 +357,8 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
   relatedList.push({prompt: prompt, results: related_question_data});
   autoScroll();
 
+  imageList.push(image_data);
+
   document.querySelector("textarea#prompt").disabled=false;
   $('.rewrite-btn, .humanize-btn').prop('disabled', false);
 
@@ -347,21 +370,6 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
 
 
 };
-
-
-function checkForEmptyAndNotRelatedQuestion(response, prompt) {
-  let related_questions = [];
-  if (response.length >= 5) {
-    response = response.slice(2);
-  }
-  response.forEach(function (related) {
-    if (!related.includes(prompt) && related != '') {
-      related_questions.push(related);
-    }
-  });
-
-  return related_questions;
-}
 
 function showAnswer(container_element, generated_text) {
   const titleContainer = document.createElement("div"); // Holds the title and icon
@@ -428,7 +436,7 @@ function showLoadingBubble(container_element) {
 }
 
 function showSource(container_element, sources) {
-  let data_html = '<div class="flex flex-col pb-4 chat-bubble-content" style="max-width: 75%;">\n' +
+  let data_html = '<div class="flex flex-col pb-4 chat-bubble-content">\n' +
     '<div class="pt-4 pb-2">\n' +
     '<span class="title-header text-xl font-extrabold">\n' +
     '<i class="fa-solid fa-list-ul" style="color: #ffffff;"></i>\n' +
@@ -473,7 +481,7 @@ function showSource(container_element, sources) {
 }
 
 function showRelatedQuestions(container_element, related_questions) {
-  let data_html = '<div class="chat-bubble-content" style="max-width: 75%; margin-bottom: 16px;">\n' +
+  let data_html = '<div class="chat-bubble-content" style="margin-bottom: 16px;">\n' +
     '<div class="pt-4 pb-2">\n' +
     '<span class="title-header text-xl font-extrabold">\n' +
     '<i class="fa-solid fa-layer-group" style="color: #ffffff;"></i>\n' +
@@ -511,7 +519,8 @@ const saveConversation = async () => {
       assistant_messages: assistantMessages,
       new_dialogue: currentDialogue,
       related_list: relatedList,
-      source_list: sourceList
+      source_list: sourceList,
+      images: imageList
     }),
   });
 
@@ -564,7 +573,8 @@ const updateConversation = async () => {
         assistant_messages: assistantMessages,
         new_dialogue: currentDialogue,
         related_list: relatedList,
-        source_list: sourceList
+        source_list: sourceList,
+        images: imageList
       }),
     });
 
@@ -819,17 +829,3 @@ $('body').on('click', '.delete_conversation_btn', function() {
     delete_conversation_btn.parent().remove();
   });
 });
-
-
-
-// -- Citation Button --
-// document
-//   .querySelector("#add-citations-button")
-//   .addEventListener("click", (e) => {
-//     e.preventDefault();
-//     const prompt = `Search for citations: \n\n${document
-//       .querySelector("#gpt-chat-container")
-//       .lastChild.innerText}`;
-//     generateText(prompt, false, true);
-//   }
-//   );

@@ -131,6 +131,7 @@ class Gpt3Controller < ApplicationController
       convo.messages = params[:new_dialogue]
       convo.user_messages = params[:user_messages]
       convo.assistant_messages = params[:assistant_messages]
+      convo.images = params[:images]
       convo.user_id = current_user.id
 
       convo.save
@@ -232,6 +233,7 @@ class Gpt3Controller < ApplicationController
     convo.messages = params[:new_dialogue]
     convo.user_messages = params[:user_messages]
     convo.assistant_messages = params[:assistant_messages]
+    convo.images = params[:images]
     convo.user_id = current_user.id
 
     convo.save
