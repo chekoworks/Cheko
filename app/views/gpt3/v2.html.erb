@@ -209,11 +209,17 @@
                       <% end %>
                     <% end %>
                   </div>
-
-                  <div class="pt-8 pl-8 w-25 chat-image ">
+                  <% convo_images = check_array(@conversation.images) %>
+                  <div class="pt-8 pl-8 w-25 chat-image <%= 'hidden' unless convo_images.present? %>">
+                    <div class="pt-4 pb-2">
+                      <span class="title-header text-xl font-extrabold">
+                        <i class="fa-regular fa-images" style="color: #ffffff;"></i>
+                        Images
+                      </span>
+                    </div>
                     <div class="grid grid-cols-2 gap-4 justify-between chat-image-<%= index %>">
                       <!-- Row 1 -->
-                      <% @conversation.images[0].each_with_index do |convo_image, index| %>
+                      <% convo_images.each_with_index do |convo_image, index| %>
                         <% break if index >= 5 %>
                         <div class="<%= index == 0 ? 'col-span-2' : 'col-span-1' %>">
                           <a href="<%= convo_image['original'] %>" target="_blank">

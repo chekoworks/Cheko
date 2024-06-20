@@ -263,8 +263,15 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
     groupBubbleContainer.appendChild(chatContent);
 
     const imageContent = document.createElement("div");
-    imageContent.classList.add('chat-image', 'w-25', 'pt-8', 'pl-8');
+    imageContent.classList.add('chat-image', 'w-25', 'pt-8', 'pl-8', 'hidden');
     groupBubbleContainer.appendChild(imageContent);
+
+    imageContent.innerHTML = ' <div class="pt-4 pb-2">\n' +
+      '                      <span class="title-header text-xl font-extrabold">\n' +
+      '                        <i class="fa-regular fa-images" style="color: #ffffff;"></i>\n' +
+      '                        Images\n' +
+      '                      </span>\n' +
+      '                    </div>';
 
     const imageContentContainer = document.createElement("div");
     imageContentContainer.classList.add('chat-image-'+userMessages.length, 'grid', 'grid-cols-2', 'gap-4', 'justify-between');
@@ -379,22 +386,24 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
 };
 
 function showImage(container_element, images) {
-  console.log(images);
-  images.forEach(function(convo_image, index) {
-    console.log(index );
-  if (index >= 5) return;
+  if (images.length > 0) {
+    container_element.parent().removeClass('hidden');
+    images.forEach(function(convo_image, index) {
+      console.log(index );
+      if (index >= 5) return;
 
-    var divClass = index == 0 ? "col-span-2" : "col-span-1";
+      var divClass = index == 0 ? "col-span-2" : "col-span-1";
 
-    var $div = $('<div>').addClass(divClass);
-    var $a = $('<a>').attr('href', convo_image['original']).attr('target', '_blank');
-    var $img = $('<img>').attr('src', convo_image['thumbnail']).addClass('w-full h-auto');
+      var $div = $('<div>').addClass(divClass);
+      var $a = $('<a>').attr('href', convo_image['original']).attr('target', '_blank');
+      var $img = $('<img>').attr('src', convo_image['thumbnail']).addClass('w-full h-auto');
 
-    $a.append($img);
-    $div.append($a);
+      $a.append($img);
+      $div.append($a);
 
-    container_element.append($div); // Append to the body or another container element
-  });
+      container_element.append($div); // Append to the body or another container element
+    });
+  }
 }
 
 function showAnswer(container_element, generated_text) {

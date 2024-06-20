@@ -11,4 +11,16 @@ module ApplicationHelper
       " "
     end
   end
+
+  def check_array(convo_arr)
+    if convo_arr
+      if convo_arr[0].instance_of? Array
+        convo_arr[0]
+      else
+        convo_arr
+      end
+    else
+      []
+    end
+  end
 end
