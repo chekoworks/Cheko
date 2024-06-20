@@ -67,7 +67,7 @@ function createChatBubble(content, sender, showEditBtn) {
 
     const rewriteHumanizeDiv = document.createElement("div");
     const copyEditButton = document.createElement("div");
-
+2
     const rewriteButton = document.createElement("button");
     rewriteButton.classList.add('chat-button', 'rewrite-btn');
     rewriteButton.innerHTML = '<i class="fa-solid fa-repeat" style="color: #ffffff;"></i> Rewrite';
@@ -245,13 +245,13 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
   // Utils:
   let convoContainer = null;
   let groupConvoContainer = null;
+  let imageContainer = null;
   if (index != null) {
     groupConvoContainer = $('.group-convo-container-' + index);
-    groupConvoContainer.addClass('w-100 flex py-8 border-bottom border-gray-600');
-    groupConvoContainer.html('');
     convoContainer = $('.convo-container-' + index);
-    groupConvoContainer.addClass('w-75');
     convoContainer.html('');
+    imageContainer = $('.chat-image-' + index);
+    imageContainer.html('');
   } else {
     const chatContainer = document.getElementById("gpt-chat-container");
     const groupBubbleContainer = document.createElement("div");
@@ -266,6 +266,10 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
     imageContent.classList.add('chat-image', 'w-25', 'pt-8', 'pl-8');
     groupBubbleContainer.appendChild(imageContent);
 
+    const imageContentContainer = document.createElement("div");
+    imageContentContainer.classList.add('chat-image-'+userMessages.length, 'grid', 'grid-cols-2', 'gap-4', 'justify-between');
+    imageContent.appendChild(imageContentContainer);
+
     const bubbleContainer = document.createElement("div");
     chatContent.classList.add('chat-bubble-container', 'convo-container-' +userMessages.length);
     groupBubbleContainer.appendChild(bubbleContainer);
@@ -274,6 +278,8 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
     convoContainer.data('index', userMessages.length);
     groupConvoContainer = $('.group-convo-container-' +userMessages.length);
     groupConvoContainer.data('index', userMessages.length);
+    imageContainer = $('.chat-image-'+userMessages.length);
+    imageContainer.data('index', userMessages.length);
   }
 
   // 1. Start requesting: Clear Chatbox, Disable Button, Play Loading Animation
@@ -338,6 +344,7 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
   );
 
   convoContainer.append('<h1 class="text-3xl text-white my-4">' + prompt + '</h1>');
+  showImage(imageContainer, image_data);
 
   showSource(convoContainer,source_data);
   sourceList.push({prompt: prompt, results: source_data});
@@ -370,6 +377,25 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
 
 
 };
+
+function showImage(container_element, images) {
+  console.log(images);
+  images.forEach(function(convo_image, index) {
+    console.log(index );
+  if (index >= 5) return;
+
+    var divClass = index == 0 ? "col-span-2" : "col-span-1";
+
+    var $div = $('<div>').addClass(divClass);
+    var $a = $('<a>').attr('href', convo_image['original']).attr('target', '_blank');
+    var $img = $('<img>').attr('src', convo_image['thumbnail']).addClass('w-full h-auto');
+
+    $a.append($img);
+    $div.append($a);
+
+    container_element.append($div); // Append to the body or another container element
+  });
+}
 
 function showAnswer(container_element, generated_text) {
   const titleContainer = document.createElement("div"); // Holds the title and icon

@@ -210,8 +210,8 @@
                     <% end %>
                   </div>
 
-                  <div class="pt-8 pl-8 w-25 chat-image">
-                    <div class="grid grid-cols-2 gap-4 justify-between">
+                  <div class="pt-8 pl-8 w-25 chat-image ">
+                    <div class="grid grid-cols-2 gap-4 justify-between chat-image-<%= index %>">
                       <!-- Row 1 -->
                       <% @conversation.images[0].each_with_index do |convo_image, index| %>
                         <% break if index >= 5 %>
