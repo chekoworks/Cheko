@@ -207,7 +207,27 @@
                           <% end %>
                         </div>
                       <% end %>
+
+                      <% @humanize_answers = @conversation.humanize_answers.select { |humanize_answer| humanize_answer.position == index } %>
+                      <% if @humanize_answers.length > 0 %>
+                        <div class="chat-bubble-content" style="margin-bottom: 16px;">
+                          <div class="pt-4 pb-2">
+                              <span class="title-header text-xl font-extrabold">
+                                <i class="fa-solid fa-chalkboard-user" style="color: #ffffff;"></i>
+                                Humanized Answer:
+                              </span>
+                          </div>
+                          <ul class="list-disc">
+                            <% @humanize_answers.each do |humanize_answer| %>
+                              <li class="text-white">
+                                <%= humanize_answer.humanized_output %>
+                              </li>
+                            <% end %>
+                          </ul>
+                        </div>
+                      <% end %>
                     <% end %>
+
                   </div>
                   <% convo_images = check_array(@conversation.images) %>
                   <div class="pt-8 pl-8 w-25 chat-image <%= 'hidden' unless convo_images.present? %>">

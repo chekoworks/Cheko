@@ -5,7 +5,8 @@ class Gpt3Controller < ApplicationController
 
   def humanize
     if params[:prompt]
-      HumanizeAnswerJob.perform_now(params[:prompt], params[:conversation_id], params[:position])
+      # HumanizeAnswerJob.perform_now(params[:prompt], params[:conversation_id], params[:position])
+      @content = generate_answer_v2(params, false, false, true)
     end
 
     if user_signed_in?
@@ -68,8 +69,7 @@ class Gpt3Controller < ApplicationController
     if @content.nil?
       @content = generate_answer_v2(params, false, true)
     end
-
-
+    
     puts @content
 
     if user_signed_in?
@@ -348,26 +348,16 @@ class Gpt3Controller < ApplicationController
   end
 
   def generate_answer_v2(params, rewrite=false, retry_request=false, humanize=false)
-    python_api_url = "https://cheko-ai-backend.onrender.com/"
     user_id = "random_user_#{rand(200)}"
     if current_user.present?
       user_id = "signed_user_#{current_user.id}"
     end
-
-    url = python_api_url + 'api/v1.0.1/agent/chat/' +  user_id
-    conn = Faraday.new(
-      url: url,
-      headers: {
-        'Content-Type' => 'application/json'
-      }
-    )
-    response = conn.post() do |req|
-      req.body = {
-        "role": "user",
-        "content": params[:prompt]
-      }.to_json
+    if humanize
+      url = '/api/v1/humanize/'
+    else
+      url = 'api/v1.0.1/agent/chat/' +  user_id
     end
-    response_json = JSON.parse(response.body)
+    response_json = Api.post_request(url, params[:prompt])
     generated_text = response_json['answer']
     newDialogue = [generated_text]
 
