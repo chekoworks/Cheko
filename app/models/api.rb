@@ -25,6 +25,16 @@ class Api < ApplicationRecord
     JSON.parse(response.body)
   end
 
+
+  def self.custom_post_request(path, body)
+    conn = Api.connection(path)
+    response = conn.post() do |req|
+      req.body = body.to_json
+    end
+
+    JSON.parse(response.body)
+  end
+
   def self.get_request(path, content)
     conn = Api.connection(path)
     response = conn.get() do |req|

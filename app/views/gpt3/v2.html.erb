@@ -112,8 +112,8 @@
               <% assistant_messages = @conversation.assistant_messages %>
               <% @conversation.user_messages.each_with_index do |user_message, index| %>
 
-                <div class="w-100 flex py-8 border-bottom border-gray-600 group-convo-container-<%= index %>">
-                  <div class="w-75 chat-content">
+                <div class="w-100 flex py-8 border-bottom border-gray-600 group-convo-container-<%= index %>" data-index="<%= index %>">
+                  <div class="w-75 chat-content" data-index="<%= index %>">
 
                     <% if assistant_messages && assistant_messages[index] %>
                       <% source_list = @sources.where(prompt_title: user_message).first %>
@@ -219,7 +219,7 @@
                                 Humanized Answer/s:
                               </span>
                         </div>
-                        <ol class="space-y-2 text-gray-500 list-decimal list-inside dark:text-gray-400">
+                        <ol class="humanize_list space-y-2 text-gray-500 list-decimal list-inside dark:text-gray-400">
                           <% @humanize_answers.each do |humanize_answer| %>
                             <li class="text-white">
                               <%= humanize_answer.humanized_output %>
@@ -320,6 +320,7 @@
       $('.humanize_countdown_container').fadeIn();
 
       let next_humanize_available_date = new Date(next_humanize_available_date_str);
+      // let next_humanize_available_date = new Date(datetime_now_str);
       let datetime_now_date = new Date(datetime_now_str);
 
       if (datetime_now_date >= next_humanize_available_date) {
@@ -338,6 +339,7 @@
 
     function toggleHumanizeBtn() {
       let next_humanize_available_date = new Date(next_humanize_available_date_str);
+      // let next_humanize_available_date = new Date(datetime_now_str);
       let datetime_now_date = new Date(datetime_now_str);
       if (datetime_now_date >= next_humanize_available_date) {
         $('.humanize-btn').prop("disabled", false);

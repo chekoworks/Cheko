@@ -177,10 +177,10 @@ function stopTyping() {
 }
 
 const humanizeText = async(prompt, position) => {
-  const chatContainer = document.getElementById("gpt-chat-container");
-  const text = "Humanizing answer... Please wait for 1-3 minutes..."
-  chatContainer.appendChild(createChatBubble(text, "user"));
-
+  autoScroll();
+  let groupConvoContainer = $('.group-convo-container-' + position);
+  let chatContent = groupConvoContainer.find('.chat-content');
+  showLoadingBubble(chatContent);
   let conversation_id = document.getElementById('conversation_id').value;
 
   let response;
@@ -201,37 +201,44 @@ const humanizeText = async(prompt, position) => {
     return;
   }
   const json = await response.json();
-  assistantMessages.push(json.generated_text);
+  let content_data = json.content;
   next_humanize_available_date_str = json.next_humanize_available_date;
   datetime_now_str = json.datetime_now;
   showCountdown();
   autoScroll();
-  // -- Event Log --
-  window.LOG_EVENTS.logSubmitPrompt(
-    json.usage.prompt_tokens,
-    json.usage.completion_tokens,
-    json.usage.total_tokens,
-    json.usage.model
-  );
 
-  // 4. Maintain a string record of the current dialogue between the user and the chatbot.
-  currentDialogue = json.new_dialogue;
+  if ($('#cheko-loading-bubble').length > 0) {
+    $('#cheko-loading-bubble').remove();
+  }
 
-  const titleContainer = document.createElement("div"); // Holds the title and icon
-  titleContainer.classList.add('pb-2')
-  titleContainer.innerHTML = '<span class="title-header text-xl font-extrabold"><i class="fa-solid fa-align-left"></i> Answer </span>';
-  chatContainer.appendChild(titleContainer);
+  let humanizeTextContainer = chatContent.find('.humanized_answers_container_' + position);
 
-  // 5. Get response and add as a chat bubble:
-  const chekoResponse = json.generated_text
-    .split("\n")
-    .map((t) => `${t}`)
-    .join("");
-  chatContainer.appendChild(createChatBubble(chekoResponse, "cheko"));
+  if (humanizeTextContainer.length) {
+    let listContainer = humanizeTextContainer.find('.humanize_list');
+    let data_html = '<li class="text-white">\n' +
+                        content_data +'\n' +
+      '                            </li>';
+    listContainer.append(data_html);
+  } else {
+    let data_html = '<div class="chat-bubble-content humanized_answers_container_' + position + '" style="margin-bottom: 16px;">\n' +
+      '                        <div class="pt-4 pb-2">\n' +
+      '                              <span class="title-header text-xl font-extrabold">\n' +
+      '                                <i class="fa-solid fa-chalkboard-user" style="color: #ffffff;"></i>\n' +
+      '                                Humanized Answer/s:\n' +
+      '                              </span>\n' +
+      '                        </div>\n' +
+      '                        <ol class="humanize_list space-y-2 text-gray-500 list-decimal list-inside dark:text-gray-400">\n' +
+      '                            <li class="text-white">\n' +
+                                      content_data +'\n' +
+      '                            </li>\n' +
+      '                        </ol>\n' +
+      '                     </div>';
+    chatContent.append(data_html);
+  }
 
   // 6. Finished Requesting: Re-enable button, turn off loading animation
   // document.getElementById("generate-btn").removeAttribute("disabled");
-  setLoading(false); // loading animation
+  // setLoading(false); // loading animation
 
   autoScroll();
 }

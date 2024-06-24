@@ -6,7 +6,7 @@ class Gpt3Controller < ApplicationController
   def humanize
     if params[:prompt]
       # HumanizeAnswerJob.perform_now(params[:prompt], params[:conversation_id], params[:position])
-      @content = generate_answer_v2(params, false, false, true)
+      @content = generate_humanize_answer_v2(params)
     end
 
     if user_signed_in?
@@ -30,7 +30,12 @@ class Gpt3Controller < ApplicationController
     end
 
     render(
-      json: { message: 'Success', next_humanize_available_date:  current_user.next_humanize_available_date, datetime_now: Time.current},
+      json: {
+        message: 'Success',
+        content: @content,
+        next_humanize_available_date:  current_user.next_humanize_available_date,
+        datetime_now: Time.current
+      },
       status: :ok
     )
   end
@@ -352,11 +357,8 @@ class Gpt3Controller < ApplicationController
     if current_user.present?
       user_id = "signed_user_#{current_user.id}"
     end
-    if humanize
-      url = '/api/v1/humanize/'
-    else
-      url = 'api/v1.0.1/agent/chat/' +  user_id
-    end
+
+    url = 'api/v1.0.1/agent/chat/' +  user_id
     response_json = Api.post_request(url, params[:prompt])
     generated_text = response_json['answer']
     newDialogue = [generated_text]
@@ -374,5 +376,26 @@ class Gpt3Controller < ApplicationController
       related_questions: response_json['related_questions'] || @serp_results[1],
       images: response_json['images'] || []
     }
+  end
+
+  def generate_humanize_answer_v2(params)
+    url = 'api/v1/humanize/'
+    body = {
+      "text": params[:prompt]
+    }
+    response_json = Api.custom_post_request(url, body)
+    humanized_text = response_json['humanized_text']
+
+    if humanized_text.present?
+      humanize_answer = HumanizeAnswer.new
+
+      humanize_answer.conversation_id = params[:conversation_id]
+      humanize_answer.position =  params[:position]
+      humanize_answer.answer = params[:prompt]
+      humanize_answer.humanized_output = humanized_text
+      humanize_answer.save
+    end
+
+    return humanized_text.present? ? humanized_text : ''
   end
 end
