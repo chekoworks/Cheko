@@ -32,31 +32,31 @@ function createChatBubble(content, sender, showEditBtn) {
   const chatBubble = document.createElement("div");
   chatBubble.className =
     sender === "user" ? "chat-bubble-user" : "chat-bubble-cheko";
-  chatBubble.classList.add("bg-new-cheko", "text-white", "border-0", "text-base");
-
-  if (sender === "user") {
-    chatBubble.innerHTML = content;
-  } else {
-    typewriterEffect(chatBubble, content, () => {
-
-      if(typeof rewriteButton !== 'undefined' && rewriteButton !== null)
-        rewriteButton.disabled = false;
-
-      if(typeof humanizeButton !== 'undefined' && humanizeButton !== null)
-        humanizeButton.disabled = false;
-
-      if(typeof copyButton !== 'undefined' && copyButton !== null)
-        copyButton.disabled = false;
-
-      // Enable source links and related question links similarly
-      document.querySelectorAll('.source-link.disabled-link').forEach(link => {
-        link.classList.remove('disabled-link');
-      });
-      document.querySelectorAll('.related-question.disabled-link').forEach(link => {
-        link.classList.remove('disabled-link');
-      });
-    });
-  }
+  chatBubble.classList.add("bg-new-cheko", "text-white", "border-0", "text-base", "markdown-body");
+  chatBubble.innerHTML = content;
+  // if (sender === "user") {
+  //   chatBubble.innerHTML = content;
+  // } else {
+  //   typewriterEffect(chatBubble, content, () => {
+  //
+  //     if(typeof rewriteButton !== 'undefined' && rewriteButton !== null)
+  //       rewriteButton.disabled = false;
+  //
+  //     if(typeof humanizeButton !== 'undefined' && humanizeButton !== null)
+  //       humanizeButton.disabled = false;
+  //
+  //     if(typeof copyButton !== 'undefined' && copyButton !== null)
+  //       copyButton.disabled = false;
+  //
+  //     // Enable source links and related question links similarly
+  //     document.querySelectorAll('.source-link.disabled-link').forEach(link => {
+  //       link.classList.remove('disabled-link');
+  //     });
+  //     document.querySelectorAll('.related-question.disabled-link').forEach(link => {
+  //       link.classList.remove('disabled-link');
+  //     });
+  //   });
+  // }
 
   if (sender != "user") {
     const bubbleContainer = document.createElement("div");
