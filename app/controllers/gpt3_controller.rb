@@ -138,6 +138,7 @@ class Gpt3Controller < ApplicationController
       convo.assistant_messages = params[:assistant_messages]
       convo.images = params[:images]
       convo.user_id = current_user.id
+      convo.session_id = params[:session_id]
 
       convo.save
 
@@ -171,10 +172,12 @@ class Gpt3Controller < ApplicationController
       convo.messages = params[:new_dialogue]
       convo.user_messages = params[:user_messages]
       convo.assistant_messages = params[:assistant_messages]
+      convo.session_id = params[:session_id]
       convo.save
 
       save_related_list(convo, params)
       save_source_list(convo, params)
+      save_images(convo, params)
 
       render json: convo
     else
@@ -238,13 +241,15 @@ class Gpt3Controller < ApplicationController
     convo.messages = params[:new_dialogue]
     convo.user_messages = params[:user_messages]
     convo.assistant_messages = params[:assistant_messages]
-    convo.images = params[:images]
+    convo.session_id = params[:session_id]
+    # convo.images = params[:images]
     convo.user_id = current_user.id
 
     convo.save
 
     save_related_list(convo, params)
     save_source_list(convo, params)
+    save_images(convo, params)
 
     convo
   end
@@ -277,6 +282,19 @@ class Gpt3Controller < ApplicationController
       end
     end
   end
+
+  def save_images(convo, params)
+    if params[:position].present? && params[:images].present
+      conversation_image = convo.conversation_images.find_or_initialize_by(
+        conversation_id: convo.id,
+        position: params[:position],
+        )
+      conversation_image.images = params[:images]
+      conversation_image.save
+    end
+  end
+
+
 
   def generate_answer(params, rewrite=false, retry_request=false, humanize=false)
     puts params[:currentDialogue]
@@ -353,14 +371,18 @@ class Gpt3Controller < ApplicationController
   end
 
   def generate_answer_v2(params, rewrite=false, retry_request=false, humanize=false)
-    user_id = "random_user_#{rand(200)}"
+    user_id = "random_user"
     if current_user.present?
       user_id = "signed_user_#{current_user.id}"
     end
 
     url = 'api/v1.0.1/agent/chat/' +  user_id
+    if params[:currentSessionId]
+      url = url + '?session_id=' + params[:currentSessionId]
+    end
     response_json = Api.post_request(url, params[:prompt])
     generated_text = response_json['answer']
+    session_id = response_json['session_id']
     newDialogue = [generated_text]
 
     @serp_results = Serp.search(params[:prompt])
@@ -374,7 +396,8 @@ class Gpt3Controller < ApplicationController
       },
       sources: response_json['sources'] || @serp_results[0],
       related_questions: response_json['related_questions'] || @serp_results[1],
-      images: response_json['images'] || []
+      images: response_json['images'] || [],
+      session_id: session_id
     }
   end
 

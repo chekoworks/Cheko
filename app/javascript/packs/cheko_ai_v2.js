@@ -12,6 +12,8 @@ let autoScrollCount = 0;
 let autoScrollMaxCount = 30000;
 let typed = null;
 let isTypedStopped = false;
+let currentConvoPosition = null;
+let currentSessionId = null;
 
 mixpanel.init("36da7c6fa99e6a22866f300e549fef43", {
   loaded: function () {
@@ -259,6 +261,8 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
     convoContainer.html('');
     imageContainer = $('.chat-image-' + index);
     imageContainer.html('');
+
+    currentConvoPosition = index;
   } else {
     const chatContainer = document.getElementById("gpt-chat-container");
     const groupBubbleContainer = document.createElement("div");
@@ -294,6 +298,9 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
     groupConvoContainer.data('index', userMessages.length);
     imageContainer = $('.chat-image-'+userMessages.length);
     imageContainer.data('index', userMessages.length);
+
+
+    currentConvoPosition = userMessages.length;
   }
 
   // 1. Start requesting: Clear Chatbox, Disable Button, Play Loading Animation
@@ -313,11 +320,11 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
   // 3. Send Prompt to Controller:
   let response;
   let generate_url = '/gpt3/generate_v2';
-  let generate_body = JSON.stringify({ prompt, currentDialogue });
+  let generate_body = JSON.stringify({ prompt, currentDialogue, currentSessionId });
 
   if (is_rewrite) {
     generate_url = '/gpt3/rewrite_v2';
-    generate_body = JSON.stringify({ prompt, current_result, currentDialogue })
+    generate_body = JSON.stringify({ prompt, current_result, currentDialogue, currentSessionId })
   }
 
   try {
@@ -341,6 +348,7 @@ const generateText = async (prompt, index, is_rewrite, current_result) => {
   let content_data = json.content;
   let source_data = json.sources;
   let image_data = json.images;
+  currentSessionId = json.session_id;
   let related_question_data = json.related_questions;
   $('#cheko-loading-bubble').remove();
   if (index != null) {
@@ -562,7 +570,8 @@ const saveConversation = async () => {
       new_dialogue: currentDialogue,
       related_list: relatedList,
       source_list: sourceList,
-      images: imageList
+      images: imageList,
+      position: currentConvoPosition
     }),
   });
 
@@ -616,7 +625,8 @@ const updateConversation = async () => {
         new_dialogue: currentDialogue,
         related_list: relatedList,
         source_list: sourceList,
-        images: imageList
+        images: imageList,
+        position: currentConvoPosition
       }),
     });
 
@@ -736,7 +746,12 @@ document.addEventListener('DOMContentLoaded', function() {
       assistantMessages = JSON.parse(currentAssistantMessages);
     }
   }
-
+  if (document.getElementById('session_id')) {
+    let sessionId = document.getElementById('session_id').value;
+    if (!(sessionId == null || sessionId == undefined || sessionId == '')) {
+      currentSessionId = sessionId;
+    }
+  }
   autoScroll();
 }, false);
 

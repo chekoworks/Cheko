@@ -5,6 +5,7 @@ class Conversation < ApplicationRecord
 
   has_many :conversation_relateds
   has_many :conversation_sources
+  has_many :conversation_images
   has_many :humanize_answers
 
   def self.markdown_to_html(content)

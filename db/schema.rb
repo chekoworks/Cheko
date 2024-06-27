@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_19_170719) do
+ActiveRecord::Schema.define(version: 2024_06_27_215906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,14 @@ ActiveRecord::Schema.define(version: 2024_06_19_170719) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "conversation_images", force: :cascade do |t|
+    t.integer "conversation_id"
+    t.integer "position"
+    t.jsonb "images"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "conversation_relateds", force: :cascade do |t|
     t.integer "conversation_id"
     t.string "prompt_title"
@@ -142,6 +150,7 @@ ActiveRecord::Schema.define(version: 2024_06_19_170719) do
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "assistant_messages"
     t.jsonb "images"
+    t.string "session_id"
   end
 
   create_table "documents", force: :cascade do |t|
