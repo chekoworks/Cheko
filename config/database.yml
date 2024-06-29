@@ -28,3 +28,12 @@ test:
   host: localhost
   port: 5432
 
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: <%= ENV.fetch("DB_NAME") %>
+  host: <%= ENV.fetch("DB_HOST") %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
+  timeout: 5000
+  username: <%= ENV.fetch("DB_USERNAME") %>
+  password: <%= ENV.fetch("DB_PASSWORD") %>
